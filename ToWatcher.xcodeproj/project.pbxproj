@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9C226797FC00A167CB /* AppDelegate.swift */; };
+		FA350E9F226797FC00A167CB /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9E226797FC00A167CB /* HomeController.swift */; };
+		FA350EA2226797FC00A167CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA0226797FC00A167CB /* Main.storyboard */; };
+		FA350EA4226797FD00A167CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA3226797FD00A167CB /* Assets.xcassets */; };
+		FA350EA7226797FD00A167CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */; };
+		FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EAE22679B4A00A167CB /* ContainerCell.swift */; };
+		FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EB02267A3C700A167CB /* MenuBar.swift */; };
+		FA350EB3226B7ED000A167CB /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EB2226B7ED000A167CB /* MenuCell.swift */; };
+		FA350EE2226C886C00A167CB /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDA226C886B00A167CB /* Montserrat-Regular.ttf */; };
+		FA350EE3226C886C00A167CB /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDB226C886B00A167CB /* Montserrat-Bold.ttf */; };
+		FA350EE4226C886C00A167CB /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */; };
+		FA350EE5226C886C00A167CB /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDD226C886B00A167CB /* Montserrat-Italic.ttf */; };
+		FA350EE6226C886C00A167CB /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDE226C886B00A167CB /* Montserrat-Black.ttf */; };
+		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
+		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
+		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA350E99226797FC00A167CB /* ToWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA350E9C226797FC00A167CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FA350E9E226797FC00A167CB /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		FA350EA1226797FC00A167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FA350EA3226797FD00A167CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA350EA6226797FD00A167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FA350EA8226797FD00A167CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA350EAE22679B4A00A167CB /* ContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCell.swift; sourceTree = "<group>"; };
+		FA350EB02267A3C700A167CB /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		FA350EB2226B7ED000A167CB /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		FA350EDA226C886B00A167CB /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		FA350EDB226C886B00A167CB /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		FA350EDD226C886B00A167CB /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
+		FA350EDE226C886B00A167CB /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA350E96226797FB00A167CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA350E90226797FB00A167CB = {
+			isa = PBXGroup;
+			children = (
+				FA350E9B226797FC00A167CB /* ToWatcher */,
+				FA350E9A226797FC00A167CB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA350E9A226797FC00A167CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA350E99226797FC00A167CB /* ToWatcher.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA350E9B226797FC00A167CB /* ToWatcher */ = {
+			isa = PBXGroup;
+			children = (
+				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
+				FA350E9E226797FC00A167CB /* HomeController.swift */,
+				FA350EB02267A3C700A167CB /* MenuBar.swift */,
+				FA350EB2226B7ED000A167CB /* MenuCell.swift */,
+				FA350EAE22679B4A00A167CB /* ContainerCell.swift */,
+				FA350EA0226797FC00A167CB /* Main.storyboard */,
+				FA350EA3226797FD00A167CB /* Assets.xcassets */,
+				FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */,
+				FA350EA8226797FD00A167CB /* Info.plist */,
+				FA350ED9226C882100A167CB /* Fonts */,
+			);
+			path = ToWatcher;
+			sourceTree = "<group>";
+		};
+		FA350ED9226C882100A167CB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FA350EDE226C886B00A167CB /* Montserrat-Black.ttf */,
+				FA350EDB226C886B00A167CB /* Montserrat-Bold.ttf */,
+				FA350EDD226C886B00A167CB /* Montserrat-Italic.ttf */,
+				FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */,
+				FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */,
+				FA350EDA226C886B00A167CB /* Montserrat-Regular.ttf */,
+				FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */,
+				FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA350E98226797FB00A167CB /* ToWatcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA350EAB226797FD00A167CB /* Build configuration list for PBXNativeTarget "ToWatcher" */;
+			buildPhases = (
+				FA350E95226797FB00A167CB /* Sources */,
+				FA350E96226797FB00A167CB /* Frameworks */,
+				FA350E97226797FB00A167CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ToWatcher;
+			productName = ToWatcher;
+			productReference = FA350E99226797FC00A167CB /* ToWatcher.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA350E91226797FB00A167CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Alex Delin";
+				TargetAttributes = {
+					FA350E98226797FB00A167CB = {
+						CreatedOnToolsVersion = 10.2;
+					};
+				};
+			};
+			buildConfigurationList = FA350E94226797FB00A167CB /* Build configuration list for PBXProject "ToWatcher" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA350E90226797FB00A167CB;
+			productRefGroup = FA350E9A226797FC00A167CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA350E98226797FB00A167CB /* ToWatcher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA350E97226797FB00A167CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */,
+				FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */,
+				FA350EE3226C886C00A167CB /* Montserrat-Bold.ttf in Resources */,
+				FA350EE6226C886C00A167CB /* Montserrat-Black.ttf in Resources */,
+				FA350EE2226C886C00A167CB /* Montserrat-Regular.ttf in Resources */,
+				FA350EA7226797FD00A167CB /* LaunchScreen.storyboard in Resources */,
+				FA350EA4226797FD00A167CB /* Assets.xcassets in Resources */,
+				FA350EE4226C886C00A167CB /* Montserrat-Thin.ttf in Resources */,
+				FA350EA2226797FC00A167CB /* Main.storyboard in Resources */,
+				FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */,
+				FA350EE5226C886C00A167CB /* Montserrat-Italic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA350E95226797FB00A167CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
+				FA350EB3226B7ED000A167CB /* MenuCell.swift in Sources */,
+				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
+				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
+				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FA350EA0226797FC00A167CB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA350EA1226797FC00A167CB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA350EA6226797FD00A167CB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA350EA9226797FD00A167CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA350EAA226797FD00A167CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA350EAC226797FD00A167CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CU9VA4YC8Q;
+				INFOPLIST_FILE = ToWatcher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexdelin.ToWatcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FA350EAD226797FD00A167CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CU9VA4YC8Q;
+				INFOPLIST_FILE = ToWatcher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alexdelin.ToWatcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA350E94226797FB00A167CB /* Build configuration list for PBXProject "ToWatcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA350EA9226797FD00A167CB /* Debug */,
+				FA350EAA226797FD00A167CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA350EAB226797FD00A167CB /* Build configuration list for PBXNativeTarget "ToWatcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA350EAC226797FD00A167CB /* Debug */,
+				FA350EAD226797FD00A167CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA350E91226797FB00A167CB /* Project object */;
+}
