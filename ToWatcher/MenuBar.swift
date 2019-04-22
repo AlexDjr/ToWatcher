@@ -26,26 +26,15 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     //   MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return menuItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = menuView.dequeueReusableCell(withReuseIdentifier: "menuCellId", for: indexPath) as! MenuItemCell
         
-        switch indexPath.row {
-        case 0:
-            cell.state = .empty
-        case 1:
-            cell.itemImage = #imageLiteral(resourceName: "menu-item-to-watch")
-            cell.itemName = "ПОСМОТРЕТЬ"
-            cell.state = .active
-        case 2:
-            cell.itemImage = #imageLiteral(resourceName: "menu-item-watched")
-            cell.itemName = "ПРОСМОТРЕНО"
-            cell.state = .inactive
-        default:
-            cell.state = .empty
-        }
+        cell.itemImage = menuItems[indexPath.item].image
+        cell.itemName = menuItems[indexPath.item].name
+        cell.itemState = menuItems[indexPath.item].state
         
         return cell
     }
@@ -57,7 +46,21 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-    }    
+    }
+    
+    //    MARK: - UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let itemIndex = indexPath.item
+        if itemIndex != 0 && itemIndex != menuItems.count - 1 {
+            collectionView.selectItem(at: IndexPath(item: indexPath.item , section: 0), animated: true, scrollPosition: .centeredHorizontally)
+            menuItems = menuItems.map { (item) -> MenuItem in
+                item.state = .inactive
+                return item
+            }
+            menuItems[itemIndex].state = .active
+            collectionView.reloadData()
+        }
+    }
     
     //    MARK: - Methods
     func setupMenuView() {
@@ -66,6 +69,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         layout.minimumLineSpacing = 0
         
         menuView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        menuView.isScrollEnabled = false
         menuView.isPagingEnabled = true
         menuView.showsHorizontalScrollIndicator = false
         menuView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

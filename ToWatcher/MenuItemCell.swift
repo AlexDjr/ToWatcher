@@ -16,9 +16,9 @@ enum MenuItemState {
 
 class MenuItemCell: UICollectionViewCell {
     
-    var state: MenuItemState {
+    var itemState: MenuItemState {
         didSet {
-            switch state {
+            switch itemState {
             case .active:
                 itemNameLabel.textColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
             case .inactive:
@@ -54,7 +54,7 @@ class MenuItemCell: UICollectionViewCell {
     }()
     
     override init(frame: CGRect) {
-        self.state = .empty
+        self.itemState = .empty
         super.init(frame: frame)
         setupCell()
     }
