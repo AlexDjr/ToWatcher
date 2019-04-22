@@ -65,7 +65,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         menuBar.translatesAutoresizingMaskIntoConstraints = false
         menuBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        menuBar.heightAnchor.constraint(equalToConstant: 154).isActive = true
+        menuBar.heightAnchor.constraint(equalToConstant: UIApplication.shared.statusBarFrame.height + 88 + 18).isActive = true
         menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }

@@ -30,7 +30,22 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = menuView.dequeueReusableCell(withReuseIdentifier: "menuCellId", for: indexPath) as! MenuCell
+        let cell = menuView.dequeueReusableCell(withReuseIdentifier: "menuCellId", for: indexPath) as! MenuItemCell
+        
+        switch indexPath.row {
+        case 0:
+            cell.state = .empty
+        case 1:
+            cell.itemImage = #imageLiteral(resourceName: "menu-item-to-watch")
+            cell.itemName = "ПОСМОТРЕТЬ"
+            cell.state = .active
+        case 2:
+            cell.itemImage = #imageLiteral(resourceName: "menu-item-watched")
+            cell.itemName = "ПРОСМОТРЕНО"
+            cell.state = .inactive
+        default:
+            cell.state = .empty
+        }
         
         return cell
     }
@@ -53,18 +68,18 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         menuView.isPagingEnabled = true
         menuView.showsHorizontalScrollIndicator = false
-        menuView.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        menuView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         menuView.dataSource = self
         menuView.delegate = self
         self.addSubview(menuView)
         
         menuView.translatesAutoresizingMaskIntoConstraints = false
-        menuView.topAnchor.constraint(equalTo: self.topAnchor, constant: 44).isActive = true
-        menuView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        menuView.topAnchor.constraint(equalTo: self.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
+        menuView.heightAnchor.constraint(equalToConstant: 88).isActive = true
         menuView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         menuView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        menuView.register(MenuCell.self, forCellWithReuseIdentifier: "menuCellId")
+        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: "menuCellId")
     }
     
     func setupArrowView() {
@@ -77,13 +92,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         arrowView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         arrowView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        arrowView.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+        arrowView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         let arrowImageView = UIImageView(image: #imageLiteral(resourceName: "arrow-down"))
         arrowView.addSubview(arrowImageView)
         
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        arrowImageView.topAnchor.constraint(equalTo: arrowView.topAnchor).isActive = true
         arrowImageView.centerXAnchor.constraint(equalTo: arrowView.centerXAnchor).isActive = true
-        arrowImageView.centerYAnchor.constraint(equalTo: arrowView.centerYAnchor).isActive = true
     }
 }

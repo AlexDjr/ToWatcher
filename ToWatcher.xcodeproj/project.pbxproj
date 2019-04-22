@@ -14,7 +14,7 @@
 		FA350EA7226797FD00A167CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */; };
 		FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EAE22679B4A00A167CB /* ContainerCell.swift */; };
 		FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EB02267A3C700A167CB /* MenuBar.swift */; };
-		FA350EB3226B7ED000A167CB /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EB2226B7ED000A167CB /* MenuCell.swift */; };
+		FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350EB2226B7ED000A167CB /* MenuItemCell.swift */; };
 		FA350EE2226C886C00A167CB /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDA226C886B00A167CB /* Montserrat-Regular.ttf */; };
 		FA350EE3226C886C00A167CB /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDB226C886B00A167CB /* Montserrat-Bold.ttf */; };
 		FA350EE4226C886C00A167CB /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */; };
@@ -35,7 +35,7 @@
 		FA350EA8226797FD00A167CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA350EAE22679B4A00A167CB /* ContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerCell.swift; sourceTree = "<group>"; };
 		FA350EB02267A3C700A167CB /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
-		FA350EB2226B7ED000A167CB /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		FA350EB2226B7ED000A167CB /* MenuItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemCell.swift; sourceTree = "<group>"; };
 		FA350EDA226C886B00A167CB /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		FA350EDB226C886B00A167CB /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA350E9E226797FC00A167CB /* HomeController.swift */,
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
-				FA350EB2226B7ED000A167CB /* MenuCell.swift */,
+				FA350EB2226B7ED000A167CB /* MenuItemCell.swift */,
 				FA350EAE22679B4A00A167CB /* ContainerCell.swift */,
 				FA350EA0226797FC00A167CB /* Main.storyboard */,
 				FA350EA3226797FD00A167CB /* Assets.xcassets */,
@@ -185,7 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
-				FA350EB3226B7ED000A167CB /* MenuCell.swift in Sources */,
+				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
