@@ -23,6 +23,7 @@
 		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
+		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,10 +79,10 @@
 			isa = PBXGroup;
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
-				FA350E9E226797FC00A167CB /* HomeController.swift */,
-				FA350EB02267A3C700A167CB /* MenuBar.swift */,
-				FA350EB2226B7ED000A167CB /* MenuItemCell.swift */,
-				FA350EAE22679B4A00A167CB /* ContainerCell.swift */,
+				FA932E58226F181C0087BE9E /* Custom UI */,
+				FA932E51226E48010087BE9E /* Model */,
+				FA932E57226F17E70087BE9E /* Controllers */,
+				FA932E56226F17DE0087BE9E /* Cells */,
 				FA350EA0226797FC00A167CB /* Main.storyboard */,
 				FA350EA3226797FD00A167CB /* Assets.xcassets */,
 				FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */,
@@ -103,6 +105,39 @@
 				FA350EDC226C886B00A167CB /* Montserrat-Thin.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		FA932E51226E48010087BE9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA932E29226E07EF0087BE9E /* MenuItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FA932E56226F17DE0087BE9E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FA350EB2226B7ED000A167CB /* MenuItemCell.swift */,
+				FA350EAE22679B4A00A167CB /* ContainerCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		FA932E57226F17E70087BE9E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA350E9E226797FC00A167CB /* HomeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FA932E58226F181C0087BE9E /* Custom UI */ = {
+			isa = PBXGroup;
+			children = (
+				FA350EB02267A3C700A167CB /* MenuBar.swift */,
+			);
+			path = "Custom UI";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +222,7 @@
 				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
+				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 			);
@@ -337,6 +373,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CU9VA4YC8Q;
 				INFOPLIST_FILE = ToWatcher/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -355,6 +392,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CU9VA4YC8Q;
 				INFOPLIST_FILE = ToWatcher/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

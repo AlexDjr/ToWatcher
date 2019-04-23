@@ -73,7 +73,7 @@ class MenuItemCell: UICollectionViewCell {
         stackView.addArrangedSubview(itemImageView)
         stackView.addArrangedSubview(itemNameLabel)
         
-        self.addSubview(stackView)
+        contentView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
