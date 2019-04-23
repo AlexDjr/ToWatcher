@@ -50,5 +50,39 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 88 + 18, left: 0.0, bottom: 0, right: 0.0)
     }
+    
+    // MARK: - UICollectionViewDelegate
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.view.bringSubviewToFront(collectionView)
+//        let currentCell = collectionView.cellForItem(at: indexPath)
+        parentController?.view.bringSubviewToFront(parentController!.containerView)
+//        collectionView.layer.zPosition = 3
+        
+        let cells = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
+        let lastCell = cells.last!
+        let lastCellIndexPath = collectionView.indexPath(for: lastCell)!
+        
+        for cell in cells {
+            let cellIndexPath = collectionView.indexPath(for: cell)!
+            
+            if cellIndexPath.item < indexPath.item {
+                UIView.animate(withDuration: 0.8, delay: 0.1 * Double(cellIndexPath.item), options: .curveEaseInOut, animations: {
+                    cell.center.y -= 1000
+                }, completion: nil)
+            }
+            
+            if cellIndexPath.item > indexPath.item {
+                UIView.animate(withDuration: 0.8, delay: 0.1 * Double(lastCellIndexPath.item - cellIndexPath.item + 1), options: .curveEaseInOut, animations: {
+                    cell.center.y += 1000
+                }, completion: nil)
+            }
+            
+            if cellIndexPath.item == indexPath.item {
+                UIView.animate(withDuration: 0.8, delay: 0.1 * Double(indexPath.item), options: .curveEaseInOut, animations: {
+                    cell.center.y = 50.0
+                }, completion: nil)
+            }
+        }
+    }
 
 }
