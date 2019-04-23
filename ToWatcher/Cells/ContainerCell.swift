@@ -9,5 +9,16 @@
 import UIKit
 
 class ContainerCell: UICollectionViewCell {
+    static let reuseIdentifier = "containerCell"
     
+    var hostedView: UIView? {
+        didSet {
+            guard let hostedView = hostedView else {
+                return
+            }
+            
+            hostedView.frame = contentView.bounds
+            contentView.addSubview(hostedView)
+        }
+    }
 }

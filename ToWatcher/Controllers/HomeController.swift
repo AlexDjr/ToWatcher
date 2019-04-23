@@ -16,11 +16,26 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return menuBar
     }()
     
+    let menuBarHeight = UIApplication.shared.statusBarFrame.height + 88 + 18
+    
+    private lazy var toWatchController: ToWatchController = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 10
+        
+        var viewController = ToWatchController(collectionViewLayout: layout)
+        
+        viewController.parentController = self
+        
+        self.add(asChildViewController: viewController)
+        return viewController
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupMenuBar()
         setupContainerView()
+        setupMenuBar()
         
     }
     
@@ -31,11 +46,30 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = containerView.dequeueReusableCell(withReuseIdentifier: "containerCellId", for: indexPath) as! ContainerCell
+        let cell = containerView.dequeueReusableCell(withReuseIdentifier: ContainerCell.reuseIdentifier, for: indexPath) as! ContainerCell
         
+        switch indexPath.item {
+        case 0: cell.hostedView = toWatchController.collectionView
+        default: break
+        }
+        
+        cell.contentView.backgroundColor = .clear
+//        cell.contentView.layer.borderColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+//        cell.contentView.layer.borderWidth = 2.0
         return cell
     }
     
+    //    MARK: - UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+
+    
+    //    MARK: - Methods
     fileprivate func setupContainerView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -44,18 +78,19 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         containerView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         containerView.isPagingEnabled = true
         containerView.showsHorizontalScrollIndicator = false
-        containerView.backgroundColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        containerView.backgroundColor = .clear
         containerView.dataSource = self
         containerView.delegate = self
         view.addSubview(containerView)
         
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.topAnchor.constraint(equalTo: menuBar.bottomAnchor).isActive = true
+//        containerView.topAnchor.constraint(equalTo: menuBar.bottomAnchor).isActive = true
+        containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        containerView.register(ContainerCell.self, forCellWithReuseIdentifier: "containerCellId")
+        containerView.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.reuseIdentifier)
     }
     
     fileprivate func setupMenuBar() {
@@ -65,9 +100,15 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         menuBar.translatesAutoresizingMaskIntoConstraints = false
         menuBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        menuBar.heightAnchor.constraint(equalToConstant: UIApplication.shared.statusBarFrame.height + 88 + 18).isActive = true
+        menuBar.heightAnchor.constraint(equalToConstant: menuBarHeight).isActive = true
         menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    private func add(asChildViewController viewController: UIViewController) {
+        addChild(viewController)
+        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        viewController.didMove(toParent: self)
     }
 
 }
