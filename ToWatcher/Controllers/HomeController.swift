@@ -15,7 +15,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     var topSafeArea: CGFloat = 0
     var bottomSafeArea: CGFloat = 0
     
-    var floatActionButton: UIButton!
+    var floatActionButton: FloatActionButton!
     let menuBar: MenuBar = {
        let menuBar = MenuBar()
         return menuBar
@@ -43,6 +43,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         setupContainerView()
         setupMenuBar()
         setFloatActionButton()
+        floatActionButton.addTarget(self, action: #selector(pressFloatActionButton), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -138,6 +139,19 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         addChild(viewController)
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParent: self)
+    }
+    
+    @objc func pressFloatActionButton(sender: FloatActionButton) {
+        UIView.animate(withDuration: 1.0) {
+            switch sender.actionState {
+            case .add:
+                sender.imageView?.transform = sender.imageView!.transform.rotated(by: CGFloat(Double.pi / 2 + Double.pi / 4))
+                sender.actionState = .close
+            case .close:
+                sender.imageView?.transform = sender.imageView!.transform.rotated(by: CGFloat(-Double.pi / 2 - Double.pi / 4))
+                sender.actionState = .add
+            }
+        }
     }
 
 }
