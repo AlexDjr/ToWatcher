@@ -23,6 +23,7 @@
 		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
+		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
 		FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchController.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		FA932E59226F2FFC0087BE9E /* ToWatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
+				FA581CC92274AE70009FBF9A /* FloatActionButton.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
+				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,

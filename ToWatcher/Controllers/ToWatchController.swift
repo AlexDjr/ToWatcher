@@ -56,6 +56,7 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         self.view.bringSubviewToFront(collectionView)
 //        let currentCell = collectionView.cellForItem(at: indexPath)
         parentController?.view.bringSubviewToFront(parentController!.containerView)
+        parentController?.view.bringSubviewToFront(parentController!.floatActionButton)
 //        collectionView.layer.zPosition = 3
         
         let cells = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
