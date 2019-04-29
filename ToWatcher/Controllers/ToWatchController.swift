@@ -68,22 +68,32 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
             
             if cellIndexPath.item < indexPath.item {
                 UIView.animate(withDuration: 0.8, delay: 0.1 * Double(cellIndexPath.item), options: .curveEaseInOut, animations: {
-                    cell.center.y -= 1000
+                    cell.transform = CGAffineTransform.init(translationX: 0, y: -1000)
                 }, completion: nil)
             }
             
             if cellIndexPath.item > indexPath.item {
                 UIView.animate(withDuration: 0.8, delay: 0.1 * Double(lastCellIndexPath.item - cellIndexPath.item + 1), options: .curveEaseInOut, animations: {
-                    cell.center.y += 1000
+                    cell.transform = CGAffineTransform.init(translationX: 0, y: 1000)
                 }, completion: nil)
             }
             
             if cellIndexPath.item == indexPath.item {
                 UIView.animate(withDuration: 0.8, delay: 0.1 * Double(indexPath.item), options: .curveEaseInOut, animations: {
-                    cell.center.y = 50.0
+                    let frameInView = self.view.convert(cell.frame, from: self.collectionView)
+                    cell.transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
                 }, completion: nil)
             }
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            for cell in cells {
+                UIView.animate(withDuration: 0.8, animations: {
+                    cell.transform = CGAffineTransform.identity
+                })
+            }
+        }
+        
     }
 
 }
