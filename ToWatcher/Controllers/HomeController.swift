@@ -153,7 +153,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         case .close:
             self.changeFloatActionButton(.add)
         }
-        toWatchController.moveItemsToOriginal()
+        toWatchController.moveItemsBack()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            self.view.bringSubviewToFront(self.menuBar)
+        }
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {

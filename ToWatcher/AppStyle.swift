@@ -11,4 +11,6 @@ import UIKit
 struct AppStyle {
     static var topSafeArea: CGFloat = 0
     static var bottomSafeArea: CGFloat = 0
+    static var menuViewHeight: CGFloat = 88
+    static var arrowViewHeight: CGFloat = 18
 }

@@ -54,20 +54,11 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     // MARK: - UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.bringSubviewToFront(collectionView)
-//        parentController?.view.bringSubviewToFront(parentController!.containerView)
-//        parentController?.view.bringSubviewToFront(parentController!.floatActionButton)
         delegate?.didSelectItem()
-        //        collectionView.layer.zPosition = 3
-        
-        hideItemsForDetails(ofItemAt: indexPath)
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-//            self.moveItemsToOriginal()
-//        }
-        
+        moveItemsFromScreen(forItem: indexPath)
     }
     
-    private func hideItemsForDetails(ofItemAt indexPath: IndexPath) {
+    private func moveItemsFromScreen(forItem indexPath: IndexPath) {
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
         let lastItem = items.last!
         let lastItemIndexPath = collectionView.indexPath(for: lastItem)!
@@ -76,6 +67,7 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
             let itemIndexPath = collectionView.indexPath(for: item)!
             
             if itemIndexPath.item < indexPath.item {
+                hideIfNeeded(item)
                 UIView.animate(withDuration: 0.6, delay: 0.1 * Double(itemIndexPath.item), options: .curveEaseInOut, animations: {
                     item.transform = CGAffineTransform.init(translationX: 0, y: -1000)
                 }, completion: nil)
@@ -96,12 +88,37 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         }
     }
     
-    func moveItemsToOriginal() {
+    func moveItemsBack() {
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
         for item in items {
+            unHideIfNeeded(item)
             UIView.animate(withDuration: 0.8, animations: {
                 item.transform = CGAffineTransform.identity
             })
+        }
+    }
+    
+    private func hideIfNeeded(_ item: UICollectionViewCell) {
+        let frameInView = self.view.convert(item.frame, from: self.collectionView)
+        let menuBarHeight = AppStyle.topSafeArea + AppStyle.menuViewHeight + AppStyle.arrowViewHeight
+        //      if item is fully under menubar
+        if frameInView.minY < menuBarHeight && frameInView.maxY <= menuBarHeight {
+            item.isHidden = true
+        }
+        //      if item is partly under menubar
+        if frameInView.minY < menuBarHeight && frameInView.maxY > menuBarHeight {
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = CGPath(rect: CGRect(x: 0, y: menuBarHeight - frameInView.minY, width: item.frame.width, height: item.frame.height - (menuBarHeight - frameInView.minY)), transform: nil)
+            item.layer.mask = maskLayer
+        }
+    }
+    
+    private func unHideIfNeeded(_ item: UICollectionViewCell) {
+        if item.isHidden {
+            item.isHidden = false
+        }
+        if item.layer.mask != nil {
+            item.layer.mask = nil
         }
     }
     
