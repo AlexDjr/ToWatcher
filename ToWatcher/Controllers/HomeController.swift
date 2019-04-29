@@ -12,9 +12,6 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
 
     var containerView: UICollectionView!
     
-    var topSafeArea: CGFloat = 0
-    var bottomSafeArea: CGFloat = 0
-    
     var floatActionButton: FloatActionButton!
     let menuBar: MenuBar = {
        let menuBar = MenuBar()
@@ -50,11 +47,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLayoutSubviews()
         
         if #available(iOS 11.0, *) {
-            topSafeArea = view.safeAreaInsets.top
-            bottomSafeArea = view.safeAreaInsets.bottom
+            AppStyle.topSafeArea = view.safeAreaInsets.top
+            AppStyle.bottomSafeArea = view.safeAreaInsets.bottom
         } else {
-            topSafeArea = topLayoutGuide.length
-            bottomSafeArea = bottomLayoutGuide.length
+            AppStyle.topSafeArea = topLayoutGuide.length
+            AppStyle.bottomSafeArea = bottomLayoutGuide.length
         }
     }
     
@@ -119,7 +116,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         menuBar.translatesAutoresizingMaskIntoConstraints = false
         menuBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        menuBar.heightAnchor.constraint(equalToConstant: topSafeArea + 88 + 18).isActive = true
+        menuBar.heightAnchor.constraint(equalToConstant: AppStyle.topSafeArea + 88 + 18).isActive = true
         menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
@@ -129,7 +126,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         view.addSubview(floatActionButton)
         floatActionButton.translatesAutoresizingMaskIntoConstraints = false
-        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -bottomSafeArea - 10).isActive = true
+        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.bottomSafeArea - 10).isActive = true
         floatActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         floatActionButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
         floatActionButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
