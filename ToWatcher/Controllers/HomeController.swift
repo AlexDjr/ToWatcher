@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ToWatchDelegateProtocol {
 
     var containerView: UICollectionView!
     
@@ -25,7 +25,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         var viewController = ToWatchController(collectionViewLayout: layout)
         
-        viewController.parentController = self
+        viewController.delegate = self
         
         self.add(asChildViewController: viewController)
         return viewController
@@ -83,6 +83,14 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
+    
+    //    MARK: - ToWatchDelegateProtocol
+    func didSelectItem() {
+        view.bringSubviewToFront(containerView)
+        view.bringSubviewToFront(floatActionButton)
+        
+        changeFloatActionButton(.close)
+    }
 
     
     //    MARK: - Methods
@@ -139,18 +147,19 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc private func pressFloatActionButton() {
-        UIView.animate(withDuration: 1.0) {
-            switch self.floatActionButton.actionState {
-            case .add:
-                self.changeFloatActionButton(.close)
-            case .close:
-                self.changeFloatActionButton(.add)
-            }
+        switch self.floatActionButton.actionState {
+        case .add:
+            self.changeFloatActionButton(.close)
+        case .close:
+            self.changeFloatActionButton(.add)
         }
+        toWatchController.moveItemsToOriginal()
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
-        floatActionButton.change(state)
+        UIView.animate(withDuration: 0.8) {
+            self.floatActionButton.change(state)
+        }
     }
    
 }
