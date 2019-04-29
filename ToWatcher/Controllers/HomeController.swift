@@ -138,18 +138,20 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         viewController.didMove(toParent: self)
     }
     
-    @objc func pressFloatActionButton(sender: FloatActionButton) {
+    @objc private func pressFloatActionButton() {
         UIView.animate(withDuration: 1.0) {
-            switch sender.actionState {
+            switch self.floatActionButton.actionState {
             case .add:
-                sender.imageView?.transform = sender.imageView!.transform.rotated(by: CGFloat(Double.pi / 2 + Double.pi / 4))
-                sender.actionState = .close
+                self.changeFloatActionButton(.close)
             case .close:
-                sender.imageView?.transform = sender.imageView!.transform.rotated(by: CGFloat(-Double.pi / 2 - Double.pi / 4))
-                sender.actionState = .add
+                self.changeFloatActionButton(.add)
             }
         }
     }
-
+    
+    private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
+        floatActionButton.change(state)
+    }
+   
 }
 

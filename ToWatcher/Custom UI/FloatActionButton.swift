@@ -45,4 +45,15 @@ class FloatActionButton: UIButton  {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func change(_ state: ActionState) {
+        switch state {
+        case .add:
+            imageView?.transform = imageView!.transform.rotated(by: CGFloat(-Double.pi / 2 - Double.pi / 4))
+        case .close:
+            imageView?.transform = imageView!.transform.rotated(by: CGFloat(Double.pi / 2 + Double.pi / 4))
+        }
+        actionState = state
+    }
+
 }
