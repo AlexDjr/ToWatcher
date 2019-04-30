@@ -91,10 +91,14 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     func moveItemsBack() {
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
         for item in items {
-            unHideIfNeeded(item)
-            UIView.animate(withDuration: 0.8, animations: {
+            UIView.animate(withDuration: 0.6, animations: {
                 item.transform = CGAffineTransform.identity
-            })
+            }) { finished in
+                //    first bring menubar back at the top
+                //    then unhide item
+                self.delegate?.didFinishMoveItemsBack()
+                self.unHideIfNeeded(item)
+            }
         }
     }
     

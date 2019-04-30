@@ -10,4 +10,5 @@ import Foundation
 
 protocol ToWatchDelegateProtocol: class {
     func didSelectItem()
+    func didFinishMoveItemsBack()
 }

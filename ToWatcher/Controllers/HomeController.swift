@@ -91,6 +91,10 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         
         changeFloatActionButton(.close)
     }
+    
+    func didFinishMoveItemsBack() {
+        view.bringSubviewToFront(self.menuBar)
+    }
 
     
     //    MARK: - Methods
@@ -154,14 +158,10 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
             self.changeFloatActionButton(.add)
         }
         toWatchController.moveItemsBack()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            self.view.bringSubviewToFront(self.menuBar)
-        }
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
-        UIView.animate(withDuration: 0.8) {
+        UIView.animate(withDuration: 0.6) {
             self.floatActionButton.change(state)
         }
     }
