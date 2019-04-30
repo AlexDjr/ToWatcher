@@ -15,6 +15,7 @@ enum MenuItemState {
 }
 
 class MenuItemCell: UICollectionViewCell {
+    static let reuseIdentifier = "menuItemCell"
     
     var itemState: MenuItemState {
         didSet {

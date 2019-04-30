@@ -31,7 +31,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = menuView.dequeueReusableCell(withReuseIdentifier: "menuCellId", for: indexPath) as! MenuItemCell
+        let cell = menuView.dequeueReusableCell(withReuseIdentifier: MenuItemCell.reuseIdentifier, for: indexPath) as! MenuItemCell
         
         cell.itemImage = menuItems[indexPath.item].image
         cell.itemName = menuItems[indexPath.item].name
@@ -80,11 +80,11 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         
         menuView.translatesAutoresizingMaskIntoConstraints = false
         menuView.topAnchor.constraint(equalTo: self.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
-        menuView.heightAnchor.constraint(equalToConstant: 88).isActive = true
+        menuView.heightAnchor.constraint(equalToConstant: AppStyle.menuViewHeight).isActive = true
         menuView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         menuView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: "menuCellId")
+        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifier)
     }
     
     func setupArrowView() {

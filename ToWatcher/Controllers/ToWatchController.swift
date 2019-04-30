@@ -10,8 +10,7 @@ import UIKit
 
 class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    private let reuseIdentifier = "Cell"
-    let array: [UIColor] = [.red, .green, .yellow, .blue, .orange, .purple, .red]
+    let array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
     
     weak var delegate: ToWatchDelegateProtocol?
     
@@ -30,10 +29,9 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = array[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchItemCell
         
-        cell.layer.roundCorners([.topRight, .bottomLeft], radius: round(AppStyle.itemHeight * 0.42))
+        cell.itemImage = array[indexPath.item]
         
         return cell
     }
@@ -62,7 +60,7 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         collectionView.collectionViewLayout = layout
         
         collectionView.showsVerticalScrollIndicator = false
-        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
         collectionView.backgroundColor = .clear
     }
     
