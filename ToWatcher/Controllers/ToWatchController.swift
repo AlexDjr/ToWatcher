@@ -32,6 +32,9 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         cell.backgroundColor = array[indexPath.item]
+        
+        cell.layer.roundCorners([.topRight, .bottomLeft], radius: round(AppStyle.itemHeight * 0.42))
+        
         return cell
     }
     
