@@ -16,7 +16,6 @@ class ContainerCell: UICollectionViewCell {
             guard let hostedView = hostedView else {
                 return
             }
-            
             hostedView.frame = contentView.bounds
             contentView.addSubview(hostedView)
         }

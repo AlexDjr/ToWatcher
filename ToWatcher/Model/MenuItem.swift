@@ -19,9 +19,10 @@ class MenuItem {
         self.name = name
     }
 }
- var menuItems: [MenuItem] = [MenuItem(state: .empty, image: nil, name: nil),
-                              MenuItem(state: .active, image: #imageLiteral(resourceName: "menu-item-to-watch"), name: "ПОСМОТРЕТЬ"),
-                              MenuItem(state: .inactive, image: #imageLiteral(resourceName: "menu-item-watched"), name: "ПРОСМОТРЕНО"),
-                              MenuItem(state: .empty, image: nil, name: nil)]
+
+var menuItems: [MenuItem] = [MenuItem(state: .empty, image: nil, name: nil),
+                             MenuItem(state: .active, image: AppStyle.menuItemToWatchImage, name: "ПОСМОТРЕТЬ"),
+                             MenuItem(state: .inactive, image: AppStyle.menuItemWatchedImage, name: "ПРОСМОТРЕНО"),
+                             MenuItem(state: .empty, image: nil, name: nil)]
 
 

@@ -11,18 +11,14 @@ import UIKit
 class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     private let reuseIdentifier = "Cell"
-    let array: [UIColor] = [.red, .green, .yellow, .blue, .orange, .purple, .red, .green, .yellow, .blue, .orange, .purple]
-    
-//    let menuBarHeight = UIApplication.shared.statusBarFrame.height + 88 + 18
+    let array: [UIColor] = [.red, .green, .yellow, .blue, .orange, .purple, .red]
     
     weak var delegate: ToWatchDelegateProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = .clear
+        setupCollectionView()
     }
-    
 
     // MARK: - UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,20 +31,17 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        
-        // Configure the cell
         cell.backgroundColor = array[indexPath.item]
-        
         return cell
     }
     
     //    MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 80)
+        return CGSize(width: collectionView.frame.width, height: AppStyle.itemHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 88 + 18, left: 0.0, bottom: 0, right: 0.0)
+        return UIEdgeInsets(top: AppStyle.menuViewHeight + AppStyle.arrowViewHeight, left: 0.0, bottom: 0, right: 0.0)
     }
     
     // MARK: - UICollectionViewDelegate
@@ -56,6 +49,17 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         self.view.bringSubviewToFront(collectionView)
         delegate?.didSelectItem()
         moveItemsFromScreen(forItem: indexPath)
+    }
+    
+    //    MARK: - Methods
+    private func setupCollectionView() {
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = round(AppStyle.itemHeight / 20)
+        collectionView.collectionViewLayout = layout
+        
+        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.backgroundColor = .clear
     }
     
     private func moveItemsFromScreen(forItem indexPath: IndexPath) {
@@ -104,15 +108,17 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     
     private func hideIfNeeded(_ item: UICollectionViewCell) {
         let frameInView = self.view.convert(item.frame, from: self.collectionView)
-        let menuBarHeight = AppStyle.topSafeArea + AppStyle.menuViewHeight + AppStyle.arrowViewHeight
         //      if item is fully under menubar
-        if frameInView.minY < menuBarHeight && frameInView.maxY <= menuBarHeight {
+        if frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY <= AppStyle.menuBarFullHeight {
             item.isHidden = true
         }
         //      if item is partly under menubar
-        if frameInView.minY < menuBarHeight && frameInView.maxY > menuBarHeight {
+        if frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY > AppStyle.menuBarFullHeight {
             let maskLayer = CAShapeLayer()
-            maskLayer.path = CGPath(rect: CGRect(x: 0, y: menuBarHeight - frameInView.minY, width: item.frame.width, height: item.frame.height - (menuBarHeight - frameInView.minY)), transform: nil)
+            maskLayer.path = CGPath(rect: CGRect(x: 0,
+                                                 y: AppStyle.menuBarFullHeight - frameInView.minY,
+                                                 width: item.frame.width,
+                                                 height: item.frame.height - (AppStyle.menuBarFullHeight - frameInView.minY)), transform: nil)
             item.layer.mask = maskLayer
         }
     }

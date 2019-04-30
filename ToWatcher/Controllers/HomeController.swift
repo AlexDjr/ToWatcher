@@ -11,18 +11,17 @@ import UIKit
 class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ToWatchDelegateProtocol {
 
     var containerView: UICollectionView!
-    
-    var floatActionButton: FloatActionButton!
+    var floatActionButton: FloatActionButton = {
+       let floatActionButton = FloatActionButton()
+        return floatActionButton
+    }()
     let menuBar: MenuBar = {
-       let menuBar = MenuBar()
+        let menuBar = MenuBar()
         return menuBar
     }()
     
     private lazy var toWatchController: ToWatchController = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10
-        
         var viewController = ToWatchController(collectionViewLayout: layout)
         
         viewController.delegate = self
@@ -39,7 +38,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidAppear(animated)
         setupContainerView()
         setupMenuBar()
-        setFloatActionButton()
+        setupFloatActionButton()
         floatActionButton.addTarget(self, action: #selector(pressFloatActionButton), for: .touchUpInside)
     }
     
@@ -56,7 +55,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
-    // MARK: - UICollectionViewDataSource
+    //   MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
@@ -98,7 +97,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
 
     
     //    MARK: - Methods
-    fileprivate func setupContainerView() {
+    private func setupContainerView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -109,8 +108,8 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         containerView.backgroundColor = .clear
         containerView.dataSource = self
         containerView.delegate = self
-        view.addSubview(containerView)
         
+        view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
 //        containerView.topAnchor.constraint(equalTo: menuBar.bottomAnchor).isActive = true
         containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -121,27 +120,22 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         containerView.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.reuseIdentifier)
     }
     
-    fileprivate func setupMenuBar() {
+    private func setupMenuBar() {
         view.addSubview(menuBar)
-        
-        menuBar.backgroundColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
-        
         menuBar.translatesAutoresizingMaskIntoConstraints = false
         menuBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        menuBar.heightAnchor.constraint(equalToConstant: AppStyle.topSafeArea + 88 + 18).isActive = true
+        menuBar.heightAnchor.constraint(equalToConstant: AppStyle.menuBarFullHeight).isActive = true
         menuBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         menuBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
-    fileprivate func setFloatActionButton() {
-        floatActionButton = FloatActionButton(frame: CGRect.zero)
-        
+    private func setupFloatActionButton() {
         view.addSubview(floatActionButton)
         floatActionButton.translatesAutoresizingMaskIntoConstraints = false
         floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.bottomSafeArea - 10).isActive = true
         floatActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        floatActionButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        floatActionButton.widthAnchor.constraint(equalToConstant: 56).isActive = true
+        floatActionButton.heightAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true
+        floatActionButton.widthAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true
     }
     
     private func add(asChildViewController viewController: UIViewController) {

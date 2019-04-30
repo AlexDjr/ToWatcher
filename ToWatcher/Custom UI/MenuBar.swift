@@ -15,6 +15,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = AppStyle.menuBarBGColor
         setupMenuView()
         setupArrowView()
     }
@@ -72,7 +73,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView.isScrollEnabled = false
         menuView.isPagingEnabled = true
         menuView.showsHorizontalScrollIndicator = false
-        menuView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        menuView.backgroundColor = AppStyle.menuBarBGColor
         menuView.dataSource = self
         menuView.delegate = self
         self.addSubview(menuView)
@@ -96,9 +97,9 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         arrowView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         arrowView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        arrowView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        arrowView.backgroundColor = AppStyle.menuBarBGColor
         
-        let arrowImageView = UIImageView(image: #imageLiteral(resourceName: "arrow-down"))
+        let arrowImageView = UIImageView(image: AppStyle.arrowViewImage)
         arrowView.addSubview(arrowImageView)
         
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false

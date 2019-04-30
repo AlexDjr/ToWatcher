@@ -20,11 +20,11 @@ class MenuItemCell: UICollectionViewCell {
         didSet {
             switch itemState {
             case .active:
-                itemNameLabel.textColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
+                itemNameLabel.textColor = AppStyle.menuItemActiveColor
             case .inactive:
-                itemNameLabel.textColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 1)
+                itemNameLabel.textColor = AppStyle.menuItemInactiveColor
                 itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysTemplate)
-                itemImageView.tintColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 1)
+                itemImageView.tintColor = AppStyle.menuItemInactiveColor
             default:
                 break
             }
@@ -36,6 +36,7 @@ class MenuItemCell: UICollectionViewCell {
             itemImageView.image = itemImage
         }
     }
+    
     var itemName: String? {
         didSet {
             itemNameLabel.text = itemName
@@ -44,7 +45,7 @@ class MenuItemCell: UICollectionViewCell {
     
     private var itemNameLabel: UILabel = {
         let itemNameLabel = UILabel()
-        itemNameLabel.font = UIFont(name: "Montserrat-Bold", size: 11)
+        itemNameLabel.font = UIFont(name: "Montserrat-Bold", size: AppStyle.menuItemFontSize)
         return itemNameLabel
     }()
     
@@ -68,7 +69,7 @@ class MenuItemCell: UICollectionViewCell {
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.alignment = .center
-        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
         stackView.addArrangedSubview(itemImageView)
         stackView.addArrangedSubview(itemNameLabel)
