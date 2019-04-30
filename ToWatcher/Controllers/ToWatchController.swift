@@ -44,7 +44,7 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         return UIEdgeInsets(top: AppStyle.menuViewHeight + AppStyle.arrowViewHeight, left: 0.0, bottom: 0, right: 0.0)
     }
     
-    // MARK: - UICollectionViewDelegate
+    //    MARK: - UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.bringSubviewToFront(collectionView)
         delegate?.didSelectItem()
@@ -64,30 +64,45 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     
     private func moveItemsFromScreen(forItem indexPath: IndexPath) {
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
-        let lastItem = items.last!
-        let lastItemIndexPath = collectionView.indexPath(for: lastItem)!
+        let firstItemIndexPath = collectionView.indexPath(for: items.first!)!
+        let lastItemIndexPath = collectionView.indexPath(for: items.last!)!
         
         for item in items {
             let itemIndexPath = collectionView.indexPath(for: item)!
             
+            //    items OVER selected item
             if itemIndexPath.item < indexPath.item {
                 hideIfNeeded(item)
-                UIView.animate(withDuration: 0.6, delay: 0.1 * Double(itemIndexPath.item), options: .curveEaseInOut, animations: {
-                    item.transform = CGAffineTransform.init(translationX: 0, y: -1000)
-                }, completion: nil)
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.1 * Double(itemIndexPath.item - firstItemIndexPath.item + 1),
+                               options: .curveEaseInOut,
+                               animations: {
+                                   item.transform = CGAffineTransform.init(translationX: 0, y: -1000)
+                               },
+                               completion: nil)
             }
             
+            //    items UNDER selected item
             if itemIndexPath.item > indexPath.item {
-                UIView.animate(withDuration: 0.6, delay: 0.1 * Double(lastItemIndexPath.item - itemIndexPath.item + 1), options: .curveEaseInOut, animations: {
-                    item.transform = CGAffineTransform.init(translationX: 0, y: 1000)
-                }, completion: nil)
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.1 * Double(lastItemIndexPath.item - itemIndexPath.item + 1),
+                               options: .curveEaseInOut,
+                               animations: {
+                                   item.transform = CGAffineTransform.init(translationX: 0, y: 1000)
+                               },
+                               completion: nil)
             }
             
+            //    SELECTED item
             if itemIndexPath.item == indexPath.item {
-                UIView.animate(withDuration: 0.6, delay: 0.1 * Double(indexPath.item), options: .curveEaseInOut, animations: {
-                    let frameInView = self.view.convert(item.frame, from: self.collectionView)
-                    item.transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
-                }, completion: nil)
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.1 * Double(max(lastItemIndexPath.item - indexPath.item, indexPath.item - firstItemIndexPath.item) + 1),
+                               options: .curveEaseInOut,
+                               animations: {
+                                   let frameInView = self.view.convert(item.frame, from: self.collectionView)
+                                   item.transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
+                               },
+                               completion: nil)
             }
         }
     }
@@ -95,13 +110,15 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     func moveItemsBack() {
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
         for item in items {
-            UIView.animate(withDuration: 0.6, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 item.transform = CGAffineTransform.identity
             }) { finished in
-                //    first bring menubar back at the top
+                //    first bring menubar back
                 //    then unhide item
                 self.delegate?.didFinishMoveItemsBack()
-                self.unHideIfNeeded(item)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.unHideIfNeeded(item)
+                }
             }
         }
     }
@@ -112,23 +129,11 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         if frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY <= AppStyle.menuBarFullHeight {
             item.isHidden = true
         }
-        //      if item is partly under menubar
-        if frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY > AppStyle.menuBarFullHeight {
-            let maskLayer = CAShapeLayer()
-            maskLayer.path = CGPath(rect: CGRect(x: 0,
-                                                 y: AppStyle.menuBarFullHeight - frameInView.minY,
-                                                 width: item.frame.width,
-                                                 height: item.frame.height - (AppStyle.menuBarFullHeight - frameInView.minY)), transform: nil)
-            item.layer.mask = maskLayer
-        }
     }
     
     private func unHideIfNeeded(_ item: UICollectionViewCell) {
         if item.isHidden {
             item.isHidden = false
-        }
-        if item.layer.mask != nil {
-            item.layer.mask = nil
         }
     }
     

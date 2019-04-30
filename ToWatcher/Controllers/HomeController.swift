@@ -85,14 +85,17 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     //    MARK: - ToWatchDelegateProtocol
     func didSelectItem() {
-        view.bringSubviewToFront(containerView)
-        view.bringSubviewToFront(floatActionButton)
-        
         changeFloatActionButton(.close)
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.menuBar.transform = CGAffineTransform.init(translationX: 0, y: -AppStyle.menuBarFullHeight)
+        }, completion: nil)
     }
     
     func didFinishMoveItemsBack() {
-        view.bringSubviewToFront(self.menuBar)
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.menuBar.transform = .identity
+        }, completion: nil)
     }
 
     
@@ -155,7 +158,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
-        UIView.animate(withDuration: 0.6) {
+        UIView.animate(withDuration: 0.5) {
             self.floatActionButton.change(state)
         }
     }
