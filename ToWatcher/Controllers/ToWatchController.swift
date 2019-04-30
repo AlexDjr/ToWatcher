@@ -61,6 +61,7 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
         layout.minimumLineSpacing = round(AppStyle.itemHeight / 20)
         collectionView.collectionViewLayout = layout
         
+        collectionView.showsVerticalScrollIndicator = false
         collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .clear
     }
