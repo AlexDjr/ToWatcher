@@ -14,6 +14,8 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     
     weak var delegate: ToWatchDelegateProtocol?
     
+    var selectedIndexPath: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -65,6 +67,8 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     private func moveItemsFromScreen(forItem indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
         let firstItemIndexPath = collectionView.indexPath(for: items.first!)!
         let lastItemIndexPath = collectionView.indexPath(for: items.last!)!
@@ -110,16 +114,57 @@ class ToWatchController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     func moveItemsBack() {
+        guard let indexPath = selectedIndexPath else { return }
+        
         let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
+        let firstItemIndexPath = collectionView.indexPath(for: items.first!)!
+
         for item in items {
-            UIView.animate(withDuration: 0.5, animations: {
-                item.transform = CGAffineTransform.identity
-            }) { finished in
-                //    first bring menubar back
-                //    then unhide item
-                self.delegate?.didFinishMoveItemsBack()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.unHideIfNeeded(item)
+            let itemIndexPath = collectionView.indexPath(for: item)!
+            
+            //    items OVER selected item
+            if itemIndexPath.item < indexPath.item {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.1 * Double(indexPath.item - itemIndexPath.item),
+                               options: .curveEaseInOut,
+                               animations: {
+                                item.transform = CGAffineTransform.identity
+                               }) { finished in
+                                    //    bringing menubar back when top item moved back
+                                    if itemIndexPath == firstItemIndexPath {
+                                        self.delegate?.didFinishMoveItemsBack()
+                                    }
+                                    //    only items over selected item could be hidden
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                        self.unHideIfNeeded(item)
+                                  }
+                }
+            }
+            
+            //    items UNDER selected item
+            if itemIndexPath.item > indexPath.item {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.1 * Double(itemIndexPath.item - indexPath.item),
+                               options: .curveEaseInOut,
+                               animations: {
+                                item.transform = CGAffineTransform.identity
+                               },
+                               completion: nil)
+            }
+            
+            //    SELECTED item
+            if itemIndexPath.item == indexPath.item {
+                UIView.animate(withDuration: 0.5, animations: {
+                    item.transform = CGAffineTransform.identity
+                }) { finished in
+                    //    bringing menubar back when top item moved back
+                    if itemIndexPath == firstItemIndexPath {
+                        self.delegate?.didFinishMoveItemsBack()
+                    }
+                    //    only items over selected item could be hidden
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.unHideIfNeeded(item)
+                    }
                 }
             }
         }
