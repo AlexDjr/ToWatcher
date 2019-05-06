@@ -154,7 +154,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         case .close:
             self.changeFloatActionButton(.add)
         }
-        toWatchController.moveItemsBack()
+        toWatchController.moveItemsBackToScreen()
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
