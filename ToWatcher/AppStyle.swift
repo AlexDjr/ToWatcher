@@ -17,6 +17,7 @@ struct AppStyle {
     static var menuBarFullHeight = topSafeArea + menuViewHeight + arrowViewHeight
     static var menuItemFontSize: CGFloat = 11
     static var itemHeight: CGFloat = round(UIScreen.main.bounds.width * 0.42)
+    static var itemCornerRadius: CGFloat = itemHeight * 0.42
     static var floatActionButtonHeight: CGFloat = 56
     
     //    colors

@@ -51,23 +51,20 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     //    MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let itemIndex = indexPath.item
-        if itemIndex != 0 && itemIndex != menuItems.count - 1 {
+        let item = menuItems[indexPath.item]
+        let isItemNotEmpty = item.state != .empty
+        
+        if isItemNotEmpty {
             collectionView.selectItem(at: IndexPath(item: indexPath.item , section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            menuItems = menuItems.map { (item) -> MenuItem in
-                item.state = .inactive
-                return item
-            }
-            menuItems[itemIndex].state = .active
+            item.state = .active
+            makeItemsInactiveExcept(item)
             collectionView.reloadData()
         }
     }
     
     //    MARK: - Methods
     func setupMenuView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
+        let layout = setupCollectionViewLayout()
         
         menuView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         menuView.isScrollEnabled = false
@@ -76,8 +73,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView.backgroundColor = AppStyle.menuBarBGColor
         menuView.dataSource = self
         menuView.delegate = self
-        self.addSubview(menuView)
         
+        self.addSubview(menuView)
         menuView.translatesAutoresizingMaskIntoConstraints = false
         menuView.topAnchor.constraint(equalTo: self.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
         menuView.heightAnchor.constraint(equalToConstant: AppStyle.menuViewHeight).isActive = true
@@ -89,8 +86,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     func setupArrowView() {
         arrowView = UIView(frame: CGRect.zero)
-        self.addSubview(arrowView)
         
+        self.addSubview(arrowView)
         arrowView.translatesAutoresizingMaskIntoConstraints = false
         arrowView.topAnchor.constraint(equalTo: menuView.bottomAnchor).isActive = true
         arrowView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
@@ -99,11 +96,34 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         
         arrowView.backgroundColor = AppStyle.menuBarBGColor
         
+        setupArrowImageView()
+    }
+    
+    private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        
+        return layout
+    }
+    
+    private func setupArrowImageView() {
         let arrowImageView = UIImageView(image: AppStyle.arrowViewImage)
         arrowView.addSubview(arrowImageView)
         
         arrowImageView.translatesAutoresizingMaskIntoConstraints = false
         arrowImageView.topAnchor.constraint(equalTo: arrowView.topAnchor).isActive = true
         arrowImageView.centerXAnchor.constraint(equalTo: arrowView.centerXAnchor).isActive = true
+    }
+    
+    private func makeItemsInactiveExcept(_ exceptedItem: MenuItem) {
+        menuItems = menuItems.map { (item) -> MenuItem in
+            let isItemNotEmpty = item.state != .empty
+            
+            if isItemNotEmpty && item != exceptedItem {
+                item.state = .inactive
+            }
+            return item
+        }
     }
 }

@@ -23,9 +23,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     private lazy var toWatchController: ToWatchController = {
         let layout = UICollectionViewFlowLayout()
         var viewController = ToWatchController(collectionViewLayout: layout)
-        
         viewController.delegate = self
-        
         self.add(asChildViewController: viewController)
         return viewController
     }()
@@ -44,14 +42,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        if #available(iOS 11.0, *) {
-            AppStyle.topSafeArea = view.safeAreaInsets.top
-            AppStyle.bottomSafeArea = view.safeAreaInsets.bottom
-        } else {
-            AppStyle.topSafeArea = topLayoutGuide.length
-            AppStyle.bottomSafeArea = bottomLayoutGuide.length
-        }
+        setupTopAndBottomSafeArea()
     }
     
     
@@ -93,17 +84,23 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func didFinishMoveItemsBack() {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            self.menuBar.transform = .identity
-        }, completion: nil)
+        moveMenuBarBackToDefaultPosition()
     }
 
     
     //    MARK: - Methods
+    private func setupTopAndBottomSafeArea() {
+        if #available(iOS 11.0, *) {
+            AppStyle.topSafeArea = view.safeAreaInsets.top
+            AppStyle.bottomSafeArea = view.safeAreaInsets.bottom
+        } else {
+            AppStyle.topSafeArea = topLayoutGuide.length
+            AppStyle.bottomSafeArea = bottomLayoutGuide.length
+        }
+    }
+    
     private func setupContainerView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
+        let layout = setupContainerViewLayout()
         
         containerView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         containerView.isPagingEnabled = true
@@ -121,6 +118,13 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         containerView.register(ContainerCell.self, forCellWithReuseIdentifier: ContainerCell.reuseIdentifier)
+    }
+    
+    private func setupContainerViewLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        return layout
     }
     
     private func setupMenuBar() {
@@ -143,8 +147,14 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     private func add(asChildViewController viewController: UIViewController) {
         addChild(viewController)
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParent: self)
+    }
+    
+    private func moveMenuBarBackToDefaultPosition() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            self.menuBar.transform = .identity
+        }, completion: nil)
     }
     
     @objc private func pressFloatActionButton() {

@@ -66,20 +66,23 @@ class MenuItemCell: UICollectionViewCell {
     }
     
     func setupCell() {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.alignment = .center
-//        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        
-        stackView.addArrangedSubview(itemImageView)
-        stackView.addArrangedSubview(itemNameLabel)
+        let stackView = setupStackView()
         
         contentView.addSubview(stackView)
-        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
+    private func setupStackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 4
+        stackView.alignment = .center
+        //        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        
+        stackView.addArrangedSubview(itemImageView)
+        stackView.addArrangedSubview(itemNameLabel)
+        return stackView
+    }
 }

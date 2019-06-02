@@ -47,11 +47,12 @@ class FloatActionButton: UIButton  {
     }
     
     func change(_ state: ActionState) {
+        let rotatingAngle = CGFloat(Double.pi / 2 + Double.pi / 4)
         switch state {
         case .add:
-            imageView?.transform = imageView!.transform.rotated(by: CGFloat(-Double.pi / 2 - Double.pi / 4))
+            imageView?.transform = imageView!.transform.rotated(by: -rotatingAngle)
         case .close:
-            imageView?.transform = imageView!.transform.rotated(by: CGFloat(Double.pi / 2 + Double.pi / 4))
+            imageView?.transform = imageView!.transform.rotated(by: rotatingAngle)
         }
         actionState = state
     }

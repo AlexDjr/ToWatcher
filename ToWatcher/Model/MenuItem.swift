@@ -20,6 +20,12 @@ class MenuItem {
     }
 }
 
+extension MenuItem: Equatable {
+    static func == (lhs: MenuItem, rhs: MenuItem) -> Bool {
+        return lhs.state == rhs.state && lhs.image == rhs.image && lhs.name == rhs.name
+    }
+}
+
 var menuItems: [MenuItem] = [MenuItem(state: .empty, image: nil, name: nil),
                              MenuItem(state: .active, image: AppStyle.menuItemToWatchImage, name: "ПОСМОТРЕТЬ"),
                              MenuItem(state: .inactive, image: AppStyle.menuItemWatchedImage, name: "ПРОСМОТРЕНО"),

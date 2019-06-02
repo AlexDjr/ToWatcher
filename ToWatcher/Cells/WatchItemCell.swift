@@ -40,6 +40,6 @@ class WatchItemCell: UICollectionViewCell {
         itemImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         itemImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         
-        self.layer.roundCorners([.topRight, .bottomLeft], radius: round(AppStyle.itemHeight * 0.42))
+        self.layer.roundCorners([.topRight, .bottomLeft], radius: AppStyle.itemCornerRadius)
     }
 }
