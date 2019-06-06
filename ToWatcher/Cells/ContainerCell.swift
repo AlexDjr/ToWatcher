@@ -16,8 +16,12 @@ class ContainerCell: UICollectionViewCell {
             guard let hostedView = hostedView else {
                 return
             }
-            hostedView.frame = contentView.bounds
             contentView.addSubview(hostedView)
+            hostedView.translatesAutoresizingMaskIntoConstraints = false
+            hostedView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+            hostedView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            hostedView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+            hostedView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         }
     }
 }

@@ -30,6 +30,7 @@
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
 		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
 		FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchController.swift */; };
+		FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		FA932E59226F2FFC0087BE9E /* ToWatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchController.swift; sourceTree = "<group>"; };
+		FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 			children = (
 				FA350E9E226797FC00A167CB /* HomeController.swift */,
 				FA932E59226F2FFC0087BE9E /* ToWatchController.swift */,
+				FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */,
 				FA2C8A3C227745CE00E01545 /* ToWatchDelegateProtocol.swift in Sources */,
 				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,

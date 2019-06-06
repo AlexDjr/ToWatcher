@@ -21,8 +21,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }()
     
     private lazy var toWatchController: ToWatchController = {
-        let layout = UICollectionViewFlowLayout()
-        var viewController = ToWatchController(collectionViewLayout: layout)
+        var viewController = ToWatchController()
         viewController.delegate = self
         self.add(asChildViewController: viewController)
         return viewController
@@ -55,11 +54,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         let cell = containerView.dequeueReusableCell(withReuseIdentifier: ContainerCell.reuseIdentifier, for: indexPath) as! ContainerCell
         
         switch indexPath.item {
-        case 0: cell.hostedView = toWatchController.collectionView
+        case 0: cell.hostedView = toWatchController.view
         default: break
         }
         
-        cell.contentView.backgroundColor = .clear
+//        cell.contentView.backgroundColor = .blue
 //        cell.contentView.layer.borderColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
 //        cell.contentView.layer.borderWidth = 2.0
         return cell
@@ -147,7 +146,6 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     private func add(asChildViewController viewController: UIViewController) {
         addChild(viewController)
-//        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         viewController.didMove(toParent: self)
     }
     
