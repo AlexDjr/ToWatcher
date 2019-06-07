@@ -15,9 +15,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = AppStyle.menuBarBGColor
-        setupMenuView()
-        setupArrowView()
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,7 +61,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     //    MARK: - Methods
-    func setupMenuView() {
+    private func setupView() {
+        backgroundColor = AppStyle.menuBarBGColor
+        setupMenuView()
+        setupArrowView()
+    }
+    
+    private func setupMenuView() {
         let layout = setupCollectionViewLayout()
         
         menuView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -84,7 +88,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifier)
     }
     
-    func setupArrowView() {
+    private func setupArrowView() {
         arrowView = UIView(frame: CGRect.zero)
         
         self.addSubview(arrowView)

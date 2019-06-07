@@ -159,10 +159,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         switch self.floatActionButton.actionState {
         case .add:
             self.changeFloatActionButton(.close)
+            toWatchController.openSearch()
         case .close:
             self.changeFloatActionButton(.add)
+            toWatchController.moveItemsBackToScreen()
         }
-        toWatchController.moveItemsBackToScreen()
     }
     
     private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {

@@ -20,10 +20,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     private var firstItemIndexPath: IndexPath?
     private var lastItemIndexPath: IndexPath?
     
-    private lazy var watchItemInfoController: WatchItemInfoController = {
-        var viewController = WatchItemInfoController()
-        return viewController
-    }()
+    private var childViewController: UIViewController?
     
     enum AnimationType {
         case fromScreen
@@ -76,7 +73,22 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         moveItemsFromScreen()
     }
     
-    //    MARK: - Methods
+    //    MARK: - Public methods
+    func moveItemsFromScreen() {
+        animateItems(withAnimationType: .fromScreen)
+    }
+    
+    func moveItemsBackToScreen() {
+        removeChildViewController(childViewController)
+        childViewController = nil
+        animateItems(withAnimationType: .backToScreen)
+    }
+    
+    func openSearch() {
+        showSearchController()
+    }
+    
+    //    MARK: - Private methods
     private func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         
@@ -103,15 +115,52 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         return layout
     }
     
-    func moveItemsFromScreen() {
-        animateItems(withAnimationType: .fromScreen)
+    private func showWatchItemInfoController() {        
+        childViewController = WatchItemInfoController()
+        add(asChildViewController: childViewController)
     }
     
-    func moveItemsBackToScreen() {
-        removeChildViewController(watchItemInfoController)
-        animateItems(withAnimationType: .backToScreen)
+    private func showSearchController() {
+        childViewController = SearchController()
+        add(asChildViewController: childViewController)
     }
     
+    private func add(asChildViewController viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.didMove(toParent: self)
+        
+        let topAnchorConstant = setupTopAnchorConstant(forViewController: viewController)
+        setupViewController(viewController, withTopAnchorConstant: topAnchorConstant)
+    }
+    
+    private func removeChildViewController(_ viewController: UIViewController?) {
+        guard let viewController = viewController else { return }
+        viewController.willMove(toParent: nil)
+        viewController.view.removeFromSuperview()
+        viewController.removeFromParent()
+    }
+    
+    private func setupTopAnchorConstant(forViewController viewController: UIViewController) -> CGFloat {
+        var topAnchorConstant: CGFloat = 0.0
+        if viewController is WatchItemInfoController {
+            topAnchorConstant = AppStyle.topSafeArea + AppStyle.itemHeight
+        } else if viewController is SearchController {
+            topAnchorConstant = AppStyle.topSafeArea
+        }
+        return topAnchorConstant
+    }
+    
+    private func setupViewController(_ viewController: UIViewController, withTopAnchorConstant topAnchorConstant: CGFloat) {
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        viewController.view.topAnchor.constraint(equalTo: view.topAnchor, constant: topAnchorConstant).isActive = true
+        viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        viewController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        viewController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    //    MARK: - Animations
     private func animateItems(withAnimationType animationType: AnimationType) {
         guard let selectedIndexPath = selectedIndexPath else { return }
         
@@ -121,17 +170,17 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         
         guard let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
         
-            for item in items {
-                let itemIndexPath = collectionView.indexPath(for: item)!
-                
-                if itemIndexPath.item < selectedIndexPath.item {
-                    animate(item, withAnimationType: animationType, andItemType: .over)
-                } else if itemIndexPath.item > selectedIndexPath.item {
-                    animate(item, withAnimationType: animationType, andItemType: .under)
-                } else if itemIndexPath.item == selectedIndexPath.item {
-                    animate(item, withAnimationType: animationType, andItemType: .selected)
-                }
+        for item in items {
+            let itemIndexPath = collectionView.indexPath(for: item)!
+            
+            if itemIndexPath.item < selectedIndexPath.item {
+                animate(item, withAnimationType: animationType, andItemType: .over)
+            } else if itemIndexPath.item > selectedIndexPath.item {
+                animate(item, withAnimationType: animationType, andItemType: .under)
+            } else if itemIndexPath.item == selectedIndexPath.item {
+                animate(item, withAnimationType: animationType, andItemType: .selected)
             }
+        }
     }
     
     private func animate(_ item: UICollectionViewCell, withAnimationType animationType: AnimationType, andItemType animatedItemType: AnimatedItemType) {
@@ -204,7 +253,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     private func runActionsAfterAnimation(for item: UICollectionViewCell, with animationType: ToWatchController.AnimationType, and animatedItemType: ToWatchController.AnimatedItemType) {
         if animationType == .fromScreen {
             if animatedItemType == .selected {
-                showWatchItemInfo()
+                showWatchItemInfoController()
             }
         } else if animationType == .backToScreen {
             let itemIndexPath = collectionView.indexPath(for: item)!
@@ -232,28 +281,5 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         if item.isHidden {
             item.isHidden = false
         }
-    }
-    
-    private func showWatchItemInfo() {        
-        watchItemInfoController = WatchItemInfoController()
-        add(asChildViewController: watchItemInfoController)
-    }
-    
-    private func add(asChildViewController viewController: UIViewController) {
-        addChild(viewController)
-        view.addSubview(viewController.view)
-        viewController.didMove(toParent: self)
-        
-        viewController.view.translatesAutoresizingMaskIntoConstraints = false
-        viewController.view.topAnchor.constraint(equalTo: view.topAnchor, constant: AppStyle.topSafeArea + AppStyle.itemHeight).isActive = true
-        viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        viewController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        viewController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-    }
-    
-    private func removeChildViewController(_ viewController: UIViewController) {
-        viewController.willMove(toParent: nil)
-        viewController.view.removeFromSuperview()
-        viewController.removeFromParent()
     }
 }
