@@ -21,11 +21,11 @@ class MenuItemCell: UICollectionViewCell {
         didSet {
             switch itemState {
             case .active:
-                itemNameLabel.textColor = AppStyle.menuItemActiveColor
+                itemNameLabel.textColor = AppStyle.menuItemActiveTextColor
             case .inactive:
-                itemNameLabel.textColor = AppStyle.menuItemInactiveColor
+                itemNameLabel.textColor = AppStyle.menuItemInactiveTextColor
                 itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysTemplate)
-                itemImageView.tintColor = AppStyle.menuItemInactiveColor
+                itemImageView.tintColor = AppStyle.menuItemInactiveTextColor
             default:
                 break
             }
