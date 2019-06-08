@@ -159,9 +159,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         switch self.floatActionButton.actionState {
         case .add:
             self.changeFloatActionButton(.close)
+            menuBar.isHidden = true
             toWatchController.openSearch()
         case .close:
             self.changeFloatActionButton(.add)
+            menuBar.isHidden = false
             toWatchController.moveItemsBackToScreen()
         }
     }

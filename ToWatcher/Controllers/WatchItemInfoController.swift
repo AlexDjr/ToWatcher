@@ -57,7 +57,7 @@ class WatchItemInfoController: UIViewController {
     private func setupTitle(withFontSize fontSize: CGFloat, andColor color: UIColor) -> UILabel {
         let title = UILabel()
         title.numberOfLines = 2
-        title.font = UIFont(name: "Montserrat-Bold", size: fontSize)
+        title.font = UIFont(name: AppStyle.appFontNameBold, size: fontSize)
         title.textColor = color
         title.textAlignment = .left
         title.adjustsFontSizeToFitWidth = true;

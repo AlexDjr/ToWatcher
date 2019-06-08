@@ -46,7 +46,7 @@ class MenuItemCell: UICollectionViewCell {
     
     private var itemNameLabel: UILabel = {
         let itemNameLabel = UILabel()
-        itemNameLabel.font = UIFont(name: "Montserrat-Bold", size: AppStyle.menuItemFontSize)
+        itemNameLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.menuItemFontSize)
         return itemNameLabel
     }()
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */; };
 		FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A39227725E300E01545 /* AppStyle.swift */; };
 		FA2C8A3C227745CE00E01545 /* ToWatchDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A3B227745CE00E01545 /* ToWatchDelegateProtocol.swift */; };
 		FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9C226797FC00A167CB /* AppDelegate.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITextField+bottomBorder.swift"; path = "../UITextField+bottomBorder.swift"; sourceTree = "<group>"; };
 		FA2C8A39227725E300E01545 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		FA2C8A3B227745CE00E01545 /* ToWatchDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA350E99226797FC00A167CB /* ToWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,7 +58,7 @@
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
-		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+roundCorners.swift"; sourceTree = "<group>"; };
+		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CALayer+roundCorners.swift"; path = "../CALayer+roundCorners.swift"; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
 		FA91D8B822AAA77900243988 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -75,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA0E509822AC4CE5002417BD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */,
+				FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		FA2C8A3D22774F7F00E01545 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,7 +115,7 @@
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA2C8A39227725E300E01545 /* AppStyle.swift */,
-				FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */,
+				FA0E509822AC4CE5002417BD /* Extensions */,
 				FA2C8A3D22774F7F00E01545 /* Protocols */,
 				FA932E58226F181C0087BE9E /* Custom UI */,
 				FA932E51226E48010087BE9E /* Model */,
@@ -251,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */,
 				FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */,
 				FA2C8A3C227745CE00E01545 /* ToWatchDelegateProtocol.swift in Sources */,
 				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
