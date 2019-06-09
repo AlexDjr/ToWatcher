@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ToWatchDelegateProtocol {
+class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WatchItemDelegateProtocol {
 
     var containerView: UICollectionView!
     var floatActionButton: FloatActionButton = {

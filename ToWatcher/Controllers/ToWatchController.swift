@@ -13,31 +13,19 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     let array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
     
     var collectionView: UICollectionView!
+    var animationManager: CollectionViewAnimationManager?
     
-    weak var delegate: ToWatchDelegateProtocol?
+    weak var delegate: WatchItemDelegateProtocol?
     
     private var selectedIndexPath: IndexPath?
-    private var firstItemIndexPath: IndexPath?
-    private var lastItemIndexPath: IndexPath?
     
     private var childViewController: UIViewController?
     
-    enum AnimationType {
-        case fromScreen
-        case backToScreen
-    }
-    
-    enum AnimatedItemType {
-        case over
-        case under
-        case selected
-    }
-    
-    typealias AnimationParams = (delay: TimeInterval, transform: CGAffineTransform?, completion: ((Bool) -> ())?)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupAnimationManager()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -70,18 +58,31 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         delegate?.didSelectItem()
         
         selectedIndexPath = indexPath
+        animationManager?.selectedIndexPath = indexPath
+        
         moveItemsFromScreen()
     }
     
     //    MARK: - Public methods
     func moveItemsFromScreen() {
-        animateItems(withAnimationType: .fromScreen)
+        guard let animationManager = animationManager else { return }
+        
+        animationManager.animateItems(withAnimationType: .fromScreen)
+        animationManager.fromScreenFinishedCallback = {
+            self.showWatchItemInfoController()
+        }
     }
     
     func moveItemsBackToScreen() {
+        guard let animationManager = animationManager else { return }
+        
         removeChildViewController(childViewController)
         childViewController = nil
-        animateItems(withAnimationType: .backToScreen)
+        
+        animationManager.animateItems(withAnimationType: .backToScreen)
+        animationManager.backToScreenFinishedCallback = {
+            self.delegate?.didFinishMoveItemsBack()
+        }
     }
     
     func openSearch() {
@@ -113,6 +114,11 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = round(AppStyle.itemHeight / 20)
         return layout
+    }
+    
+    private func setupAnimationManager() {
+        animationManager = CollectionViewAnimationManager.shared
+        animationManager!.collectionView = collectionView
     }
     
     private func showWatchItemInfoController() {        
@@ -160,126 +166,4 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         viewController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
-    //    MARK: - Animations
-    private func animateItems(withAnimationType animationType: AnimationType) {
-        guard let selectedIndexPath = selectedIndexPath else { return }
-        
-        let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
-        firstItemIndexPath = collectionView.indexPath(for: items.first!)!
-        lastItemIndexPath = collectionView.indexPath(for: items.last!)!
-        
-        guard let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
-        
-        for item in items {
-            let itemIndexPath = collectionView.indexPath(for: item)!
-            
-            if itemIndexPath.item < selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .over)
-            } else if itemIndexPath.item > selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .under)
-            } else if itemIndexPath.item == selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .selected)
-            }
-        }
-    }
-    
-    private func animate(_ item: UICollectionViewCell, withAnimationType animationType: AnimationType, andItemType animatedItemType: AnimatedItemType) {
-        let delay = setupAnimationParams(for: item, with: animationType, and: animatedItemType).delay
-        let transform = setupAnimationParams(for: item, with: animationType, and: animatedItemType).transform
-        let completion = setupAnimationParams(for: item, with: animationType, and: animatedItemType).completion
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: delay,
-                       options: .curveEaseInOut,
-                       animations: { item.transform = transform! },
-                       completion: completion)
-    }
-    
-    private func setupAnimationParams(for item: UICollectionViewCell, with animationType: ToWatchController.AnimationType, and animatedItemType: ToWatchController.AnimatedItemType) -> (AnimationParams) {
-        let itemIndexPath = collectionView.indexPath(for: item)!
-        var delay: TimeInterval = 0.0
-        var transform: CGAffineTransform? = nil
-        var completion: ((Bool) -> ())? = nil
-        
-        if animationType == .fromScreen {
-            switch animatedItemType {
-            case .over:
-                hideIfNeeded(item)
-                delay = 0.1 * Double(itemIndexPath.item - firstItemIndexPath!.item + 1)
-                transform = CGAffineTransform.init(translationX: 0, y: -1000)
-                completion = nil
-            case .under:
-                delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
-                transform = CGAffineTransform.init(translationX: 0, y: 1000)
-                completion = nil
-            case .selected:
-                delay = 0.1 * Double(max(lastItemIndexPath!.item - selectedIndexPath!.item, selectedIndexPath!.item - firstItemIndexPath!.item) + 1)
-                
-                let frameInView = view.convert(item.frame, from: self.collectionView)
-                transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
-                }
-            }
-        } else if animationType == .backToScreen {
-            switch animatedItemType {
-            case .over:
-                delay = 0.1 * Double(selectedIndexPath!.item - itemIndexPath.item)
-                transform = CGAffineTransform.identity
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
-                }
-            case .under:
-                delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
-                transform = CGAffineTransform.identity
-                completion = nil
-            case .selected:
-                delay = 0.0
-                transform = CGAffineTransform.identity
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
-                }
-            }
-        }
-        return (delay, transform, completion)
-    }
-    
-    private func runActionsAfterAnimation(for item: UICollectionViewCell, with animationType: ToWatchController.AnimationType, and animatedItemType: ToWatchController.AnimatedItemType) {
-        if animationType == .fromScreen {
-            if animatedItemType == .selected {
-                showWatchItemInfoController()
-            }
-        } else if animationType == .backToScreen {
-            let itemIndexPath = collectionView.indexPath(for: item)!
-            let isTopItemMovedBack = itemIndexPath == self.firstItemIndexPath!
-            
-            if isTopItemMovedBack {
-                self.delegate?.didFinishMoveItemsBack()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.unHideIfNeeded(item)
-            }
-        }
-    }
-    
-    private func hideIfNeeded(_ item: UICollectionViewCell) {
-        let frameInView = self.view.convert(item.frame, from: self.collectionView)
-        let isItemFullyUnderMenubar = frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY <= AppStyle.menuBarFullHeight;
-        
-        if isItemFullyUnderMenubar {
-            item.isHidden = true
-        }
-    }
-    
-    private func unHideIfNeeded(_ item: UICollectionViewCell) {
-        if item.isHidden {
-            item.isHidden = false
-        }
-    }
 }

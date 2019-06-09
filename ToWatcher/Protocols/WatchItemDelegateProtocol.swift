@@ -1,5 +1,5 @@
 //
-//  ToWatchProtocol.swift
+//  WatchItemDelegateProtocol.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 29/04/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ToWatchDelegateProtocol: class {
+protocol WatchItemDelegateProtocol: class {
     func didSelectItem()
     func didFinishMoveItemsBack()
 }
