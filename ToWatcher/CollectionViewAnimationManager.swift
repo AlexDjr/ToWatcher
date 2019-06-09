@@ -15,17 +15,20 @@ class CollectionViewAnimationManager {
     var backToScreenFinishedCallback: (() -> ())?
     
     enum AnimationType {
+        case watchItems
+        case menuItems
+    }
+    
+    enum AnimationDirection {
         case fromScreen
         case backToScreen
     }
     
-    enum AnimatedItemType {
-        case over
-        case under
+    enum AnimatedItemLocation {
+        case before
+        case after
         case selected
     }
-    
-    typealias AnimationParams = (delay: TimeInterval, transform: CGAffineTransform?, completion: ((Bool) -> ())?)
     
     var collectionView: UICollectionView?
     var selectedIndexPath: IndexPath?
@@ -33,10 +36,10 @@ class CollectionViewAnimationManager {
     var lastItemIndexPath: IndexPath?
     
     
-    func animateItems(withAnimationType animationType: AnimationType) {
+    func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
         guard let collectionView = collectionView, let selectedIndexPath = selectedIndexPath else { return }
         
-        let items = collectionView.visibleCells.sorted { $0.frame.maxY < $1.frame.maxY }
+        let items = collectionView.visibleCells.sorted { collectionView.indexPath(for: $0)!.item < collectionView.indexPath(for: $1)!.item }
         firstItemIndexPath = collectionView.indexPath(for: items.first!)!
         lastItemIndexPath = collectionView.indexPath(for: items.last!)!
         
@@ -46,19 +49,27 @@ class CollectionViewAnimationManager {
             let itemIndexPath = collectionView.indexPath(for: item)!
             
             if itemIndexPath.item < selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .over)
+                animate(item, withType: type, andDirection: direction, andLocation: .before)
             } else if itemIndexPath.item > selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .under)
+                animate(item, withType: type, andDirection: direction, andLocation: .after)
             } else if itemIndexPath.item == selectedIndexPath.item {
-                animate(item, withAnimationType: animationType, andItemType: .selected)
+                animate(item, withType: type, andDirection: direction, andLocation: .selected)
             }
         }
     }
     
-    private func animate(_ item: UICollectionViewCell, withAnimationType animationType: AnimationType, andItemType animatedItemType: AnimatedItemType) {
-        let delay = setupAnimationParams(for: item, with: animationType, and: animatedItemType)!.delay
-        let transform = setupAnimationParams(for: item, with: animationType, and: animatedItemType)!.transform
-        let completion = setupAnimationParams(for: item, with: animationType, and: animatedItemType)!.completion
+    private func animate(_ item: UICollectionViewCell,
+                         withType type: AnimationType,
+                         andDirection direction: AnimationDirection,
+                         andLocation location: AnimatedItemLocation) {
+        let isItemUnderMenuBarWhenFromScreen = type == .watchItems && location == .before && direction == .fromScreen
+        if isItemUnderMenuBarWhenFromScreen {
+            hideIfNeeded(item)
+        }
+            
+        let delay = setupAnimationParamDelay(for: item, withType: type, andDirection: direction, andLocation: location)
+        let transform = setupAnimationParamTransform(for: item, withType: type, andDirection: direction, andLocation: location)
+        let completion = setupAnimationParamCompletion(for: item, withType: type, andDirection: direction, andLocation: location)
         
         UIView.animate(withDuration: 0.5,
                        delay: delay,
@@ -67,75 +78,177 @@ class CollectionViewAnimationManager {
                        completion: completion)
     }
     
-    private func setupAnimationParams(for item: UICollectionViewCell, with animationType: AnimationType, and animatedItemType: AnimatedItemType) -> (AnimationParams?) {
-        guard let collectionView = collectionView else { return nil }
+    private func setupAnimationParamDelay(for item: UICollectionViewCell,
+                                          withType type: AnimationType,
+                                          andDirection direction: AnimationDirection,
+                                          andLocation location: AnimatedItemLocation) -> TimeInterval {
+        guard let collectionView = collectionView else { return 0.0 }
         
-        let itemIndexPath = collectionView.indexPath(for: item)!
         var delay: TimeInterval = 0.0
-        var transform: CGAffineTransform? = nil
-        var completion: ((Bool) -> ())? = nil
+        let itemIndexPath = collectionView.indexPath(for: item)!
         
-        if animationType == .fromScreen {
-            switch animatedItemType {
-            case .over:
-                hideIfNeeded(item)
-                delay = 0.1 * Double(itemIndexPath.item - firstItemIndexPath!.item + 1)
-                transform = CGAffineTransform.init(translationX: 0, y: -1000)
-                completion = nil
-            case .under:
-                delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
-                transform = CGAffineTransform.init(translationX: 0, y: 1000)
-                completion = nil
-            case .selected:
-                delay = 0.1 * Double(max(lastItemIndexPath!.item - selectedIndexPath!.item, selectedIndexPath!.item - firstItemIndexPath!.item) + 1)
-                
-                let frameInView = collectionView.superview!.convert(item.frame, from: self.collectionView)
-                transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
+        if type == .watchItems {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:   delay = 0.1 * Double(itemIndexPath.item - firstItemIndexPath!.item + 1)
+                case .after:    delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
+                case .selected: delay = 0.1 * Double(max(lastItemIndexPath!.item - selectedIndexPath!.item, selectedIndexPath!.item - firstItemIndexPath!.item) + 1)
+                }
+            case .backToScreen:
+                switch location {
+                case .before:   delay = 0.1 * Double(selectedIndexPath!.item - itemIndexPath.item)
+                case .after:    delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
+                case .selected: delay = 0.0
                 }
             }
-        } else if animationType == .backToScreen {
-            switch animatedItemType {
-            case .over:
-                delay = 0.1 * Double(selectedIndexPath!.item - itemIndexPath.item)
-                transform = CGAffineTransform.identity
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
-                }
-            case .under:
-                delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
-                transform = CGAffineTransform.identity
-                completion = nil
-            case .selected:
-                delay = 0.0
-                transform = CGAffineTransform.identity
-                completion = { finished in
-                    if finished {
-                        self.runActionsAfterAnimation(for:item, with: animationType, and: animatedItemType)
-                    }
-                }
-            }
+//            else if type == .menuItems {
+//                switch direction {
+//                case .fromScreen:
+//                    switch location {
+//                    case .before:
+//                    case .after:
+//                    case .selected:
+//                    }
+//                case .backToScreen:
+//                    switch location {
+//                    case .before:
+//                    case .after:
+//                    case .selected:
+//                    }
+//                }
+//            }
         }
-        return (delay, transform, completion)
+        
+        return delay
     }
     
-    private func runActionsAfterAnimation(for item: UICollectionViewCell, with animationType: AnimationType, and animatedItemType: AnimatedItemType) {
+    private func setupAnimationParamTransform(for item: UICollectionViewCell,
+                                              withType type: AnimationType,
+                                              andDirection direction: AnimationDirection,
+                                              andLocation location: AnimatedItemLocation) -> CGAffineTransform? {
+        guard let collectionView = collectionView else { return nil }
+        
+        var transform: CGAffineTransform? = nil
+        
+        if type == .watchItems {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    transform = CGAffineTransform.init(translationX: 0, y: -1000)
+                case .after:
+                    transform = CGAffineTransform.init(translationX: 0, y: 1000)
+                case .selected:
+                    let frameInView = collectionView.superview!.convert(item.frame, from: self.collectionView)
+                    transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
+                }
+            case .backToScreen:
+                switch location {
+                case .before:
+                    transform = CGAffineTransform.identity
+                case .after:
+                    transform = CGAffineTransform.identity
+                case .selected:
+                    transform = CGAffineTransform.identity
+                }
+            }
+            //            else if type == .menuItems {
+            //                switch direction {
+            //                case .fromScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                case .backToScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                }
+            //            }
+        }
+        
+        return transform
+    }
+    
+    private func setupAnimationParamCompletion(for item: UICollectionViewCell,
+                                               withType type: AnimationType,
+                                               andDirection direction: AnimationDirection,
+                                               andLocation location: AnimatedItemLocation) -> ((Bool) -> ())? {
+        var completion: ((Bool) -> ())?  = nil
+        
+        if type == .watchItems {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    completion = nil
+                case .after:
+                    completion = nil
+                case .selected:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                }
+            case .backToScreen:
+                switch location {
+                case .before:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                case .after:
+                    completion = nil
+                case .selected:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                }
+            }
+            //            else if type == .menuItems {
+            //                switch direction {
+            //                case .fromScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                case .backToScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                }
+            //            }
+        }
+        
+        return completion
+    }
+    
+    private func runActionsAfterAnimation(for item: UICollectionViewCell,
+                                          withType type: AnimationType,
+                                          andDirection direction: AnimationDirection,
+                                          andLocation location: AnimatedItemLocation) {
         guard let collectionView = collectionView else { return }
         
-        if animationType == .fromScreen {
-            if animatedItemType == .selected {
+        if direction == .fromScreen {
+            if location == .selected {
                 fromScreenFinishedCallback?()
             }
-        } else if animationType == .backToScreen {
+        } else if direction == .backToScreen {
             let itemIndexPath = collectionView.indexPath(for: item)!
-            let isTopItemMovedBack = itemIndexPath == self.firstItemIndexPath!
+            let isFirstItemMovedBack = itemIndexPath == self.firstItemIndexPath!
             
-            if isTopItemMovedBack {
+            if isFirstItemMovedBack {
                 backToScreenFinishedCallback?()
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

@@ -67,7 +67,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     func moveItemsFromScreen() {
         guard let animationManager = animationManager else { return }
         
-        animationManager.animateItems(withAnimationType: .fromScreen)
+        animationManager.animateItems(withType: .watchItems, andDirection: .fromScreen)
         animationManager.fromScreenFinishedCallback = {
             self.showWatchItemInfoController()
         }
@@ -79,7 +79,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         removeChildViewController(childViewController)
         childViewController = nil
         
-        animationManager.animateItems(withAnimationType: .backToScreen)
+        animationManager.animateItems(withType: .watchItems, andDirection: .backToScreen)
         animationManager.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBack()
         }
