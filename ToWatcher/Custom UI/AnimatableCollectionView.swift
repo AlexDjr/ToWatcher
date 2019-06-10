@@ -13,8 +13,8 @@ class AnimatableCollectionView: UICollectionView {
     var backToScreenFinishedCallback: (() -> ())?
     
     enum AnimationType {
-        case watchItems
-        case menuItems
+        case itemSelected
+        case allItems
     }
     
     enum AnimationDirection {
@@ -22,26 +22,24 @@ class AnimatableCollectionView: UICollectionView {
         case backToScreen
     }
     
-    enum AnimatedItemLocation {
+    private enum AnimatedItemLocation {
         case before
         case after
         case selected
     }
     
     var selectedIndexPath: IndexPath?
-    var firstItemIndexPath: IndexPath?
-    var lastItemIndexPath: IndexPath?
+    private var firstItemIndexPath: IndexPath?
+    private var lastItemIndexPath: IndexPath?
+    private var itemsOnScreen: [UICollectionViewCell]!
     
     func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
-        guard let selectedIndexPath = selectedIndexPath else { return }
+        setupItemsOnScreen()
+        setupIndexPaths()
         
-        let items = self.visibleCells.sorted { self.indexPath(for: $0)!.item < self.indexPath(for: $1)!.item }
-        firstItemIndexPath = self.indexPath(for: items.first!)!
-        lastItemIndexPath = self.indexPath(for: items.last!)!
+        guard let selectedIndexPath = selectedIndexPath, let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
         
-        guard let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
-        
-        for item in items {
+        for item in itemsOnScreen {
             let itemIndexPath = self.indexPath(for: item)!
             
             if itemIndexPath.item < selectedIndexPath.item {
@@ -58,8 +56,8 @@ class AnimatableCollectionView: UICollectionView {
                          withType type: AnimationType,
                          andDirection direction: AnimationDirection,
                          andLocation location: AnimatedItemLocation) {
-        let isItemUnderMenuBarWhenFromScreen = type == .watchItems && location == .before && direction == .fromScreen
-        if isItemUnderMenuBarWhenFromScreen {
+        let isNeedToCheckIfItemUnderMenuBar = location != .after && direction == .fromScreen
+        if isNeedToCheckIfItemUnderMenuBar {
             hideIfNeeded(item)
         }
         
@@ -82,7 +80,7 @@ class AnimatableCollectionView: UICollectionView {
         var delay: TimeInterval = 0.0
         let itemIndexPath = self.indexPath(for: item)!
         
-        if type == .watchItems {
+        if type == .itemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
@@ -97,22 +95,22 @@ class AnimatableCollectionView: UICollectionView {
                 case .selected: delay = 0.0
                 }
             }
-            //            else if type == .menuItems {
-            //                switch direction {
-            //                case .fromScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                case .backToScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                }
-            //            }
+            
+        } else if type == .allItems {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:   delay = 0.0
+                case .after:    delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
+                case .selected: delay = 0.1 * Double(lastItemIndexPath!.item - selectedIndexPath!.item + 1)
+                }
+            case .backToScreen:
+                switch location {
+                case .before:   delay = 0.0
+                case .after:    delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
+                case .selected: delay = 0.0
+                }
+            }
         }
         
         return delay
@@ -124,44 +122,29 @@ class AnimatableCollectionView: UICollectionView {
                                               andLocation location: AnimatedItemLocation) -> CGAffineTransform? {
         var transform: CGAffineTransform? = nil
         
-        if type == .watchItems {
+        if type == .itemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
                 case .before:
-                    transform = CGAffineTransform.init(translationX: 0, y: -1000)
+                    transform = CGAffineTransform(translationX: 0, y: -1000)
                 case .after:
-                    transform = CGAffineTransform.init(translationX: 0, y: 1000)
+                    transform = CGAffineTransform(translationX: 0, y: 1000)
                 case .selected:
                     let frameInView = self.superview!.convert(item.frame, from: self)
-                    transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
+                    transform = CGAffineTransform(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
                 }
             case .backToScreen:
-                switch location {
-                case .before:
-                    transform = CGAffineTransform.identity
-                case .after:
-                    transform = CGAffineTransform.identity
-                case .selected:
-                    transform = CGAffineTransform.identity
-                }
+                transform = CGAffineTransform.identity
             }
-            //            else if type == .menuItems {
-            //                switch direction {
-            //                case .fromScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                case .backToScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                }
-            //            }
+            
+        } else if type == .allItems {
+            switch direction {
+            case .fromScreen:
+                transform = CGAffineTransform(translationX: 0, y: 1000)
+            case .backToScreen:
+                transform = CGAffineTransform.identity
+            }
         }
         
         return transform
@@ -173,7 +156,7 @@ class AnimatableCollectionView: UICollectionView {
                                                andLocation location: AnimatedItemLocation) -> ((Bool) -> ())? {
         var completion: ((Bool) -> ())?  = nil
         
-        if type == .watchItems {
+        if type == .itemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
@@ -206,22 +189,35 @@ class AnimatableCollectionView: UICollectionView {
                     }
                 }
             }
-            //            else if type == .menuItems {
-            //                switch direction {
-            //                case .fromScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                case .backToScreen:
-            //                    switch location {
-            //                    case .before:
-            //                    case .after:
-            //                    case .selected:
-            //                    }
-            //                }
-            //            }
+        } else if type == .allItems {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    completion = nil
+                case .after:
+                    completion = nil
+                case .selected:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                }
+            case .backToScreen:
+                switch location {
+                case .before:
+                    completion = nil
+                case .after:
+                    completion = nil
+                case .selected:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                }
+            }
         }
         
         return completion
@@ -231,7 +227,6 @@ class AnimatableCollectionView: UICollectionView {
                                           withType type: AnimationType,
                                           andDirection direction: AnimationDirection,
                                           andLocation location: AnimatedItemLocation) {
-        
         if direction == .fromScreen {
             if location == .selected {
                 fromScreenFinishedCallback?()
@@ -246,6 +241,7 @@ class AnimatableCollectionView: UICollectionView {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.unHideIfNeeded(item)
             }
+            selectedIndexPath = nil
         }
     }
     
@@ -263,4 +259,18 @@ class AnimatableCollectionView: UICollectionView {
             item.isHidden = false
         }
     }
+    
+    private func setupItemsOnScreen() {
+        itemsOnScreen = self.visibleCells.sorted { self.indexPath(for: $0)!.item < self.indexPath(for: $1)!.item }
+    }
+    
+    private func setupIndexPaths() {
+        firstItemIndexPath = self.indexPath(for: itemsOnScreen.first!)!
+        lastItemIndexPath = self.indexPath(for: itemsOnScreen.last!)!
+        
+        if selectedIndexPath == nil {
+            selectedIndexPath = firstItemIndexPath
+        }
+    }
+    
 }

@@ -73,19 +73,19 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
-    //    MARK: - ToWatchDelegateProtocol
+    //    MARK: - WatchItemDelegateProtocol
     func didSelectItem() {
         changeFloatActionButton(.close)
-        
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            self.menuBar.transform = CGAffineTransform.init(translationX: 0, y: -AppStyle.menuBarFullHeight)
-        }, completion: nil)
+        menuBar.moveMenuBarFromScreen()
     }
     
-    func didFinishMoveItemsBack() {
-        moveMenuBarBackToDefaultPosition()
+    func didFinishMoveItemsFromScreen() {
+        toWatchController.openSearch()
     }
-
+    
+    func didFinishMoveItemsBackToScreen() {
+        menuBar.moveMenuBarBackToScreen()
+    }
     
     //    MARK: - Methods
     private func setupTopAndBottomSafeArea() {
@@ -149,21 +149,14 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         viewController.didMove(toParent: self)
     }
     
-    private func moveMenuBarBackToDefaultPosition() {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
-            self.menuBar.transform = .identity
-        }, completion: nil)
-    }
-    
     @objc private func pressFloatActionButton() {
         switch self.floatActionButton.actionState {
         case .add:
             self.changeFloatActionButton(.close)
-            menuBar.isHidden = true
-            toWatchController.openSearch()
+            toWatchController.moveAllItemsFromScreen()
+            menuBar.moveMenuBarFromScreen()
         case .close:
             self.changeFloatActionButton(.add)
-            menuBar.isHidden = false
             toWatchController.moveItemsBackToScreen()
         }
     }

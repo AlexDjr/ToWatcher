@@ -60,7 +60,16 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         }
     }
     
-    //    MARK: - Methods
+    //    MARK: - Public Methods
+    func moveMenuBarFromScreen() {
+        animateMenuBar(withAnimationDirection: .fromScreen)
+    }
+    
+    func moveMenuBarBackToScreen() {
+        animateMenuBar(withAnimationDirection: .backToScreen)
+    }
+    
+    //    MARK: - Private Methods
     private func setupView() {
         backgroundColor = AppStyle.menuBarBGColor
         setupMenuView()
@@ -129,5 +138,19 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
             }
             return item
         }
+    }
+    
+    //    MARK: - Animations
+    private func animateMenuBar(withAnimationDirection animationDirection: AnimatableCollectionView.AnimationDirection) {
+            switch animationDirection {
+            case .fromScreen:
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                    self.transform = CGAffineTransform(translationX: 0, y: -AppStyle.menuBarFullHeight)
+                })
+            case .backToScreen:
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                    self.transform = .identity
+                })
+            }
     }
 }

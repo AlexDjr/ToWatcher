@@ -58,32 +58,54 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         selectedIndexPath = indexPath
         self.collectionView.selectedIndexPath = indexPath
         
-        moveItemsFromScreen()
+        moveItemsExceptSelectedFromScreen()
     }
     
     //    MARK: - Public methods
-    func moveItemsFromScreen() {
-        collectionView.animateItems(withType: .watchItems, andDirection: .fromScreen)
+    func openSearch() {
+        showSearchController()
+    }
+    
+    func moveAllItemsFromScreen() {
+        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
+        collectionView.fromScreenFinishedCallback = {
+            self.delegate?.didFinishMoveItemsFromScreen()
+        }
+    }
+    
+    func moveItemsBackToScreen() {
+        if collectionView.selectedIndexPath != nil {
+            moveItemsExceptSelectedBackToScreen()
+        } else {
+            moveAllItemsBackToScreen()
+        }
+    }
+    
+    //    MARK: - Private methods
+    private func moveItemsExceptSelectedFromScreen() {
+        collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showWatchItemInfoController()
         }
     }
     
-    func moveItemsBackToScreen() {
+    private func moveItemsExceptSelectedBackToScreen() {
         removeChildViewController(childViewController)
         childViewController = nil
         
-        collectionView.animateItems(withType: .watchItems, andDirection: .backToScreen)
+        collectionView.animateItems(withType: .itemSelected, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
-            self.delegate?.didFinishMoveItemsBack()
+            self.delegate?.didFinishMoveItemsBackToScreen()
         }
     }
     
-    func openSearch() {
-        showSearchController()
+    private func moveAllItemsBackToScreen() {
+        collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
+        collectionView.backToScreenFinishedCallback = {
+            self.delegate?.didFinishMoveItemsBackToScreen()
+        }
     }
     
-    //    MARK: - Private methods
     private func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         

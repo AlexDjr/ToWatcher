@@ -10,5 +10,6 @@ import Foundation
 
 protocol WatchItemDelegateProtocol: class {
     func didSelectItem()
-    func didFinishMoveItemsBack()
+    func didFinishMoveItemsFromScreen()
+    func didFinishMoveItemsBackToScreen()
 }
