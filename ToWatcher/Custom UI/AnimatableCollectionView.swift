@@ -1,16 +1,14 @@
 //
-//  CollectionViewAnimationManager.swift
+//  AnimatableCollectionView.swift
 //  ToWatcher
 //
-//  Created by Alex Delin on 09/06/2019.
+//  Created by Alex Delin on 10/06/2019.
 //  Copyright © 2019 Alex Delin. All rights reserved.
 //
 
 import UIKit
 
-class CollectionViewAnimationManager {
-    static let shared = CollectionViewAnimationManager()
-    
+class AnimatableCollectionView: UICollectionView {
     var fromScreenFinishedCallback: (() -> ())?
     var backToScreenFinishedCallback: (() -> ())?
     
@@ -30,23 +28,21 @@ class CollectionViewAnimationManager {
         case selected
     }
     
-    var collectionView: UICollectionView?
     var selectedIndexPath: IndexPath?
     var firstItemIndexPath: IndexPath?
     var lastItemIndexPath: IndexPath?
     
-    
     func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
-        guard let collectionView = collectionView, let selectedIndexPath = selectedIndexPath else { return }
+        guard let selectedIndexPath = selectedIndexPath else { return }
         
-        let items = collectionView.visibleCells.sorted { collectionView.indexPath(for: $0)!.item < collectionView.indexPath(for: $1)!.item }
-        firstItemIndexPath = collectionView.indexPath(for: items.first!)!
-        lastItemIndexPath = collectionView.indexPath(for: items.last!)!
+        let items = self.visibleCells.sorted { self.indexPath(for: $0)!.item < self.indexPath(for: $1)!.item }
+        firstItemIndexPath = self.indexPath(for: items.first!)!
+        lastItemIndexPath = self.indexPath(for: items.last!)!
         
         guard let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
         
         for item in items {
-            let itemIndexPath = collectionView.indexPath(for: item)!
+            let itemIndexPath = self.indexPath(for: item)!
             
             if itemIndexPath.item < selectedIndexPath.item {
                 animate(item, withType: type, andDirection: direction, andLocation: .before)
@@ -66,7 +62,7 @@ class CollectionViewAnimationManager {
         if isItemUnderMenuBarWhenFromScreen {
             hideIfNeeded(item)
         }
-            
+        
         let delay = setupAnimationParamDelay(for: item, withType: type, andDirection: direction, andLocation: location)
         let transform = setupAnimationParamTransform(for: item, withType: type, andDirection: direction, andLocation: location)
         let completion = setupAnimationParamCompletion(for: item, withType: type, andDirection: direction, andLocation: location)
@@ -82,10 +78,9 @@ class CollectionViewAnimationManager {
                                           withType type: AnimationType,
                                           andDirection direction: AnimationDirection,
                                           andLocation location: AnimatedItemLocation) -> TimeInterval {
-        guard let collectionView = collectionView else { return 0.0 }
         
         var delay: TimeInterval = 0.0
-        let itemIndexPath = collectionView.indexPath(for: item)!
+        let itemIndexPath = self.indexPath(for: item)!
         
         if type == .watchItems {
             switch direction {
@@ -102,22 +97,22 @@ class CollectionViewAnimationManager {
                 case .selected: delay = 0.0
                 }
             }
-//            else if type == .menuItems {
-//                switch direction {
-//                case .fromScreen:
-//                    switch location {
-//                    case .before:
-//                    case .after:
-//                    case .selected:
-//                    }
-//                case .backToScreen:
-//                    switch location {
-//                    case .before:
-//                    case .after:
-//                    case .selected:
-//                    }
-//                }
-//            }
+            //            else if type == .menuItems {
+            //                switch direction {
+            //                case .fromScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                case .backToScreen:
+            //                    switch location {
+            //                    case .before:
+            //                    case .after:
+            //                    case .selected:
+            //                    }
+            //                }
+            //            }
         }
         
         return delay
@@ -127,8 +122,6 @@ class CollectionViewAnimationManager {
                                               withType type: AnimationType,
                                               andDirection direction: AnimationDirection,
                                               andLocation location: AnimatedItemLocation) -> CGAffineTransform? {
-        guard let collectionView = collectionView else { return nil }
-        
         var transform: CGAffineTransform? = nil
         
         if type == .watchItems {
@@ -140,7 +133,7 @@ class CollectionViewAnimationManager {
                 case .after:
                     transform = CGAffineTransform.init(translationX: 0, y: 1000)
                 case .selected:
-                    let frameInView = collectionView.superview!.convert(item.frame, from: self.collectionView)
+                    let frameInView = self.superview!.convert(item.frame, from: self)
                     transform = CGAffineTransform.init(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
                 }
             case .backToScreen:
@@ -238,14 +231,13 @@ class CollectionViewAnimationManager {
                                           withType type: AnimationType,
                                           andDirection direction: AnimationDirection,
                                           andLocation location: AnimatedItemLocation) {
-        guard let collectionView = collectionView else { return }
         
         if direction == .fromScreen {
             if location == .selected {
                 fromScreenFinishedCallback?()
             }
         } else if direction == .backToScreen {
-            let itemIndexPath = collectionView.indexPath(for: item)!
+            let itemIndexPath = self.indexPath(for: item)!
             let isFirstItemMovedBack = itemIndexPath == self.firstItemIndexPath!
             
             if isFirstItemMovedBack {
@@ -258,9 +250,7 @@ class CollectionViewAnimationManager {
     }
     
     private func hideIfNeeded(_ item: UICollectionViewCell) {
-        guard let collectionView = collectionView else { return }
-        
-        let frameInView = collectionView.superview!.convert(item.frame, from: self.collectionView)
+        let frameInView = self.superview!.convert(item.frame, from: self)
         let isItemFullyUnderMenubar = frameInView.minY < AppStyle.menuBarFullHeight && frameInView.maxY <= AppStyle.menuBarFullHeight;
         
         if isItemFullyUnderMenubar {

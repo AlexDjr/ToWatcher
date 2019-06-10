@@ -29,11 +29,11 @@
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */; };
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
+		FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */; };
 		FA91D8B922AAA77900243988 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA91D8B822AAA77900243988 /* SearchController.swift */; };
 		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
 		FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchController.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */; };
-		FAE744D622AD04210091E1CF /* CollectionViewAnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE744D522AD04210091E1CF /* CollectionViewAnimationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,11 +61,11 @@
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CALayer+roundCorners.swift"; path = "../CALayer+roundCorners.swift"; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
+		FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView.swift; sourceTree = "<group>"; };
 		FA91D8B822AAA77900243988 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		FA932E59226F2FFC0087BE9E /* ToWatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchController.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoController.swift; sourceTree = "<group>"; };
-		FAE744D522AD04210091E1CF /* CollectionViewAnimationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAnimationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,6 @@
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA2C8A39227725E300E01545 /* AppStyle.swift */,
-				FAE744D522AD04210091E1CF /* CollectionViewAnimationManager.swift */,
 				FA0E509822AC4CE5002417BD /* Extensions */,
 				FA2C8A3D22774F7F00E01545 /* Protocols */,
 				FA932E58226F181C0087BE9E /* Custom UI */,
@@ -182,6 +181,7 @@
 			children = (
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
 				FA581CC92274AE70009FBF9A /* FloatActionButton.swift */,
+				FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -265,7 +265,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAE744D622AD04210091E1CF /* CollectionViewAnimationManager.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */,
 				FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */,
 				FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */,
@@ -278,6 +277,7 @@
 				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
+				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,

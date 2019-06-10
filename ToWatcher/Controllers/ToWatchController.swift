@@ -12,8 +12,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
 
     let array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
     
-    var collectionView: UICollectionView!
-    var animationManager: CollectionViewAnimationManager?
+    var collectionView: AnimatableCollectionView!
     
     weak var delegate: WatchItemDelegateProtocol?
     
@@ -25,7 +24,6 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        setupAnimationManager()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -58,29 +56,25 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         delegate?.didSelectItem()
         
         selectedIndexPath = indexPath
-        animationManager?.selectedIndexPath = indexPath
+        self.collectionView.selectedIndexPath = indexPath
         
         moveItemsFromScreen()
     }
     
     //    MARK: - Public methods
     func moveItemsFromScreen() {
-        guard let animationManager = animationManager else { return }
-        
-        animationManager.animateItems(withType: .watchItems, andDirection: .fromScreen)
-        animationManager.fromScreenFinishedCallback = {
+        collectionView.animateItems(withType: .watchItems, andDirection: .fromScreen)
+        collectionView.fromScreenFinishedCallback = {
             self.showWatchItemInfoController()
         }
     }
     
     func moveItemsBackToScreen() {
-        guard let animationManager = animationManager else { return }
-        
         removeChildViewController(childViewController)
         childViewController = nil
         
-        animationManager.animateItems(withType: .watchItems, andDirection: .backToScreen)
-        animationManager.backToScreenFinishedCallback = {
+        collectionView.animateItems(withType: .watchItems, andDirection: .backToScreen)
+        collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBack()
         }
     }
@@ -93,7 +87,7 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
     private func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView = AnimatableCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
@@ -114,11 +108,6 @@ class ToWatchController: UIViewController, UICollectionViewDelegateFlowLayout, U
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = round(AppStyle.itemHeight / 20)
         return layout
-    }
-    
-    private func setupAnimationManager() {
-        animationManager = CollectionViewAnimationManager.shared
-        animationManager!.collectionView = collectionView
     }
     
     private func showWatchItemInfoController() {        
