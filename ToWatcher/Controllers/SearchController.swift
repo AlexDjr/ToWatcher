@@ -18,6 +18,11 @@ class SearchController: UIViewController {
         super.viewDidLoad()
         setupView()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
 
     //    MARK: - Methods
     func setupView() {
