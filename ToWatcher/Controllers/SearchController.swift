@@ -26,8 +26,12 @@ class SearchController: UIViewController {
 
     //    MARK: - Methods
     func setupView() {
-        self.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.alpha = 0.0
+        
         setupSearchTextFieldView()
+        animateShowView()
+        setFocusOnSearchTextFieldView()
     }
     
     private func setupSearchTextFieldView() {
@@ -56,8 +60,17 @@ class SearchController: UIViewController {
         searchTextField.tintColor = AppStyle.searchTextFieldTintColor
         searchTextField.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)
         searchTextField.addBottomBorder()
-        searchTextField.becomeFirstResponder()
         
         return searchTextField
+    }
+    
+    private func animateShowView() {
+        UIView.animate(withDuration: 0.2) {
+            self.view.alpha = 1.0
+        }
+    }
+    
+    private func setFocusOnSearchTextFieldView() {
+        searchTextField.becomeFirstResponder()
     }
 }

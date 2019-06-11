@@ -25,6 +25,9 @@ class WatchItemInfoController: UIViewController {
     
     func setupView() {
 //        self.view.backgroundColor = .purple
+        view.alpha = 0.0
+        
+        animateShowView()
         setupWatchItemInfoView()
     }
     
@@ -64,6 +67,12 @@ class WatchItemInfoController: UIViewController {
         title.minimumScaleFactor = 0.8;
         
         return title
+    }
+    
+    private func animateShowView() {
+        UIView.animate(withDuration: 0.2) {
+            self.view.alpha = 1.0
+        }
     }
 
 }
