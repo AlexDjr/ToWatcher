@@ -65,7 +65,7 @@ class AnimatableCollectionView: UICollectionView {
         let transform = setupAnimationParamTransform(for: item, withType: type, andDirection: direction, andLocation: location)
         let completion = setupAnimationParamCompletion(for: item, withType: type, andDirection: direction, andLocation: location)
         
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 0.4,
                        delay: delay,
                        options: .curveEaseInOut,
                        animations: { item.transform = transform! },
