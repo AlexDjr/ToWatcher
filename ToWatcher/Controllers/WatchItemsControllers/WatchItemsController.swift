@@ -64,6 +64,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showSearchController()
+            self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
     }
@@ -74,6 +75,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         } else {
             moveAllItemsBackToScreen()
         }
+        self.collectionView.isUserInteractionEnabled = true
     }
     
     //    MARK: - Private methods
@@ -88,6 +90,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showWatchItemInfoController()
+            self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
     }
