@@ -10,6 +10,9 @@ import UIKit
 
 class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WatchItemDelegateProtocol {
 
+    var childControllers: [WatchItemsController]?
+    var selectedChildController: WatchItemsController?
+    
     var containerView: UICollectionView!
     var floatActionButton: FloatActionButton = {
        let floatActionButton = FloatActionButton()
@@ -20,20 +23,14 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return menuBar
     }()
     
-    private lazy var toWatchController: ToWatchController = {
-        var viewController = ToWatchController()
-        viewController.delegate = self
-        self.add(asChildViewController: viewController)
-        return viewController
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupChildControllers()
+        setupContainerView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupContainerView()
         setupMenuBar()
         setupFloatActionButton()
         floatActionButton.addTarget(self, action: #selector(pressFloatActionButton), for: .touchUpInside)
@@ -44,6 +41,9 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         setupTopAndBottomSafeArea()
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setupSelectedChidController()
+    }
     
     //   MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -51,12 +51,10 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let childControllers = childControllers else { return UICollectionViewCell() }
         let cell = containerView.dequeueReusableCell(withReuseIdentifier: ContainerCell.reuseIdentifier, for: indexPath) as! ContainerCell
-        
-        switch indexPath.item {
-        case 0: cell.hostedView = toWatchController.view
-        default: break
-        }
+
+        cell.hostedView = childControllers[indexPath.item].view
         
 //        cell.contentView.backgroundColor = .blue
 //        cell.contentView.layer.borderColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
@@ -80,7 +78,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func didFinishMoveItemsFromScreen() {
-        toWatchController.openSearch()
+        selectedChildController?.openSearch()
     }
     
     func didFinishMoveItemsBackToScreen() {
@@ -88,6 +86,24 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     //    MARK: - Methods
+    private func setupChildControllers() {
+        let toWatchController = ToWatchController()
+        toWatchController.delegate = self
+        self.add(asChildViewController: toWatchController)
+        
+        let watchedController = WatchedController()
+        watchedController.delegate = self
+        self.add(asChildViewController: watchedController)
+        
+        childControllers = [toWatchController, watchedController]
+    }
+    
+    private func setupSelectedChidController() {
+        guard let childControllers = childControllers else { return }
+        let controllerIndex = containerView.indexPathsForVisibleItems.first!.item
+        selectedChildController = childControllers[controllerIndex]
+    }
+    
     private func setupTopAndBottomSafeArea() {
         if #available(iOS 11.0, *) {
             AppStyle.topSafeArea = view.safeAreaInsets.top
@@ -153,11 +169,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         switch self.floatActionButton.actionState {
         case .add:
             self.changeFloatActionButton(.close)
-            toWatchController.moveAllItemsFromScreen()
+            selectedChildController?.moveAllItemsFromScreen()
             menuBar.moveMenuBarFromScreen()
         case .close:
             self.changeFloatActionButton(.add)
-            toWatchController.moveItemsBackToScreen()
+            selectedChildController?.moveItemsBackToScreen()
         }
     }
     

@@ -34,6 +34,7 @@
 		FA91D8B922AAA77900243988 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA91D8B822AAA77900243988 /* SearchController.swift */; };
 		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
 		FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchController.swift */; };
+		FAC5D60E22B173EB005ED487 /* WatchedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedController.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		FA91D8B822AAA77900243988 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		FA932E59226F2FFC0087BE9E /* ToWatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchController.swift; sourceTree = "<group>"; };
+		FAC5D60D22B173EB005ED487 /* WatchedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedController.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,8 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				FA350E9E226797FC00A167CB /* HomeController.swift */,
-				FA932E59226F2FFC0087BE9E /* ToWatchController.swift */,
-				FA5D5B8022B16D3000159B40 /* WatchItemsController.swift */,
+				FAC5D60F22B17400005ED487 /* WatchItemsControllers */,
 				FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */,
 				FA91D8B822AAA77900243988 /* SearchController.swift */,
 			);
@@ -187,6 +188,16 @@
 				FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */,
 			);
 			path = "Custom UI";
+			sourceTree = "<group>";
+		};
+		FAC5D60F22B17400005ED487 /* WatchItemsControllers */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D5B8022B16D3000159B40 /* WatchItemsController.swift */,
+				FA932E59226F2FFC0087BE9E /* ToWatchController.swift */,
+				FAC5D60D22B173EB005ED487 /* WatchedController.swift */,
+			);
+			path = WatchItemsControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +295,7 @@
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA5D5B8122B16D3000159B40 /* WatchItemsController.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
+				FAC5D60E22B173EB005ED487 /* WatchedController.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
