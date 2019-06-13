@@ -25,8 +25,8 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupChildControllers()
         setupContainerView()
+        setupChildControllers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,11 +78,12 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func didFinishMoveItemsFromScreen() {
-        selectedChildController?.openSearch()
+        containerView.isScrollEnabled = false
     }
     
     func didFinishMoveItemsBackToScreen() {
         menuBar.moveMenuBarBackToScreen()
+        containerView.isScrollEnabled = true
     }
     
     //    MARK: - Methods
@@ -96,6 +97,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         self.add(asChildViewController: watchedController)
         
         childControllers = [toWatchController, watchedController]
+        selectedChildController = childControllers?[0]
     }
     
     private func setupSelectedChidController() {

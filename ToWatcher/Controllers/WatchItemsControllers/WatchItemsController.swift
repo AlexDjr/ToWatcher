@@ -60,13 +60,10 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
     }
     
-    func openSearch() {
-        showSearchController()
-    }
-    
     func moveAllItemsFromScreen() {
         collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
+            self.showSearchController()
             self.delegate?.didFinishMoveItemsFromScreen()
         }
     }
@@ -91,6 +88,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showWatchItemInfoController()
+            self.delegate?.didFinishMoveItemsFromScreen()
         }
     }
     
