@@ -62,6 +62,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         delegate?.didSelectMenuItem(at: delegateIndexPath)
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if menuItems[indexPath.item].name == nil {
+            return false
+        }
+        return true
+    }
+    
     //    MARK: - Public Methods
     func moveMenuBarFromScreen() {
         animateMenuBar(withAnimationDirection: .fromScreen)
