@@ -11,7 +11,6 @@ import UIKit
 enum MenuItemState {
     case active
     case inactive
-    case empty
 }
 
 class MenuItemCell: UICollectionViewCell {
@@ -22,12 +21,11 @@ class MenuItemCell: UICollectionViewCell {
             switch itemState {
             case .active:
                 itemNameLabel.textColor = AppStyle.menuItemActiveTextColor
+                itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysOriginal)
             case .inactive:
                 itemNameLabel.textColor = AppStyle.menuItemInactiveTextColor
                 itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysTemplate)
                 itemImageView.tintColor = AppStyle.menuItemInactiveTextColor
-            default:
-                break
             }
         }
     }
@@ -55,8 +53,14 @@ class MenuItemCell: UICollectionViewCell {
         return itemImageView
     }()
     
+    override var isSelected: Bool {
+        didSet {
+            self.itemState = isSelected ? .active : .inactive
+        }
+    }
+    
     override init(frame: CGRect) {
-        self.itemState = .empty
+        self.itemState = .inactive
         super.init(frame: frame)
         setupCell()
     }

@@ -8,20 +8,22 @@
 
 import UIKit
 
-class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WatchItemDelegateProtocol {
+class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WatchItemDelegateProtocol, MenuItemDelegateProtocol {
 
-    var childControllers: [WatchItemsController]?
-    var selectedChildController: WatchItemsController?
+    private var childControllers: [WatchItemsController]?
+    private var selectedChildController: WatchItemsController?
     
-    var containerView: UICollectionView!
-    var floatActionButton: FloatActionButton = {
+    private var containerView: UICollectionView!
+    private var floatActionButton: FloatActionButton = {
        let floatActionButton = FloatActionButton()
         return floatActionButton
     }()
-    let menuBar: MenuBar = {
+    private let menuBar: MenuBar = {
         let menuBar = MenuBar()
         return menuBar
     }()
+    
+    private var lastContentOffset: CGPoint = CGPoint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +41,6 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupTopAndBottomSafeArea()
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        setupSelectedChidController()
     }
     
     //   MARK: - UICollectionViewDataSource
@@ -71,6 +69,20 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
+    //    MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentContentOffset = containerView.contentOffset
+        
+        scrollMenuBar(withOffset: currentContentOffset)
+        selectMenuItem(withOffset: currentContentOffset)
+        
+        lastContentOffset = currentContentOffset
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        setupSelectedChidController()
+    }
+    
     //    MARK: - WatchItemDelegateProtocol
     func didSelectItem() {
         changeFloatActionButton(.close)
@@ -84,6 +96,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     func didFinishMoveItemsBackToScreen() {
         menuBar.moveMenuBarBackToScreen()
         containerView.isScrollEnabled = true
+    }
+    
+    //    MARK: - MenuItemDelegateProtocol
+    func didSelectMenuItem(at indexPath: IndexPath) {
+        containerView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     
     //    MARK: - Methods
@@ -145,6 +162,8 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     private func setupMenuBar() {
+        menuBar.delegate = self
+        
         view.addSubview(menuBar)
         menuBar.translatesAutoresizingMaskIntoConstraints = false
         menuBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -183,6 +202,31 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         UIView.animate(withDuration: 0.5) {
             self.floatActionButton.change(state)
         }
+    }
+    
+    private func scrollMenuBar(withOffset offset: CGPoint) {
+        var scrollBounds = menuBar.menuView.bounds
+        scrollBounds.origin = CGPoint(x: offset.x / 3, y: scrollBounds.origin.y)
+        menuBar.menuView.bounds = scrollBounds
+    }
+    
+    private func selectMenuItem(withOffset offset: CGPoint) {
+        let screenWidthHalf = AppStyle.screenWidth / 2
+        let isScrolledToNextItem = lastContentOffset.x <= screenWidthHalf && offset.x >= screenWidthHalf
+        let isScrolledToPreviousItem = lastContentOffset.x >= screenWidthHalf && offset.x <= screenWidthHalf
+        
+        if isScrolledToNextItem {
+            let indexPath = containerView.indexPathForVisibleItem(withOffset: offset)!
+            menuBar.selectedIndexPath = translateToMenuBarIndexPath(indexPath)
+        } else if isScrolledToPreviousItem {
+            let indexPath = containerView.indexPathForVisibleItem(withOffset: offset)!
+            menuBar.selectedIndexPath = translateToMenuBarIndexPath(indexPath)
+        }
+    }
+    
+    private func translateToMenuBarIndexPath(_ indexPath: IndexPath?) -> IndexPath? {
+        guard let indexPath = indexPath else { return nil }
+        return IndexPath(item: indexPath.item + 1, section: indexPath.section)
     }
    
 }

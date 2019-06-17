@@ -10,8 +10,15 @@ import UIKit
 
 class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    weak var delegate: MenuItemDelegateProtocol?
+    
     var menuView: UICollectionView!
     var arrowView: UIView!
+    var selectedIndexPath: IndexPath? {
+        didSet {
+            menuView.reloadData()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +40,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         
         cell.itemImage = menuItems[indexPath.item].image
         cell.itemName = menuItems[indexPath.item].name
-        cell.itemState = menuItems[indexPath.item].state
+        cell.itemState = indexPath == selectedIndexPath ? .active : .inactive
         
         return cell
     }
@@ -49,15 +56,10 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     //    MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = menuItems[indexPath.item]
-        let isItemNotEmpty = item.state != .empty
+        selectedIndexPath = indexPath
         
-        if isItemNotEmpty {
-            collectionView.selectItem(at: IndexPath(item: indexPath.item , section: 0), animated: true, scrollPosition: .centeredHorizontally)
-            item.state = .active
-            makeItemsInactiveExcept(item)
-            collectionView.reloadData()
-        }
+        let delegateIndexPath = IndexPath(item: indexPath.item  - 1, section: 0)
+        delegate?.didSelectMenuItem(at: delegateIndexPath)
     }
     
     //    MARK: - Public Methods
@@ -74,6 +76,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         backgroundColor = AppStyle.menuBarBGColor
         setupMenuView()
         setupArrowView()
+        selectFirstMenuItem()
     }
     
     private func setupMenuView() {
@@ -129,15 +132,8 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         arrowImageView.centerXAnchor.constraint(equalTo: arrowView.centerXAnchor).isActive = true
     }
     
-    private func makeItemsInactiveExcept(_ exceptedItem: MenuItem) {
-        menuItems = menuItems.map { (item) -> MenuItem in
-            let isItemNotEmpty = item.state != .empty
-            
-            if isItemNotEmpty && item != exceptedItem {
-                item.state = .inactive
-            }
-            return item
-        }
+    private func selectFirstMenuItem() {
+        selectedIndexPath = IndexPath(item: 1, section: 0)
     }
     
     //    MARK: - Animations

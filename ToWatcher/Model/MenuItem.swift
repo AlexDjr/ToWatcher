@@ -9,26 +9,18 @@
 import UIKit
 
 class MenuItem {
-    var state: MenuItemState
     var image: UIImage?
     var name: String?
     
-    init(state: MenuItemState, image: UIImage?, name: String?) {
-        self.state = state
+    init(image: UIImage?, name: String?) {
         self.image = image
         self.name = name
     }
 }
 
-extension MenuItem: Equatable {
-    static func == (lhs: MenuItem, rhs: MenuItem) -> Bool {
-        return lhs.state == rhs.state && lhs.image == rhs.image && lhs.name == rhs.name
-    }
-}
-
-var menuItems: [MenuItem] = [MenuItem(state: .empty, image: nil, name: nil),
-                             MenuItem(state: .active, image: AppStyle.menuItemToWatchImage, name: "ПОСМОТРЕТЬ"),
-                             MenuItem(state: .inactive, image: AppStyle.menuItemWatchedImage, name: "ПРОСМОТРЕНО"),
-                             MenuItem(state: .empty, image: nil, name: nil)]
+var menuItems: [MenuItem] = [MenuItem(image: nil, name: nil),
+                             MenuItem(image: AppStyle.menuItemToWatchImage, name: "ПОСМОТРЕТЬ"),
+                             MenuItem(image: AppStyle.menuItemWatchedImage, name: "ПРОСМОТРЕНО"),
+                             MenuItem(image: nil, name: nil)]
 
 
