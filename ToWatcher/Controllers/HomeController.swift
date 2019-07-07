@@ -125,11 +125,11 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     
     private func setupTopAndBottomSafeArea() {
         if #available(iOS 11.0, *) {
-            AppStyle.topSafeArea = view.safeAreaInsets.top
-            AppStyle.bottomSafeArea = view.safeAreaInsets.bottom
+            AppStyle.topSafeAreaHeight = view.safeAreaInsets.top
+            AppStyle.bottomSafeAreaHeight = view.safeAreaInsets.bottom
         } else {
-            AppStyle.topSafeArea = topLayoutGuide.length
-            AppStyle.bottomSafeArea = bottomLayoutGuide.length
+            AppStyle.topSafeAreaHeight = topLayoutGuide.length
+            AppStyle.bottomSafeAreaHeight = bottomLayoutGuide.length
         }
     }
     
@@ -175,7 +175,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     private func setupFloatActionButton() {
         view.addSubview(floatActionButton)
         floatActionButton.translatesAutoresizingMaskIntoConstraints = false
-        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.bottomSafeArea - 10).isActive = true
+        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.bottomSafeAreaHeight - 10).isActive = true
         floatActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         floatActionButton.heightAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true
         floatActionButton.widthAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true

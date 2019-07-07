@@ -132,7 +132,7 @@ class AnimatableCollectionView: UICollectionView {
                     transform = CGAffineTransform(translationX: 0, y: 1000)
                 case .selected:
                     let frameInView = self.superview!.convert(item.frame, from: self)
-                    transform = CGAffineTransform(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeArea))
+                    transform = CGAffineTransform(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeAreaHeight))
                 }
             case .backToScreen:
                 transform = CGAffineTransform.identity

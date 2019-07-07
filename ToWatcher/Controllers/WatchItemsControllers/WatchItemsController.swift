@@ -125,9 +125,9 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
     private func setupTopAnchorConstant(forViewController viewController: UIViewController) -> CGFloat {
         var topAnchorConstant: CGFloat = 0.0
         if viewController is WatchItemInfoController {
-            topAnchorConstant = AppStyle.topSafeArea + AppStyle.itemHeight
+            topAnchorConstant = AppStyle.topSafeAreaHeight + AppStyle.itemHeight
         } else if viewController is SearchController {
-            topAnchorConstant = AppStyle.topSafeArea
+            topAnchorConstant = AppStyle.topSafeAreaHeight
         }
         return topAnchorConstant
     }

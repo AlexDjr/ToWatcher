@@ -11,11 +11,11 @@ import UIKit
 struct AppStyle {
     //    view sizes
     static var screenWidth: CGFloat = UIScreen.main.bounds.width
-    static var topSafeArea: CGFloat = 0
-    static var bottomSafeArea: CGFloat = 0
+    static var topSafeAreaHeight: CGFloat = 0
+    static var bottomSafeAreaHeight: CGFloat = 0
     static var menuViewHeight: CGFloat = 88
     static var arrowViewHeight: CGFloat = 18
-    static var menuBarFullHeight = topSafeArea + menuViewHeight + arrowViewHeight
+    static var menuBarFullHeight = topSafeAreaHeight + menuViewHeight + arrowViewHeight
     static var itemHeight: CGFloat = round(screenWidth * 0.42)
     static var itemCornerRadius: CGFloat = itemHeight * 0.42
     static var floatActionButtonHeight: CGFloat = 56
