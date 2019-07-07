@@ -32,7 +32,8 @@ class WatchItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell() {
+    //    MARK: - Private methods
+    private func setupCell() {
         contentView.addSubview(itemImageView)
         itemImageView.translatesAutoresizingMaskIntoConstraints = false
         itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -40,6 +41,18 @@ class WatchItemCell: UICollectionViewCell {
         itemImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         itemImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         
-        self.layer.roundCorners([.topRight, .bottomLeft], radius: AppStyle.itemCornerRadius)
+        setupRoundCornersForCell()
+        setupShadowForCell()
+    }
+    
+    private func setupRoundCornersForCell() {
+        self.contentView.layer.roundCorners([.topRight, .bottomLeft], radius: AppStyle.itemCornerRadius)
+    }
+    
+    private func setupShadowForCell() {
+        layer.masksToBounds = false
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 3
+        layer.shadowOffset = CGSize(width: -3, height: 4)
     }
 }
