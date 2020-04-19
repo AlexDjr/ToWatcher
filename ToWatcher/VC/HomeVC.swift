@@ -85,17 +85,23 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     // MARK: - WatchItemDelegateProtocol
     func didSelectItem() {
+        containerView.isUserInteractionEnabled = false
+        floatActionButton.isUserInteractionEnabled = false
         changeFloatActionButton(.close)
         menuBar.moveMenuBarFromScreen()
     }
     
     func didFinishMoveItemsFromScreen() {
         containerView.isScrollEnabled = false
+        floatActionButton.isUserInteractionEnabled = true
+        containerView.isUserInteractionEnabled = true
     }
     
     func didFinishMoveItemsBackToScreen() {
         menuBar.moveMenuBarBackToScreen()
         containerView.isScrollEnabled = true
+        floatActionButton.isUserInteractionEnabled = true
+        containerView.isUserInteractionEnabled = true
     }
     
     // MARK: - MenuItemDelegateProtocol
@@ -187,6 +193,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     }
     
     @objc private func pressFloatActionButton() {
+        containerView.isUserInteractionEnabled = false
+        floatActionButton.isUserInteractionEnabled = false
         switch floatActionButton.actionState {
         case .add:
             changeFloatActionButton(.close)
