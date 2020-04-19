@@ -1,5 +1,5 @@
 //
-//  WatchItemInfoController.swift
+//  WatchItemInfoVC.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 06/06/2019.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-class WatchItemInfoController: UIViewController {
-
+class WatchItemInfoVC: UIViewController {
     lazy var localTitle: UILabel = {
         return setupTitle(withFontSize: AppStyle.watchItemInfoLocalTitleFontSize, andColor: AppStyle.watchItemInfoLocalTitleTextColor)
     }()

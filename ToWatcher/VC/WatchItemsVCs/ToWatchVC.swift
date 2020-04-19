@@ -1,5 +1,5 @@
 //
-//  ToWatchController.swift
+//  ToWatchVC.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 23/04/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ToWatchController: WatchItemsController, UICollectionViewDataSource {
+class ToWatchVC: WatchItemsVC, UICollectionViewDataSource {
 
     let array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
     
@@ -32,7 +32,7 @@ class ToWatchController: WatchItemsController, UICollectionViewDataSource {
         return cell
     }
     
-    //    MARK: - Methods
+    // MARK: - Methods
     override func setupCollectionView() {
         super.setupCollectionView()
         collectionView.dataSource = self

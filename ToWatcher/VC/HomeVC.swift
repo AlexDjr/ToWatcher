@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeVC.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 17/04/2019.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class HomeController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WatchItemDelegateProtocol, MenuItemDelegateProtocol {
+class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WatchItemDelegateProtocol, MenuItemDelegateProtocol {
 
-    private var childControllers: [WatchItemsController]?
-    private var selectedChildController: WatchItemsController?
+    private var childControllers: [WatchItemsVC]?
+    private var selectedChildController: WatchItemsVC?
     
     private var containerView: UICollectionView!
     private var floatActionButton: FloatActionButton = {
@@ -60,7 +60,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return cell
     }
     
-    //    MARK: - UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
@@ -69,7 +69,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
-    //    MARK: - UIScrollViewDelegate
+    // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentContentOffset = containerView.contentOffset
         
@@ -80,10 +80,10 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        setupSelectedChidController()
+        setupSelectedChildController()
     }
     
-    //    MARK: - WatchItemDelegateProtocol
+    // MARK: - WatchItemDelegateProtocol
     func didSelectItem() {
         changeFloatActionButton(.close)
         menuBar.moveMenuBarFromScreen()
@@ -98,18 +98,18 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         containerView.isScrollEnabled = true
     }
     
-    //    MARK: - MenuItemDelegateProtocol
+    // MARK: - MenuItemDelegateProtocol
     func didSelectMenuItem(at indexPath: IndexPath) {
         containerView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
     }
     
-    //    MARK: - Methods
+    // MARK: - Private methods
     private func setupChildControllers() {
-        let toWatchController = ToWatchController()
+        let toWatchController = ToWatchVC()
         toWatchController.delegate = self
         self.add(asChildViewController: toWatchController)
         
-        let watchedController = WatchedController()
+        let watchedController = WatchedVC()
         watchedController.delegate = self
         self.add(asChildViewController: watchedController)
         
@@ -117,7 +117,7 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
         selectedChildController = childControllers?[0]
     }
     
-    private func setupSelectedChidController() {
+    private func setupSelectedChildController() {
         guard let childControllers = childControllers else { return }
         let controllerIndex = containerView.indexPathsForVisibleItems.first!.item
         selectedChildController = childControllers[controllerIndex]
@@ -187,13 +187,13 @@ class HomeController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc private func pressFloatActionButton() {
-        switch self.floatActionButton.actionState {
+        switch floatActionButton.actionState {
         case .add:
-            self.changeFloatActionButton(.close)
+            changeFloatActionButton(.close)
             selectedChildController?.moveAllItemsFromScreen()
             menuBar.moveMenuBarFromScreen()
         case .close:
-            self.changeFloatActionButton(.add)
+            changeFloatActionButton(.add)
             selectedChildController?.moveItemsBackToScreen()
         }
     }

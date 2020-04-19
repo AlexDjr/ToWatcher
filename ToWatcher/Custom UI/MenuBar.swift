@@ -30,7 +30,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     }
     
     
-    //   MARK: - UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return menuItems.count
     }
@@ -45,7 +45,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return cell
     }
     
-    //    MARK: - UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width / 3, height: collectionView.frame.height)
     }
@@ -54,7 +54,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
-    //    MARK: - UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         
@@ -69,7 +69,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         return true
     }
     
-    //    MARK: - Public Methods
+    // MARK: - Public Methods
     func moveMenuBarFromScreen() {
         animateMenuBar(withAnimationDirection: .fromScreen)
     }
@@ -78,7 +78,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         animateMenuBar(withAnimationDirection: .backToScreen)
     }
     
-    //    MARK: - Private Methods
+    // MARK: - Private Methods
     private func setupView() {
         backgroundColor = AppStyle.menuBarBGColor
         setupMenuView()
@@ -143,7 +143,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         selectedIndexPath = IndexPath(item: 1, section: 0)
     }
     
-    //    MARK: - Animations
+    // MARK: - Animations
     private func animateMenuBar(withAnimationDirection animationDirection: AnimatableCollectionView.AnimationDirection) {
             switch animationDirection {
             case .fromScreen:

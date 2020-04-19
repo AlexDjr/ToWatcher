@@ -1,5 +1,5 @@
 //
-//  WatchItemsController.swift
+//  WatchItemsVC.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 12/06/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
 
     var collectionView: AnimatableCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
@@ -18,10 +18,9 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
-    //    MARK: - UICollectionViewDelegateFlowLayout
+    // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: AppStyle.itemHeight)
     }
@@ -30,7 +29,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         return UIEdgeInsets(top: AppStyle.menuViewHeight + AppStyle.arrowViewHeight, left: 0.0, bottom: 0, right: 0.0)
     }
     
-    //    MARK: - UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.bringSubviewToFront(collectionView)
         delegate?.didSelectItem()
@@ -41,7 +40,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         moveItemsExceptSelectedFromScreen()
     }
     
-    //    MARK: - Public methods
+    // MARK: - Public methods
     func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         
@@ -63,7 +62,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
     func moveAllItemsFromScreen() {
         collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
-            self.showSearchController()
+            self.showSearchVC()
             self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
@@ -75,10 +74,10 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         } else {
             moveAllItemsBackToScreen()
         }
-        self.collectionView.isUserInteractionEnabled = true
+        collectionView.isUserInteractionEnabled = true
     }
     
-    //    MARK: - Private methods
+    // MARK: - Private methods
     private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -89,7 +88,7 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
     private func moveItemsExceptSelectedFromScreen() {
         collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
-            self.showWatchItemInfoController()
+            self.showWatchItemInfoVC()
             self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
@@ -112,21 +111,21 @@ class WatchItemsController: UIViewController, UICollectionViewDelegateFlowLayout
         }
     }
     
-    private func showWatchItemInfoController() {
-        childViewController = WatchItemInfoController()
+    private func showWatchItemInfoVC() {
+        childViewController = WatchItemInfoVC()
         add(asChildViewController: childViewController)
     }
     
-    private func showSearchController() {
-        childViewController = SearchController()
+    private func showSearchVC() {
+        childViewController = SearchVC()
         add(asChildViewController: childViewController)
     }
     
     private func setupTopAnchorConstant(forViewController viewController: UIViewController) -> CGFloat {
         var topAnchorConstant: CGFloat = 0.0
-        if viewController is WatchItemInfoController {
+        if viewController is WatchItemInfoVC {
             topAnchorConstant = AppStyle.topSafeAreaHeight + AppStyle.itemHeight
-        } else if viewController is SearchController {
+        } else if viewController is SearchVC {
             topAnchorConstant = AppStyle.topSafeAreaHeight
         }
         return topAnchorConstant

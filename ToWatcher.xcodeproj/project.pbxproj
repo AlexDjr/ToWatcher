@@ -11,7 +11,7 @@
 		FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A39227725E300E01545 /* AppStyle.swift */; };
 		FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A3B227745CE00E01545 /* WatchItemDelegateProtocol.swift */; };
 		FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9C226797FC00A167CB /* AppDelegate.swift */; };
-		FA350E9F226797FC00A167CB /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9E226797FC00A167CB /* HomeController.swift */; };
+		FA350E9F226797FC00A167CB /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9E226797FC00A167CB /* HomeVC.swift */; };
 		FA350EA2226797FC00A167CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA0226797FC00A167CB /* Main.storyboard */; };
 		FA350EA4226797FD00A167CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA3226797FD00A167CB /* Assets.xcassets */; };
 		FA350EA7226797FD00A167CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA350EA5226797FD00A167CB /* LaunchScreen.storyboard */; };
@@ -27,17 +27,17 @@
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
-		FA5D5B8122B16D3000159B40 /* WatchItemsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsController.swift */; };
+		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
 		FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */; };
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
 		FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */; };
 		FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */; };
-		FA91D8B922AAA77900243988 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA91D8B822AAA77900243988 /* SearchController.swift */; };
+		FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA91D8B822AAA77900243988 /* SearchVC.swift */; };
 		FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E29226E07EF0087BE9E /* MenuItem.swift */; };
-		FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchController.swift */; };
+		FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA932E59226F2FFC0087BE9E /* ToWatchVC.swift */; };
 		FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */; };
-		FAC5D60E22B173EB005ED487 /* WatchedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedController.swift */; };
-		FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */; };
+		FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedVC.swift */; };
+		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +46,7 @@
 		FA2C8A3B227745CE00E01545 /* WatchItemDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA350E99226797FC00A167CB /* ToWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA350E9C226797FC00A167CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA350E9E226797FC00A167CB /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		FA350E9E226797FC00A167CB /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		FA350EA1226797FC00A167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA350EA3226797FD00A167CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA350EA6226797FD00A167CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,17 +63,17 @@
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
-		FA5D5B8022B16D3000159B40 /* WatchItemsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsController.swift; sourceTree = "<group>"; };
+		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CALayer+roundCorners.swift"; path = "../CALayer+roundCorners.swift"; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
 		FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView.swift; sourceTree = "<group>"; };
-		FA91D8B822AAA77900243988 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		FA91D8B822AAA77900243988 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		FA932E29226E07EF0087BE9E /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
-		FA932E59226F2FFC0087BE9E /* ToWatchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchController.swift; sourceTree = "<group>"; };
+		FA932E59226F2FFC0087BE9E /* ToWatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToWatchVC.swift; sourceTree = "<group>"; };
 		FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+indexPathForVisibleRect.swift"; sourceTree = "<group>"; };
-		FAC5D60D22B173EB005ED487 /* WatchedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedController.swift; sourceTree = "<group>"; };
-		FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoController.swift; sourceTree = "<group>"; };
+		FAC5D60D22B173EB005ED487 /* WatchedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedVC.swift; sourceTree = "<group>"; };
+		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +131,7 @@
 				FA2C8A3D22774F7F00E01545 /* Protocols */,
 				FA932E58226F181C0087BE9E /* Custom UI */,
 				FA932E51226E48010087BE9E /* Model */,
-				FA932E57226F17E70087BE9E /* Controllers */,
+				FA932E57226F17E70087BE9E /* VC */,
 				FA932E56226F17DE0087BE9E /* Cells */,
 				FA350EA0226797FC00A167CB /* Main.storyboard */,
 				FA350EA3226797FD00A167CB /* Assets.xcassets */,
@@ -175,15 +175,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		FA932E57226F17E70087BE9E /* Controllers */ = {
+		FA932E57226F17E70087BE9E /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				FA350E9E226797FC00A167CB /* HomeController.swift */,
-				FAC5D60F22B17400005ED487 /* WatchItemsControllers */,
-				FAE278BA22A934EF006FED16 /* WatchItemInfoController.swift */,
-				FA91D8B822AAA77900243988 /* SearchController.swift */,
+				FA350E9E226797FC00A167CB /* HomeVC.swift */,
+				FAC5D60F22B17400005ED487 /* WatchItemsVCs */,
+				FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */,
+				FA91D8B822AAA77900243988 /* SearchVC.swift */,
 			);
-			path = Controllers;
+			path = VC;
 			sourceTree = "<group>";
 		};
 		FA932E58226F181C0087BE9E /* Custom UI */ = {
@@ -196,14 +196,14 @@
 			path = "Custom UI";
 			sourceTree = "<group>";
 		};
-		FAC5D60F22B17400005ED487 /* WatchItemsControllers */ = {
+		FAC5D60F22B17400005ED487 /* WatchItemsVCs */ = {
 			isa = PBXGroup;
 			children = (
-				FA5D5B8022B16D3000159B40 /* WatchItemsController.swift */,
-				FA932E59226F2FFC0087BE9E /* ToWatchController.swift */,
-				FAC5D60D22B173EB005ED487 /* WatchedController.swift */,
+				FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */,
+				FA932E59226F2FFC0087BE9E /* ToWatchVC.swift */,
+				FAC5D60D22B173EB005ED487 /* WatchedVC.swift */,
 			);
-			path = WatchItemsControllers;
+			path = WatchItemsVCs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,12 +287,12 @@
 			files = (
 				FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
-				FAE278BB22A934EF006FED16 /* WatchItemInfoController.swift in Sources */,
+				FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */,
 				FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */,
-				FA350E9F226797FC00A167CB /* HomeController.swift in Sources */,
-				FA91D8B922AAA77900243988 /* SearchController.swift in Sources */,
+				FA350E9F226797FC00A167CB /* HomeVC.swift in Sources */,
+				FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
-				FA932E5A226F2FFC0087BE9E /* ToWatchController.swift in Sources */,
+				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */,
 				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
@@ -300,10 +300,10 @@
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
-				FA5D5B8122B16D3000159B40 /* WatchItemsController.swift in Sources */,
+				FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */,
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
-				FAC5D60E22B173EB005ED487 /* WatchedController.swift in Sources */,
+				FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

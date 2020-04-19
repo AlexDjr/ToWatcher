@@ -32,7 +32,7 @@ class WatchItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //    MARK: - Private methods
+    // MARK: - Private methods
     private func setupCell() {
         contentView.addSubview(itemImageView)
         itemImageView.translatesAutoresizingMaskIntoConstraints = false

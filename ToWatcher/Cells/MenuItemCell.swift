@@ -69,7 +69,7 @@ class MenuItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell() {
+    private func setupCell() {
         let stackView = setupStackView()
         
         contentView.addSubview(stackView)

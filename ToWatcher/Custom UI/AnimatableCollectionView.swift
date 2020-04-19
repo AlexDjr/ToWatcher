@@ -33,6 +33,7 @@ class AnimatableCollectionView: UICollectionView {
     private var lastItemIndexPath: IndexPath?
     private var itemsOnScreen: [UICollectionViewCell]!
     
+    // MARK: - Public methods
     func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
         setupItemsOnScreen()
         setupIndexPaths()
@@ -52,6 +53,7 @@ class AnimatableCollectionView: UICollectionView {
         }
     }
     
+    // MARK: - Private methods
     private func animate(_ item: UICollectionViewCell,
                          withType type: AnimationType,
                          andDirection direction: AnimationDirection,

@@ -1,5 +1,5 @@
 //
-//  SearchController.swift
+//  SearchVC.swift
 //  ToWatcher
 //
 //  Created by Alex Delin on 07/06/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchController: UIViewController {
+class SearchVC: UIViewController {
 
     lazy var searchTextField: UITextField = {
         return setupSearchTextField()
@@ -24,8 +24,8 @@ class SearchController: UIViewController {
         view.endEditing(true)
     }
 
-    //    MARK: - Methods
-    func setupView() {
+    // MARK: - Private Methods
+    private func setupView() {
         view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         view.alpha = 0.0
         
