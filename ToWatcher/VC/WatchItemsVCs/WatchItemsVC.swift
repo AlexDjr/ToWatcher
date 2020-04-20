@@ -20,6 +20,11 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         super.viewDidLoad()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupLongPressGesture()
+    }
+    
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: AppStyle.itemHeight)
@@ -85,6 +90,27 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         return layout
     }
     
+    // MARK: - Gestures
+    private func setupLongPressGesture() {
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressedItem))
+        longPressGesture.minimumPressDuration = 0.5
+        collectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func didLongPressedItem(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
+            impactFeedbackgenerator.prepare()
+            
+            let touchPoint = gestureRecognizer.location(in: collectionView)
+            if let indexPath = collectionView.indexPathForItem(at: touchPoint) {
+                impactFeedbackgenerator.impactOccurred()
+                
+            }
+        }
+    }
+    
+    // MARK: - Items animation
     private func moveItemsExceptSelectedFromScreen() {
         collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
@@ -111,6 +137,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         }
     }
     
+    // MARK: - Work with VCs
     private func showWatchItemInfoVC() {
         childViewController = WatchItemInfoVC()
         add(asChildViewController: childViewController)
