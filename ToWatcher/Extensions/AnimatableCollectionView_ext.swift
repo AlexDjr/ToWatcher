@@ -12,9 +12,8 @@ extension AnimatableCollectionView {
     func disableAllCellsExceptSelected() {
         for i in 0...self.numberOfItems(inSection: 0) - 1 {
             let indexPath = IndexPath(item: i, section: 0)
-            if indexPath != selectedIndexPath, let cell = self.cellForItem(at: indexPath) {
-                print("disable indexPath = \(indexPath)")
-                cell.isUserInteractionEnabled = false
+            if let cell = self.cellForItem(at: indexPath) as? WatchItemCell, indexPath != selectedIndexPath {
+                cell.state = .disabled
             }
         }
     }
@@ -22,9 +21,8 @@ extension AnimatableCollectionView {
     func enableAllCells() {
         for i in 0...self.numberOfItems(inSection: 0) - 1 {
             let indexPath = IndexPath(item: i, section: 0)
-            if let cell = self.cellForItem(at: indexPath) {
-                print("enable indexPath = \(indexPath)")
-                cell.isUserInteractionEnabled = true
+            if let cell = self.cellForItem(at: indexPath) as? WatchItemCell, cell.state == .disabled {
+                cell.state = .enabled
             }
         }
     }

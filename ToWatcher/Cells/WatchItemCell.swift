@@ -11,13 +11,21 @@ import UIKit
 class WatchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "watchItemCell"
     
+    private var originalImage: UIImage?
+    
     var itemImage: UIImage? {
         didSet {
             itemImageView.image = itemImage
         }
     }
     
-    private var itemImageView: UIImageView = {
+    var state: State = .enabled {
+        didSet {
+            setupState()
+        }
+    }
+    
+    var itemImageView: UIImageView = {
         let itemImageView = UIImageView(image: nil)
         itemImageView.contentMode = .scaleAspectFill
         return itemImageView
@@ -54,5 +62,45 @@ class WatchItemCell: UICollectionViewCell {
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
         layer.shadowOffset = CGSize(width: -3, height: 4)
+    }
+    
+    // MARK: - State
+    private func setupState() {
+        switch state {
+        case .enabled:
+            isUserInteractionEnabled = true
+            removeFilterFromImage()
+        case .disabled:
+            isUserInteractionEnabled = false
+            addFilterToImage()
+        }
+    }
+    
+    private func addFilterToImage() {
+        originalImage = itemImage
+        
+        let ciImage = CIImage(image: itemImage!)!
+        let blackAndWhiteImage = ciImage.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 1, "inputBrightness": 0.015])
+        let newImage = UIImage(ciImage: blackAndWhiteImage)
+        
+        // TODO: Change color simultaneously with moving animation
+        UIView.transition(with: itemImageView,
+                          duration: 0.4,
+                          options: .transitionCrossDissolve,
+                          animations: { self.itemImageView.image = newImage },
+                          completion: nil)
+    }
+    
+    private func removeFilterFromImage() {
+        UIView.transition(with: itemImageView,
+                          duration: 0.4,
+                          options: .transitionCrossDissolve,
+                          animations: { self.itemImageView.image = self.originalImage },
+                          completion: { _ in self.originalImage = nil } )
+    }
+    
+    enum State {
+        case enabled
+        case disabled
     }
 }
