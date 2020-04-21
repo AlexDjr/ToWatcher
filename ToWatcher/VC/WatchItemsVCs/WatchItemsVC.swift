@@ -15,6 +15,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     private var childViewController: UIViewController?
     private var selectedIndexPath: IndexPath?
+    private var isEditMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +37,10 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath != self.collectionView.selectedIndexPath else { return }
+        
         self.view.bringSubviewToFront(collectionView)
-        delegate?.didSelectItem()
+        delegate?.didSelectItem(isEditMode: false)
         
         selectedIndexPath = indexPath
         self.collectionView.selectedIndexPath = indexPath
@@ -106,6 +109,17 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             if let indexPath = collectionView.indexPathForItem(at: touchPoint) {
                 impactFeedbackgenerator.impactOccurred()
                 
+                if isEditMode {
+                    collectionView.selectedIndexPath = nil
+                    moveItemsEditMode()
+                    isEditMode = false
+                } else {
+                    delegate?.didSelectItem(isEditMode: true)
+                    collectionView.selectedIndexPath = indexPath
+                    moveItemsEditMode()
+                    isEditMode = true
+                }
+                
             }
         }
     }
@@ -126,14 +140,43 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         
         collectionView.animateItems(withType: .itemSelected, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
-            self.delegate?.didFinishMoveItemsBackToScreen()
+            self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
         }
     }
     
     private func moveAllItemsBackToScreen() {
         collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
-            self.delegate?.didFinishMoveItemsBackToScreen()
+            self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
+        }
+    }
+    
+    private func moveItemsEditMode() {
+        if isEditMode {
+            enableScroll(true)
+            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
+            collectionView.backToScreenFinishedCallback = {
+                self.collectionView.enableAllCells()
+                self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
+            }
+        } else {
+            enableScroll(false)
+            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
+            collectionView.fromScreenFinishedCallback = {
+                self.collectionView.disableAllCellsExceptSelected()
+                self.delegate?.didFinishMoveItemsFromScreen()
+            }
+        }
+    }
+    
+    private func enableScroll(_ isEnabled: Bool) {
+        if isEnabled {
+            collectionView.isScrollEnabled = true
+            collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            // this is to prevent "bouncing" behaviour of selected cell while animating other (not selected) cells for edit mode
+            collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+            collectionView.isScrollEnabled = false
         }
     }
     

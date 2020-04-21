@@ -9,7 +9,7 @@
 import Foundation
 
 protocol WatchItemDelegateProtocol: class {
-    func didSelectItem()
+    func didSelectItem(isEditMode: Bool)
     func didFinishMoveItemsFromScreen()
-    func didFinishMoveItemsBackToScreen()
+    func didFinishMoveItemsBackToScreen(isEditMode: Bool)
 }

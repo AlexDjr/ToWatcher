@@ -84,11 +84,16 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     }
     
     // MARK: - WatchItemDelegateProtocol
-    func didSelectItem() {
+    func didSelectItem(isEditMode: Bool) {
         containerView.isUserInteractionEnabled = false
         floatActionButton.isUserInteractionEnabled = false
-        changeFloatActionButton(.close)
-        menuBar.moveMenuBarFromScreen()
+
+        if isEditMode {
+            changeFloatActionButton(.hidden)
+        } else {
+            changeFloatActionButton(.close)
+            menuBar.moveMenuBarFromScreen()
+        }
     }
     
     func didFinishMoveItemsFromScreen() {
@@ -97,11 +102,15 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         containerView.isUserInteractionEnabled = true
     }
     
-    func didFinishMoveItemsBackToScreen() {
-        menuBar.moveMenuBarBackToScreen()
+    func didFinishMoveItemsBackToScreen(isEditMode: Bool) {
         containerView.isScrollEnabled = true
         floatActionButton.isUserInteractionEnabled = true
         containerView.isUserInteractionEnabled = true
+        if isEditMode {
+            changeFloatActionButton(.visible)
+        } else {
+            menuBar.moveMenuBarBackToScreen()
+        }
     }
     
     // MARK: - MenuItemDelegateProtocol
@@ -203,6 +212,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         case .close:
             changeFloatActionButton(.add)
             selectedChildController?.moveItemsBackToScreen()
+        default: break
         }
     }
     

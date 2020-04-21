@@ -15,6 +15,7 @@ class AnimatableCollectionView: UICollectionView {
     enum AnimationType {
         case itemSelected
         case allItems
+        case editMode
     }
     
     enum AnimationDirection {
@@ -113,6 +114,8 @@ class AnimatableCollectionView: UICollectionView {
                 case .selected: delay = 0.0
                 }
             }
+        } else if type == .editMode {
+            delay = 0.0
         }
         
         return delay
@@ -144,6 +147,20 @@ class AnimatableCollectionView: UICollectionView {
             switch direction {
             case .fromScreen:
                 transform = CGAffineTransform(translationX: 0, y: 1000)
+            case .backToScreen:
+                transform = CGAffineTransform.identity
+            }
+        } else if type == .editMode {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    transform = CGAffineTransform(translationX: 0, y: -25)
+                case .after:
+                    transform = CGAffineTransform(translationX: 0, y: 25)
+                case .selected:
+                    transform = CGAffineTransform.identity
+                }
             case .backToScreen:
                 transform = CGAffineTransform.identity
             }
@@ -191,22 +208,9 @@ class AnimatableCollectionView: UICollectionView {
                     }
                 }
             }
-        } else if type == .allItems {
+        } else if type == .allItems || type == .editMode {
             switch direction {
-            case .fromScreen:
-                switch location {
-                case .before:
-                    completion = nil
-                case .after:
-                    completion = nil
-                case .selected:
-                    completion = { finished in
-                        if finished {
-                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
-                        }
-                    }
-                }
-            case .backToScreen:
+            case .fromScreen, .backToScreen:
                 switch location {
                 case .before:
                     completion = nil

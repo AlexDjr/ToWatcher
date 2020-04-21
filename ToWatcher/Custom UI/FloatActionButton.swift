@@ -13,6 +13,8 @@ class FloatActionButton: UIButton  {
     enum ActionState {
         case add
         case close
+        case hidden
+        case visible
     }
     
     var actionState: ActionState {
@@ -22,6 +24,7 @@ class FloatActionButton: UIButton  {
                 self.imageView?.tintColor = AppStyle.floatActionButtonIconAddColor
             case .close:
                 self.imageView?.tintColor = AppStyle.floatActionButtonIconCloseColor
+            default: break
             }
         }
     }
@@ -53,6 +56,10 @@ class FloatActionButton: UIButton  {
             imageView?.transform = imageView!.transform.rotated(by: -rotatingAngle)
         case .close:
             imageView?.transform = imageView!.transform.rotated(by: rotatingAngle)
+        case .hidden:
+            self.alpha = 0.0
+        case .visible:
+            self.alpha = 1.0
         }
         actionState = state
     }

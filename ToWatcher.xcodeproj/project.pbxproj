@@ -26,6 +26,7 @@
 		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
+		FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
 		FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */; };
@@ -62,6 +63,7 @@
 		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView_ext.swift; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CALayer+roundCorners.swift"; path = "../CALayer+roundCorners.swift"; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */,
 				FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
+				FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */,
+				FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
