@@ -80,7 +80,11 @@ class WatchItemCell: UICollectionViewCell {
         originalImage = itemImage
         
         let ciImage = CIImage(image: itemImage!)!
-        let blackAndWhiteImage = ciImage.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 1, "inputBrightness": 0.015])
+//        let blackAndWhiteImage = ciImage.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 1, "inputBrightness": 0.015])
+//        let blackAndWhiteImage = ciImage.applyingFilter("CIColorMonochrome", parameters: ["inputColor": CIColor.gray, "inputIntensity": 1])
+//        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectMono", parameters: [:])
+//        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectNoir", parameters: [:])
+        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectTonal", parameters: [:])
         let newImage = UIImage(ciImage: blackAndWhiteImage)
         
         // TODO: Change color simultaneously with moving animation
