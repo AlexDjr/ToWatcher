@@ -9,10 +9,14 @@
 import UIKit
 
 extension AnimatableCollectionView {
-    func disableAllCellsExceptSelected() {
+    func switchSelectedItemToEditMode() {
         for i in 0...self.numberOfItems(inSection: 0) - 1 {
             let indexPath = IndexPath(item: i, section: 0)
-            if let cell = self.cellForItem(at: indexPath) as? WatchItemCell, indexPath != selectedIndexPath {
+            guard let cell = self.cellForItem(at: indexPath) as? WatchItemCell else { continue }
+            
+            if indexPath == selectedIndexPath {
+                cell.state = .editing
+            } else {
                 cell.state = .disabled
             }
         }
@@ -21,7 +25,7 @@ extension AnimatableCollectionView {
     func enableAllCells() {
         for i in 0...self.numberOfItems(inSection: 0) - 1 {
             let indexPath = IndexPath(item: i, section: 0)
-            if let cell = self.cellForItem(at: indexPath) as? WatchItemCell, cell.state == .disabled {
+            if let cell = self.cellForItem(at: indexPath) as? WatchItemCell, cell.state != .enabled {
                 cell.state = .enabled
             }
         }

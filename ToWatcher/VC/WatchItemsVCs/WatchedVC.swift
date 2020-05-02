@@ -28,7 +28,7 @@ class WatchedVC: WatchItemsVC, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchItemCell
-        cell.itemImage = array[indexPath.item]
+        cell.setImage(array[indexPath.item])
         return cell
     }
     

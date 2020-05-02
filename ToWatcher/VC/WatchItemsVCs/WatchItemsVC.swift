@@ -163,7 +163,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             enableScroll(false)
             collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
             collectionView.fromScreenFinishedCallback = {
-                self.collectionView.disableAllCellsExceptSelected()
+                self.collectionView.switchSelectedItemToEditMode()
                 self.delegate?.didFinishMoveItemsFromScreen()
             }
         }

@@ -11,44 +11,36 @@ import UIKit
 class WatchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "watchItemCell"
     
-    private var originalImage: UIImage?
-    
-    var itemImage: UIImage? {
-        didSet {
-            itemImageView.image = itemImage
-        }
-    }
-    
     var state: State = .enabled {
-        didSet {
-            setupState()
-        }
+        didSet { setupState() }
     }
     
-    var itemImageView: UIImageView = {
-        let itemImageView = UIImageView(image: nil)
-        itemImageView.contentMode = .scaleAspectFill
-        return itemImageView
-    }()
+    private var watchItmeView = WatchItemView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCell()
+        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: Public methods
+    func setImage(_ image: UIImage) {
+        watchItmeView.setImage(image)
+    }
+    
     // MARK: - Private methods
-    private func setupCell() {
-        contentView.addSubview(itemImageView)
-        itemImageView.translatesAutoresizingMaskIntoConstraints = false
-        itemImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        itemImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        itemImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        itemImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+    private func setupView() {
+        contentView.addSubview(watchItmeView)
+        watchItmeView.translatesAutoresizingMaskIntoConstraints = false
+        watchItmeView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        watchItmeView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        watchItmeView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        watchItmeView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         
+        // TODO: Fix shadow
         setupRoundCornersForCell()
         setupShadowForCell()
     }
@@ -59,6 +51,10 @@ class WatchItemCell: UICollectionViewCell {
     
     private func setupShadowForCell() {
         layer.masksToBounds = false
+//        contentView.layer.masksToBounds = false
+//        clipsToBounds = false
+//        contentView.clipsToBounds = false
+        
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
         layer.shadowOffset = CGSize(width: -3, height: 4)
@@ -66,45 +62,19 @@ class WatchItemCell: UICollectionViewCell {
     
     // MARK: - State
     private func setupState() {
+        watchItmeView.setupState(state)
+        
         switch state {
-        case .enabled:
+        case .enabled, .editing:
             isUserInteractionEnabled = true
-            removeFilterFromImage()
         case .disabled:
             isUserInteractionEnabled = false
-            addFilterToImage()
         }
-    }
-    
-    private func addFilterToImage() {
-        originalImage = itemImage
-        
-        let ciImage = CIImage(image: itemImage!)!
-//        let blackAndWhiteImage = ciImage.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 1, "inputBrightness": 0.015])
-//        let blackAndWhiteImage = ciImage.applyingFilter("CIColorMonochrome", parameters: ["inputColor": CIColor.gray, "inputIntensity": 1])
-//        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectMono", parameters: [:])
-//        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectNoir", parameters: [:])
-        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectTonal", parameters: [:])
-        let newImage = UIImage(ciImage: blackAndWhiteImage)
-        
-        // TODO: Change color simultaneously with moving animation
-        UIView.transition(with: itemImageView,
-                          duration: 0.4,
-                          options: .transitionCrossDissolve,
-                          animations: { self.itemImageView.image = newImage },
-                          completion: nil)
-    }
-    
-    private func removeFilterFromImage() {
-        UIView.transition(with: itemImageView,
-                          duration: 0.4,
-                          options: .transitionCrossDissolve,
-                          animations: { self.itemImageView.image = self.originalImage },
-                          completion: { _ in self.originalImage = nil } )
     }
     
     enum State {
         case enabled
         case disabled
+        case editing
     }
 }
