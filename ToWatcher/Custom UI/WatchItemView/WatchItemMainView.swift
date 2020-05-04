@@ -75,9 +75,8 @@ class WatchItemMainView: UIView {
         let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectTonal", parameters: [:])
         let newImage = UIImage(ciImage: blackAndWhiteImage)
         
-        // TODO: Change color simultaneously with moving animation
         UIView.transition(with: itemImageView,
-                          duration: 0.4,
+                          duration: AppStyle.animationDuration,
                           options: .transitionCrossDissolve,
                           animations: { self.itemImageView.image = newImage },
                           completion: nil)
@@ -87,11 +86,10 @@ class WatchItemMainView: UIView {
         guard let originalImage = originalImage else { return }
         
         UIView.transition(with: itemImageView,
-                          duration: 0.4,
+                          duration: AppStyle.animationDuration,
                           options: .transitionCrossDissolve,
                           animations: { self.itemImageView.image = originalImage },
                           completion: { _ in self.originalImage = nil } )
     }
     
 }
-

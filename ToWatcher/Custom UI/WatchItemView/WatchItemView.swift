@@ -48,7 +48,7 @@ class WatchItemView: UIView {
             
             if currentEditState != .default {
                 let params: EndMovingParams = (shouldReturnToDefault: true, widthXPoint: nil)
-                moveViewToEndState(with: params)
+                moveViewToEndState(with: params, duration: AppStyle.animationDuration)
             }
         default: gestureRecognizer.isEnabled = false
         }
@@ -260,7 +260,7 @@ class WatchItemView: UIView {
         return (shouldReturnToDefault, widthXPoint)
     }
     
-    private func moveViewToEndState(with params: EndMovingParams) {
+    private func moveViewToEndState(with params: EndMovingParams, duration: Double = 0.1) {
         let shouldReturnToDefault = params.shouldReturnToDefault
         
         var newAlpha: CGFloat = 0.0
@@ -276,7 +276,7 @@ class WatchItemView: UIView {
             newAlpha = 1.0
         }
         
-        UIView.animate(withDuration: 0.1) {
+        UIView.animate(withDuration: duration) {
             self.mainView.superview?.layoutIfNeeded()
             self.activeActionView.alpha = newAlpha
             

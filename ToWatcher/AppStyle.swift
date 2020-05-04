@@ -9,7 +9,7 @@
 import UIKit
 
 struct AppStyle {
-    // view sizes
+    // MARK: - view sizes
     static let screenWidth: CGFloat = UIScreen.main.bounds.width
     static var topSafeAreaHeight: CGFloat = 0
     static var bottomSafeAreaHeight: CGFloat = 0
@@ -36,16 +36,16 @@ struct AppStyle {
     
     static let watchItemEditActionViewIconSize = CGSize(width: 44.0, height: 44.0)
     
-    // font
+    // MARK: - font
     static var appFontNameBold = "Montserrat-Bold"
     
-    // font sizes
+    // MARK: - font sizes
     static let menuItemFontSize: CGFloat = 11
     static let watchItemInfoLocalTitleFontSize: CGFloat = round(itemHeight / 7.5)
     static let watchItemInfoOriginalTitleFontSize: CGFloat = round(itemHeight / 12.5)
     static let searchTextFieldFontSize: CGFloat = watchItemInfoOriginalTitleFontSize
     
-    // colors
+    // MARK: - colors
     static let menuBarBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let menuItemActiveTextColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
     static let menuItemInactiveTextColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 1)
@@ -56,11 +56,14 @@ struct AppStyle {
     static let watchItemInfoOriginalTitleTextColor: UIColor = #colorLiteral(red: 0.6588235294, green: 0.6862745098, blue: 0.7019607843, alpha: 1)
     static let searchTextFieldTintColor: UIColor = menuItemActiveTextColor
     
-    // images
+    // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")
     static let menuItemWatchedImage: UIImage = #imageLiteral(resourceName: "menu-item-watched")
     static let arrowViewImage: UIImage = #imageLiteral(resourceName: "arrow-down")
     static let floatActionBarIconImage: UIImage = #imageLiteral(resourceName: "plus")
     static let watchItemActionWatchedImage: UIImage = #imageLiteral(resourceName: "action_view_watched")
     static let watchItemActionDeleteImage: UIImage = #imageLiteral(resourceName: "action_view_delete")
+    
+    // MARK: - animations
+    static let animationDuration = 0.4
 }
