@@ -24,6 +24,7 @@ struct AppStyle {
     static var searchTextFieldHeight: CGFloat = 40
     static var searchTextFieldTopPadding: CGFloat = 50
     static var searchTextFieldLeftRightPadding: CGFloat = round(itemHeight / 3)
+    static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
     //    font
     static var appFontNameBold = "Montserrat-Bold"

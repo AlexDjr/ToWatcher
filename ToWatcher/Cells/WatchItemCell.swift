@@ -39,25 +39,6 @@ class WatchItemCell: UICollectionViewCell {
         watchItmeView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         watchItmeView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         watchItmeView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        
-        // TODO: Fix shadow
-        setupRoundCornersForCell()
-        setupShadowForCell()
-    }
-    
-    private func setupRoundCornersForCell() {
-        self.contentView.layer.roundCorners([.topRight, .bottomLeft], radius: AppStyle.itemCornerRadius)
-    }
-    
-    private func setupShadowForCell() {
-        layer.masksToBounds = false
-//        contentView.layer.masksToBounds = false
-//        clipsToBounds = false
-//        contentView.clipsToBounds = false
-        
-        layer.shadowOpacity = 0.15
-        layer.shadowRadius = 3
-        layer.shadowOffset = CGSize(width: -3, height: 4)
     }
     
     // MARK: - State

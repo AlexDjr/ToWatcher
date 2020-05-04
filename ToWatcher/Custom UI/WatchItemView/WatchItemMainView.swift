@@ -10,6 +10,7 @@ import UIKit
 
 class WatchItemMainView: UIView {
     private var originalImage: UIImage?
+    private var roundedView = UIView()
     
     private var itemImageView: UIImageView = {
         let itemImageView = UIImageView(image: nil)
@@ -24,6 +25,12 @@ class WatchItemMainView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addShadow(AppStyle.itemRoundCorners, radius: AppStyle.itemCornerRadius)
+        roundedView.roundCorners(AppStyle.itemRoundCorners, radius: AppStyle.itemCornerRadius)
     }
     
     // MARK: Public methods
@@ -41,27 +48,20 @@ class WatchItemMainView: UIView {
     
     // MARK: - Private methods
     private func setupView() {
-        self.addSubview(itemImageView)
-        itemImageView.translatesAutoresizingMaskIntoConstraints = false
-        itemImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        itemImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        itemImageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        itemImageView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        addSubview(roundedView)
+        roundedView.translatesAutoresizingMaskIntoConstraints = false
+        roundedView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        roundedView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        roundedView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        roundedView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-//        setupRoundCornersForCell()
-//        setupShadowForCell()
+        roundedView.addSubview(itemImageView)
+        itemImageView.translatesAutoresizingMaskIntoConstraints = false
+        itemImageView.topAnchor.constraint(equalTo: roundedView.topAnchor).isActive = true
+        itemImageView.bottomAnchor.constraint(equalTo: roundedView.bottomAnchor).isActive = true
+        itemImageView.leftAnchor.constraint(equalTo: roundedView.leftAnchor).isActive = true
+        itemImageView.rightAnchor.constraint(equalTo: roundedView.rightAnchor).isActive = true
     }
-    
-//    private func setupRoundCornersForCell() {
-//        self.contentView.layer.roundCorners([.topRight, .bottomLeft], radius: AppStyle.itemCornerRadius)
-//    }
-//
-//    private func setupShadowForCell() {
-//        layer.masksToBounds = false
-//        layer.shadowOpacity = 0.15
-//        layer.shadowRadius = 3
-//        layer.shadowOffset = CGSize(width: -3, height: 4)
-//    }
     
     // MARK: - State
     private func addFilterToImage() {

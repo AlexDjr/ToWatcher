@@ -29,7 +29,7 @@
 		FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
-		FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */; };
+		FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* UIView_ext.swift */; };
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
 		FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */; };
 		FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */; };
@@ -71,7 +71,7 @@
 		FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView_ext.swift; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
-		FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CALayer+roundCorners.swift"; path = "../CALayer+roundCorners.swift"; sourceTree = "<group>"; };
+		FA6D811322788A9F00A60758 /* UIView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIView_ext.swift; path = ../UIView_ext.swift; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
 		FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView.swift; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		FA0E509822AC4CE5002417BD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FA6D811322788A9F00A60758 /* CALayer+roundCorners.swift */,
+				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
 				FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */,
@@ -330,7 +330,7 @@
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
-				FA6D811422788A9F00A60758 /* CALayer+roundCorners.swift in Sources */,
+				FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */,
 				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA9D3A48245DD826000688BC /* WatchItemEditState.swift in Sources */,
