@@ -21,12 +21,6 @@ class WatchItemView: UIView {
     }
     
     private var activeActionView = UIView()
-    private let actionViewWidth: CGFloat = 100.0
-    private let actionViewMoveWidth: CGFloat = 200.0
-    private let hideActionViewGap: CGFloat = 25.0
-    
-    private let stickToFrameGap: CGFloat = 10.0
-    private let endMovingViewGap: CGFloat = 25.0
     
     private var leftMainConstraint: NSLayoutConstraint!
     private var rightMainConstraint: NSLayoutConstraint!
@@ -55,9 +49,6 @@ class WatchItemView: UIView {
     
     // MARK: - Private methods
     private func setupView() {
-//        layer.masksToBounds = false
-//        clipsToBounds = false
-        
         add(watchedView)
         add(deleteView)
         addMainView()
@@ -144,10 +135,10 @@ class WatchItemView: UIView {
         let currentXPoint = leftMainConstraint.constant
         let newXPoint = getXPoint(from: translationPoint)
         
-        let shouldViewStickToFrame = currentXPoint == 0.0 && abs(newXPoint) < stickToFrameGap
+        let shouldViewStickToFrame = currentXPoint == 0.0 && abs(newXPoint) < AppStyle.watchItemEditStickToFrameGap
         guard !shouldViewStickToFrame else { return }
         
-        //        let canMoveView = abs(newXPoint) <= actionViewWidth && newXPoint != currentXPoint
+        //        let canMoveView = abs(newXPoint) <= AppStyle.watchItemEditActionViewWidth && newXPoint != currentXPoint
         //        guard canMoveView else { return }
         
         switchCellStateIfNeeded(current: currentXPoint, new: newXPoint)
@@ -159,12 +150,12 @@ class WatchItemView: UIView {
     private func getXPoint(from translationPoint: CGPoint) -> CGFloat {
         var xPoint = leftMainConstraint.constant + translationPoint.x
         
-        //        let isMaxWidthReached = abs(leadingConstraint.constant) < actionViewWidth && abs(xPoint) > actionViewWidth
+        //        let isMaxWidthReached = abs(leadingConstraint.constant) < AppStyle.watchItemEditActionViewWidth && abs(xPoint) > AppStyle.watchItemEditActionViewWidth
         //        if isMaxWidthReached {
-        //            xPoint = xPoint > 0 ? actionViewWidth : -actionViewWidth
+        //            xPoint = xPoint > 0 ? AppStyle.watchItemEditActionViewWidth : -AppStyle.watchItemEditActionViewWidth
         //        }
         
-        let shouldStickToFrame = abs(xPoint) < stickToFrameGap
+        let shouldStickToFrame = abs(xPoint) < AppStyle.watchItemEditStickToFrameGap
         if shouldStickToFrame {
             xPoint = 0.0
         }
@@ -188,7 +179,7 @@ class WatchItemView: UIView {
         rightMainConstraint.constant = newConstant
         UIView.animate(withDuration: 0.01) {
             self.mainView.superview?.layoutIfNeeded()
-            //            if abs(newConstant) == self.actionViewWidth {
+            //            if abs(newConstant) == AppStyle.watchItemEditActionViewWidth {
             //                self.impactFeedbackgenerator.impactOccurred()
             //            }
         }
@@ -211,7 +202,7 @@ class WatchItemView: UIView {
     }
     
     private func changeConstraints(of actionView: WatchItemActionView, with newConstant: CGFloat) {
-        if abs(newConstant) >= actionViewMoveWidth {
+        if abs(newConstant) >= AppStyle.watchItemEditActionViewMoveWidth {
             if actionView.initialConstraint.isActive { actionView.initialConstraint.isActive = false }
             if !actionView.activeConstraint.isActive { actionView.activeConstraint.isActive = true }
         } else {
@@ -221,10 +212,10 @@ class WatchItemView: UIView {
     }
     
     private func showActionView(for xPoint: CGFloat) {
-        let shouldKeepHidden = abs(xPoint) <= hideActionViewGap && ((gestureRecognizer.direction == .right && currentCellState == .toWatched) || (gestureRecognizer.direction == .left && currentCellState == .toDelete))
+        let shouldKeepHidden = abs(xPoint) <= AppStyle.watchItemEditHideActionViewGap && ((gestureRecognizer.direction == .right && currentCellState == .toWatched) || (gestureRecognizer.direction == .left && currentCellState == .toDelete))
         guard !shouldKeepHidden else { return }
         
-        let newAlpha = (abs(xPoint) - hideActionViewGap) / (actionViewWidth - hideActionViewGap)
+        let newAlpha = (abs(xPoint) - AppStyle.watchItemEditHideActionViewGap) / (AppStyle.watchItemEditActionViewWidth - AppStyle.watchItemEditHideActionViewGap)
         
         UIView.animate(withDuration: 0.01) {
             self.activeActionView.alpha = newAlpha <= 1 ? newAlpha : 1
@@ -234,7 +225,7 @@ class WatchItemView: UIView {
     // MARK: - Pan gesture 'End' state
     private func handleEndState() {
         guard currentCellState != .active else { return }
-        guard abs(leftMainConstraint.constant) != actionViewWidth else { return }
+        guard abs(leftMainConstraint.constant) != AppStyle.watchItemEditActionViewWidth else { return }
         
         let params = getEndMovingParams()
         endMovingView(with: params)
@@ -249,13 +240,13 @@ class WatchItemView: UIView {
         var shouldReturnToActive = false
         switch self.currentCellState {
         case .toWatched:
-            widthXPoint = actionViewWidth
+            widthXPoint = AppStyle.watchItemEditActionViewWidth
             let currentXPoint = leftMainConstraint.constant
-            shouldReturnToActive = (direction == .right && currentXPoint < endMovingViewGap) || (direction == .left && (actionViewWidth - currentXPoint) > endMovingViewGap) || currentXPoint < 0
+            shouldReturnToActive = (direction == .right && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .left && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
         case .toDelete:
-            widthXPoint = -actionViewWidth
+            widthXPoint = -AppStyle.watchItemEditActionViewWidth
             let currentXPoint = -leftMainConstraint.constant
-            shouldReturnToActive = (direction == .left && currentXPoint < endMovingViewGap) || (direction == .right && (actionViewWidth - currentXPoint) > endMovingViewGap) || currentXPoint < 0
+            shouldReturnToActive = (direction == .left && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .right && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
         default: break
         }
         

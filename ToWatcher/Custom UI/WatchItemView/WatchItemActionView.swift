@@ -27,8 +27,6 @@ class WatchItemActionView: UIView {
     
     // MARK: - Private methods
     private func setupView() {
-//        layer.masksToBounds = false
-        
         switch actionViewType {
         case .watched: backgroundColor = .systemGreen
         case .delete: backgroundColor = .systemRed
@@ -50,7 +48,7 @@ class WatchItemActionView: UIView {
 
             actionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             actionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            actionView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
+            actionView.widthAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewWidth).isActive = true
             
             initialConstraint = actionView.leftAnchor.constraint(equalTo: self.leftAnchor)
             initialConstraint.isActive = true
@@ -60,7 +58,7 @@ class WatchItemActionView: UIView {
             
             actionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
             actionView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            actionView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
+            actionView.widthAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewWidth).isActive = true
             
             initialConstraint = actionView.rightAnchor.constraint(equalTo: self.rightAnchor)
             initialConstraint.isActive = true
@@ -73,16 +71,16 @@ class WatchItemActionView: UIView {
         let imageView = UIImageView()
         
         switch actionViewType {
-        case .watched: imageView.image = #imageLiteral(resourceName: "action_view_watched")
-        case .delete: imageView.image = #imageLiteral(resourceName: "action_view_delete")
+        case .watched: imageView.image = AppStyle.watchItemActionWatchedImage
+        case .delete: imageView.image = AppStyle.watchItemActionDeleteImage
         }
         
         actionView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.centerXAnchor.constraint(equalTo: actionView.centerXAnchor).isActive = true
         imageView.centerYAnchor.constraint(equalTo: actionView.centerYAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 44.0).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 44.0).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewIconSize.height).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewIconSize.width).isActive = true
     }
 }
 

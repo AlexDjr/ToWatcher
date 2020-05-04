@@ -17,10 +17,6 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     private var selectedIndexPath: IndexPath?
     private var isEditMode = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupLongPressGesture()
