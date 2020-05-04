@@ -96,7 +96,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.addGestureRecognizer(longPressGesture)
     }
     
-    @objc func didLongPressedItem(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    @objc private func didLongPressedItem(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .heavy)
             impactFeedbackgenerator.prepare()
@@ -151,15 +151,17 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         if isEditMode {
             enableScroll(true)
             collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
+            collectionView.enableAllCells()
+            
             collectionView.backToScreenFinishedCallback = {
-                self.collectionView.enableAllCells()
                 self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
             }
         } else {
             enableScroll(false)
             collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
+            collectionView.switchSelectedItemToEditMode()
+            
             collectionView.fromScreenFinishedCallback = {
-                self.collectionView.switchSelectedItemToEditMode()
                 self.delegate?.didFinishMoveItemsFromScreen()
             }
         }

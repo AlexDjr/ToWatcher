@@ -15,7 +15,7 @@ extension AnimatableCollectionView {
             guard let cell = self.cellForItem(at: indexPath) as? WatchItemCell else { continue }
             
             if indexPath == selectedIndexPath {
-                cell.state = .editing
+                cell.state = .editing(.default)
             } else {
                 cell.state = .disabled
             }

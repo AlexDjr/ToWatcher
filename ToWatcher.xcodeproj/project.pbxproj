@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */; };
+		FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA253CE9246035EB00297E53 /* WatchItemCellState.swift */; };
 		FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A39227725E300E01545 /* AppStyle.swift */; };
 		FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A3B227745CE00E01545 /* WatchItemDelegateProtocol.swift */; };
 		FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA350E9C226797FC00A167CB /* AppDelegate.swift */; };
@@ -48,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITextField+bottomBorder.swift"; path = "../UITextField+bottomBorder.swift"; sourceTree = "<group>"; };
+		FA253CE9246035EB00297E53 /* WatchItemCellState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCellState.swift; sourceTree = "<group>"; };
 		FA2C8A39227725E300E01545 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		FA2C8A3B227745CE00E01545 /* WatchItemDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA350E99226797FC00A167CB /* ToWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				FA9D3A47245DD826000688BC /* WatchItemEditState.swift */,
+				FA253CE9246035EB00297E53 /* WatchItemCellState.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
+				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */,
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,

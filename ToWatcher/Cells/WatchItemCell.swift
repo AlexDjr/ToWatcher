@@ -11,7 +11,7 @@ import UIKit
 class WatchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "watchItemCell"
     
-    var state: State = .enabled {
+    var state: WatchItemCellState = .enabled {
         didSet { setupState() }
     }
     
@@ -51,11 +51,5 @@ class WatchItemCell: UICollectionViewCell {
         case .disabled:
             isUserInteractionEnabled = false
         }
-    }
-    
-    enum State {
-        case enabled
-        case disabled
-        case editing
     }
 }

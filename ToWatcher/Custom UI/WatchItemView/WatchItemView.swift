@@ -9,16 +9,16 @@
 import UIKit
 
 class WatchItemView: UIView {
+    var currentEditState: WatchItemEditState = .default {
+        didSet { setupCellState() }
+    }
+    
     private var mainView = WatchItemMainView()
     private var deleteView = WatchItemActionView(.delete)
     private var watchedView = WatchItemActionView(.watched)
     
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
-    
-    private var currentCellState: WatchItemEditState = .active {
-        didSet { setupCellState() }
-    }
     
     private var activeActionView = UIView()
     
@@ -39,10 +39,17 @@ class WatchItemView: UIView {
         mainView.setImage(image)
     }
     
-    func setupState(_ state: WatchItemCell.State) {
+    func setupState(_ state: WatchItemCellState) {
         mainView.setupState(state)
         switch state {
         case .editing: gestureRecognizer.isEnabled = true
+        case .enabled:
+            gestureRecognizer.isEnabled = false
+            
+            if currentEditState != .default {
+                let params: EndMovingParams = (shouldReturnToDefault: true, widthXPoint: nil)
+                moveViewToEndState(with: params)
+            }
         default: gestureRecognizer.isEnabled = false
         }
     }
@@ -90,7 +97,7 @@ class WatchItemView: UIView {
     }
     
     private func setupCellState() {
-        switch currentCellState {
+        switch currentEditState {
         case .toWatched:
             activeActionView = watchedView
             watchedView.isHidden = false
@@ -116,15 +123,15 @@ class WatchItemView: UIView {
     
     // MARK: - Pan gesture 'Begin' state
     private func handleBeganState() {
-        guard currentCellState == .active else { return }
+        guard currentEditState == .default else { return }
         changeCellState()
         activeActionView.alpha = 0.0
     }
     
     private func changeCellState() {
         switch gestureRecognizer.direction {
-        case .right: currentCellState = .toWatched
-        case .left: currentCellState = .toDelete
+        case .right: currentEditState = .toWatched
+        case .left: currentEditState = .toDelete
         }
     }
     
@@ -164,13 +171,13 @@ class WatchItemView: UIView {
     }
     
     private func switchCellStateIfNeeded(current currentXPoint: CGFloat, new newXPoint: CGFloat) {
-        if newXPoint == 0.0 && currentXPoint != 0.0 && currentCellState != .active {
+        if newXPoint == 0.0 && currentXPoint != 0.0 && currentEditState != .default {
             impactFeedbackgenerator.impactOccurred()
-            currentCellState = .active
-        } else if currentXPoint >= 0.0 && newXPoint < 0.0 && currentCellState != .toDelete {
-            currentCellState = .toDelete
-        } else if currentXPoint <= 0.0 && newXPoint > 0.0 && currentCellState != .toWatched {
-            currentCellState = .toWatched
+            currentEditState = .default
+        } else if currentXPoint >= 0.0 && newXPoint < 0.0 && currentEditState != .toDelete {
+            currentEditState = .toDelete
+        } else if currentXPoint <= 0.0 && newXPoint > 0.0 && currentEditState != .toWatched {
+            currentEditState = .toWatched
         }
     }
     
@@ -212,7 +219,7 @@ class WatchItemView: UIView {
     }
     
     private func showActionView(for xPoint: CGFloat) {
-        let shouldKeepHidden = abs(xPoint) <= AppStyle.watchItemEditHideActionViewGap && ((gestureRecognizer.direction == .right && currentCellState == .toWatched) || (gestureRecognizer.direction == .left && currentCellState == .toDelete))
+        let shouldKeepHidden = abs(xPoint) <= AppStyle.watchItemEditHideActionViewGap && ((gestureRecognizer.direction == .right && currentEditState == .toWatched) || (gestureRecognizer.direction == .left && currentEditState == .toDelete))
         guard !shouldKeepHidden else { return }
         
         let newAlpha = (abs(xPoint) - AppStyle.watchItemEditHideActionViewGap) / (AppStyle.watchItemEditActionViewWidth - AppStyle.watchItemEditHideActionViewGap)
@@ -224,46 +231,46 @@ class WatchItemView: UIView {
     
     // MARK: - Pan gesture 'End' state
     private func handleEndState() {
-        guard currentCellState != .active else { return }
+        guard currentEditState != .default else { return }
         guard abs(leftMainConstraint.constant) != AppStyle.watchItemEditActionViewWidth else { return }
         
         let params = getEndMovingParams()
-        endMovingView(with: params)
+        moveViewToEndState(with: params)
     }
     
-    private typealias EndMovingParams = (shouldReturnToActive: Bool, widthXPoint: CGFloat)
+    private typealias EndMovingParams = (shouldReturnToDefault: Bool, widthXPoint: CGFloat?)
     
     private func getEndMovingParams() -> EndMovingParams {
         var widthXPoint: CGFloat = 0.0
         let direction = gestureRecognizer.direction
         
-        var shouldReturnToActive = false
-        switch self.currentCellState {
+        var shouldReturnToDefault = false
+        switch self.currentEditState {
         case .toWatched:
             widthXPoint = AppStyle.watchItemEditActionViewWidth
             let currentXPoint = leftMainConstraint.constant
-            shouldReturnToActive = (direction == .right && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .left && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
+            shouldReturnToDefault = (direction == .right && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .left && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
         case .toDelete:
             widthXPoint = -AppStyle.watchItemEditActionViewWidth
             let currentXPoint = -leftMainConstraint.constant
-            shouldReturnToActive = (direction == .left && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .right && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
+            shouldReturnToDefault = (direction == .left && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .right && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
         default: break
         }
         
-        return (shouldReturnToActive, widthXPoint)
+        return (shouldReturnToDefault, widthXPoint)
     }
     
-    private func endMovingView(with params: EndMovingParams) {
-        let shouldReturnToActive = params.shouldReturnToActive
-        let widthXPoint = params.widthXPoint
+    private func moveViewToEndState(with params: EndMovingParams) {
+        let shouldReturnToDefault = params.shouldReturnToDefault
         
         var newAlpha: CGFloat = 0.0
-        if shouldReturnToActive {
+        if shouldReturnToDefault {
             leftMainConstraint.constant = 0.0
             rightMainConstraint.constant = 0.0
             newAlpha = 0.0
-            currentCellState = .active
+            currentEditState = .default
         } else {
+            guard let widthXPoint = params.widthXPoint else { return }
             leftMainConstraint.constant = widthXPoint
             rightMainConstraint.constant = widthXPoint
             newAlpha = 1.0

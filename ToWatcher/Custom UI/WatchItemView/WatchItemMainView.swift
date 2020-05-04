@@ -38,7 +38,7 @@ class WatchItemMainView: UIView {
         itemImageView.image = image
     }
 
-    func setupState(_ state: WatchItemCell.State) {
+    func setupState(_ state: WatchItemCellState) {
         switch state {
         case .enabled: removeFilterFromImageIfNeeded()
         case .disabled: addFilterToImage()

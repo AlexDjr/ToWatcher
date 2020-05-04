@@ -9,7 +9,7 @@
 import Foundation
 
 enum WatchItemEditState {
-    case active
+    case `default`
     case toWatched
     case toDelete
 }
