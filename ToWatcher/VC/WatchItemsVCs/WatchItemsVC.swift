@@ -177,7 +177,9 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         } else {
             // this is to prevent "bouncing" behaviour of selected cell while animating other (not selected) cells for edit mode
-            collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 50, right: 0)
+            let newTopInset = collectionView.contentInset.top + AppStyle.topSafeAreaHeight
+            let newBottomInset = collectionView.contentInset.bottom + AppStyle.bottomSafeAreaHeight
+            collectionView.contentInset = UIEdgeInsets(top: newTopInset, left: 0, bottom: newBottomInset, right: 0)
             collectionView.isScrollEnabled = false
         }
     }
