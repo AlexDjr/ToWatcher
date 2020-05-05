@@ -13,9 +13,18 @@ class WatchItemView: UIView {
         didSet { setupCellState() }
     }
     
-    private var mainView = WatchItemMainView()
-    private var deleteView = WatchItemActionView(.delete)
-    private var watchedView = WatchItemActionView(.watched)
+    private weak var contextCell: WatchItemCell?
+    
+    var itemRemovedCallback: (() -> ())? {
+        didSet {
+            watchedView.itemDeletedCallback = itemRemovedCallback
+            deleteView.itemDeletedCallback = itemRemovedCallback
+        }
+    }
+    
+    private lazy var mainView = WatchItemMainView()
+    private lazy var deleteView = WatchItemActionView(.delete)
+    private lazy var watchedView = WatchItemActionView(.watched)
     
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -24,6 +33,13 @@ class WatchItemView: UIView {
     
     private var leftMainConstraint: NSLayoutConstraint!
     private var rightMainConstraint: NSLayoutConstraint!
+    
+    private var isInDeletedState = false
+    
+    convenience init(_ contextCell: WatchItemCell) {
+        self.init()
+        self.contextCell = contextCell
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +55,19 @@ class WatchItemView: UIView {
         mainView.setImage(image)
     }
     
-    func setupState(_ state: WatchItemCellState) {
+    func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
+        if isForReused && isInDeletedState {
+            gestureRecognizer.isEnabled = false
+            isInDeletedState = false
+            mainView.transform = CGAffineTransform.identity
+            
+            let params: EndMovingParams = (shouldReturnToDefault: true, widthXPoint: nil)
+            moveViewToEndState(with: params, withAnimation: false)
+            return
+        }
+        
+        guard !isForReused else { return }
+        
         mainView.setupState(state)
         switch state {
         case .editing: gestureRecognizer.isEnabled = true
@@ -60,6 +88,13 @@ class WatchItemView: UIView {
         add(deleteView)
         addMainView()
         setupActionViewActiveConstraints()
+        
+        itemRemovedCallback = { [weak self] in
+            self?.animateRemoving() { _ in
+                guard let self = self, let cell = self.contextCell else { return }
+                cell.delegate?.didRemoveItem(cell, withType: self.currentEditState)
+            }
+        }
         
         addGestureRecognizer()
     }
@@ -260,7 +295,7 @@ class WatchItemView: UIView {
         return (shouldReturnToDefault, widthXPoint)
     }
     
-    private func moveViewToEndState(with params: EndMovingParams, duration: Double = 0.1) {
+    private func moveViewToEndState(with params: EndMovingParams, duration: Double = 0.1, withAnimation: Bool = true) {
         let shouldReturnToDefault = params.shouldReturnToDefault
         
         var newAlpha: CGFloat = 0.0
@@ -276,11 +311,49 @@ class WatchItemView: UIView {
             newAlpha = 1.0
         }
         
-        UIView.animate(withDuration: duration) {
-            self.mainView.superview?.layoutIfNeeded()
-            self.activeActionView.alpha = newAlpha
-            
-            self.impactFeedbackgenerator.impactOccurred()
+        if withAnimation {
+            UIView.animate(withDuration: duration) {
+                self.mainView.superview?.layoutIfNeeded()
+                self.activeActionView.alpha = newAlpha
+                
+                self.impactFeedbackgenerator.impactOccurred()
+            }
+        } else {
+            mainView.superview?.layoutIfNeeded()
+            activeActionView.alpha = newAlpha
         }
+    }
+}
+
+// MARK: - Animation
+extension WatchItemView {
+    func animateRemoving(_ completion: ((Bool) -> ())?) {
+        isInDeletedState = true
+        
+        var direction: CGFloat = 1
+        var hidingView = UIView()
+        
+        switch currentEditState {
+        case .toWatched:
+            direction = 1
+            hidingView = watchedView
+        case .toDelete:
+            direction = -1
+            hidingView = deleteView
+        default: break
+        }
+
+        let transform = CGAffineTransform(translationX: 500 * direction, y: 0)
+        
+        UIView.animate(withDuration: 0.2,
+                       delay: 0.0,
+                       options: .curveEaseInOut,
+                       animations: { hidingView.alpha = 0.0 },
+                       completion: completion)
+        UIView.animate(withDuration: AppStyle.animationDuration,
+                       delay: 0.0,
+                       options: .curveEaseInOut,
+                       animations: { self.mainView.transform = transform },
+                       completion: nil )
     }
 }

@@ -81,6 +81,28 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.isUserInteractionEnabled = true
     }
     
+    func moveItemsEditMode() {
+        if isEditMode {
+            isEditMode = false
+            enableScroll(true)
+            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
+            collectionView.enableAllCells()
+            
+            collectionView.backToScreenFinishedCallback = {
+                self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
+            }
+        } else {
+            isEditMode = true
+            enableScroll(false)
+            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
+            collectionView.switchSelectedItemToEditMode()
+            
+            collectionView.fromScreenFinishedCallback = {
+                self.delegate?.didFinishMoveItemsFromScreen()
+            }
+        }
+    }
+    
     // MARK: - Private methods
     private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
@@ -104,18 +126,14 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             let touchPoint = gestureRecognizer.location(in: collectionView)
             if let indexPath = collectionView.indexPathForItem(at: touchPoint) {
                 impactFeedbackgenerator.impactOccurred()
-                
+
+                collectionView.selectedIndexPath = indexPath
                 if isEditMode {
-                    collectionView.selectedIndexPath = nil
                     moveItemsEditMode()
-                    isEditMode = false
                 } else {
                     delegate?.didSelectItem(isEditMode: true)
-                    collectionView.selectedIndexPath = indexPath
                     moveItemsEditMode()
-                    isEditMode = true
                 }
-                
             }
         }
     }
@@ -144,26 +162,6 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
-        }
-    }
-    
-    private func moveItemsEditMode() {
-        if isEditMode {
-            enableScroll(true)
-            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
-            collectionView.enableAllCells()
-            
-            collectionView.backToScreenFinishedCallback = {
-                self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
-            }
-        } else {
-            enableScroll(false)
-            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
-            collectionView.switchSelectedItemToEditMode()
-            
-            collectionView.fromScreenFinishedCallback = {
-                self.delegate?.didFinishMoveItemsFromScreen()
-            }
         }
     }
     

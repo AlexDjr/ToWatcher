@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ToWatchVC: WatchItemsVC, UICollectionViewDataSource {
+class ToWatchVC: WatchItemsVC, UICollectionViewDataSource, WatchItemEditProtocol {
 
-    let array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
+    var array: [UIImage] = [#imageLiteral(resourceName: "6"), #imageLiteral(resourceName: "2"), #imageLiteral(resourceName: "7"), #imageLiteral(resourceName: "1"), #imageLiteral(resourceName: "3"), #imageLiteral(resourceName: "4"), #imageLiteral(resourceName: "5")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,26 @@ class ToWatchVC: WatchItemsVC, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchItemCell
         cell.setImage(array[indexPath.item])
+        cell.delegate = self
         return cell
     }
     
-    // MARK: - Methods
+    // MARK: - WatchItemsVC Methods
     override func setupCollectionView() {
         super.setupCollectionView()
         collectionView.dataSource = self
     }
     
+    // MARK: - WatchItemEditProtocol
+    func didRemoveItem(_ cell: UICollectionViewCell, withType type: WatchItemEditState) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        deleteCell(at: indexPath)
+    }
+    
+    // MARK: - Private methods
+    private func deleteCell(at indexPath: IndexPath) {
+        moveItemsEditMode()
+        array.remove(at: indexPath.row)
+        collectionView.deleteItems(at: [indexPath])
+    }
 }

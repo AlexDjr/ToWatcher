@@ -13,7 +13,9 @@ class WatchItemActionView: UIView {
     var activeConstraint = NSLayoutConstraint()
     var actionView = UIView()
     
-    private var actionViewType: ActionViewType
+    var itemDeletedCallback: (() -> ())?
+    
+    var actionViewType: ActionViewType
     
     init(_ actionViewType: ActionViewType) {
         self.actionViewType = actionViewType
@@ -65,6 +67,7 @@ class WatchItemActionView: UIView {
         }
         
         setupImageView()
+        addGestureRecognizer()
     }
     
     private func setupImageView() {
@@ -81,6 +84,15 @@ class WatchItemActionView: UIView {
         imageView.centerYAnchor.constraint(equalTo: actionView.centerYAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewIconSize.height).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: AppStyle.watchItemEditActionViewIconSize.width).isActive = true
+    }
+
+    private func addGestureRecognizer() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        actionView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc private func handleTapGesture() {
+        itemDeletedCallback?()
     }
 }
 

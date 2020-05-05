@@ -11,11 +11,11 @@ import UIKit
 class WatchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "watchItemCell"
     
-    var state: WatchItemCellState = .enabled {
-        didSet { setupState() }
-    }
+    weak var delegate: WatchItemEditProtocol?
     
-    private var watchItmeView = WatchItemView()
+    var state: WatchItemCellState = .enabled
+    
+    private lazy var watchItmeView = WatchItemView(self)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,9 +26,31 @@ class WatchItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setupState(isForReused: true)
+    }
+    
     // MARK: Public methods
     func setImage(_ image: UIImage) {
         watchItmeView.setImage(image)
+    }
+    
+    func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
+        self.state = state
+        
+        if isForReused {
+            watchItmeView.setupState(isForReused: true)
+        } else {
+            watchItmeView.setupState(state)
+        }
+        
+        switch state {
+        case .enabled, .editing:
+            isUserInteractionEnabled = true
+        case .disabled:
+            isUserInteractionEnabled = false
+        }
     }
     
     // MARK: - Private methods
@@ -39,17 +61,5 @@ class WatchItemCell: UICollectionViewCell {
         watchItmeView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         watchItmeView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         watchItmeView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-    }
-    
-    // MARK: - State
-    private func setupState() {
-        watchItmeView.setupState(state)
-        
-        switch state {
-        case .enabled, .editing:
-            isUserInteractionEnabled = true
-        case .disabled:
-            isUserInteractionEnabled = false
-        }
     }
 }

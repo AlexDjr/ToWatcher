@@ -59,7 +59,7 @@ class AnimatableCollectionView: UICollectionView {
                          withType type: AnimationType,
                          andDirection direction: AnimationDirection,
                          andLocation location: AnimatedItemLocation) {
-        let isNeedToCheckIfItemUnderMenuBar = location != .after && direction == .fromScreen
+        let isNeedToCheckIfItemUnderMenuBar = location != .after && direction == .fromScreen && type != .editMode
         if isNeedToCheckIfItemUnderMenuBar {
             hideIfNeeded(item)
         }
@@ -238,12 +238,25 @@ class AnimatableCollectionView: UICollectionView {
                 fromScreenFinishedCallback?()
             }
         } else if direction == .backToScreen {
-            let itemIndexPath = self.indexPath(for: item)!
-            let isFirstItemMovedBack = itemIndexPath == self.firstItemIndexPath!
+            let itemIndexPath = indexPath(for: item)
             
-            if isFirstItemMovedBack {
+            let itemWasRemoved = itemIndexPath == nil
+            guard !itemWasRemoved else {
+                backToScreenFinishedCallback?()
+                selectedIndexPath = nil
+                return }
+            
+            var isWholeAnimationFinished: Bool
+            if type == .editMode {
+                isWholeAnimationFinished = true
+            } else {
+                isWholeAnimationFinished = itemIndexPath == self.firstItemIndexPath!
+            }
+            
+            if isWholeAnimationFinished {
                 backToScreenFinishedCallback?()
             }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 self.unHideIfNeeded(item)
             }
