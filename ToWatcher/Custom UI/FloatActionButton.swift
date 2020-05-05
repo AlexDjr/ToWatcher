@@ -9,30 +9,26 @@
 import UIKit
 
 class FloatActionButton: UIButton  {
-    
-    enum ActionState {
-        case add
-        case close
-        case hidden
-        case visible
+    var actionState: ActionState {
+        didSet { changeState() }
     }
     
-    var actionState: ActionState {
-        didSet {
-            switch actionState {
-            case .add:
-                self.imageView?.tintColor = AppStyle.floatActionButtonIconAddColor
-            case .close:
-                self.imageView?.tintColor = AppStyle.floatActionButtonIconCloseColor
-            default: break
-            }
-        }
+    var isButtonHidden: Bool = true {
+        didSet { changeVisibility() }
     }
     
     override init(frame: CGRect) {
         actionState = .add
         super.init(frame: frame)
-        
+        setupButton()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Private methods
+    private func setupButton() {
         backgroundColor = AppStyle.floatActionButtonBGColor
         layer.cornerRadius = AppStyle.floatActionButtonHeight / 2
         layer.shadowOpacity = 0.15
@@ -45,23 +41,42 @@ class FloatActionButton: UIButton  {
         imageView?.contentMode = .center
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func change(_ state: ActionState) {
+    private func changeState() {
+        var transform: CGAffineTransform? = nil
+        var tintColor: UIColor? = nil
+        
         let rotatingAngle = CGFloat(Double.pi / 2 + Double.pi / 4)
-        switch state {
+        switch actionState {
         case .add:
-            imageView?.transform = imageView!.transform.rotated(by: -rotatingAngle)
+            transform = imageView!.transform.rotated(by: -rotatingAngle)
+            tintColor = AppStyle.floatActionButtonIconAddColor
         case .close:
-            imageView?.transform = imageView!.transform.rotated(by: rotatingAngle)
-        case .hidden:
-            self.alpha = 0.0
-        case .visible:
-            self.alpha = 1.0
+            transform = imageView!.transform.rotated(by: rotatingAngle)
+            tintColor = AppStyle.floatActionButtonIconCloseColor
         }
-        actionState = state
+        UIView.animate(withDuration: AppStyle.animationDuration) {
+            self.imageView?.transform = transform!
+            self.imageView?.tintColor = tintColor!
+        }
     }
 
+    private func changeVisibility() {
+        var alpha: CGFloat
+        
+        if isButtonHidden {
+            alpha = 0.0
+        } else {
+            alpha = 1.0
+        }
+        
+        UIView.animate(withDuration: AppStyle.animationDuration) {
+            self.alpha = alpha
+        }
+    }
+    
+    // MARK: - Private types
+    enum ActionState {
+        case add
+        case close
+    }
 }

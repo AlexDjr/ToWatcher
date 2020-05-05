@@ -14,14 +14,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     private var selectedChildController: WatchItemsVC?
     
     private var containerView: UICollectionView!
-    private var floatActionButton: FloatActionButton = {
-       let floatActionButton = FloatActionButton()
-        return floatActionButton
-    }()
-    private let menuBar: MenuBar = {
-        let menuBar = MenuBar()
-        return menuBar
-    }()
+    private var floatActionButton = FloatActionButton()
+    private let menuBar = MenuBar()
     
     private var lastContentOffset: CGPoint = CGPoint()
     
@@ -89,9 +83,9 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         floatActionButton.isUserInteractionEnabled = false
 
         if isEditMode {
-            changeFloatActionButton(.hidden)
+            floatActionButton.isButtonHidden = true
         } else {
-            changeFloatActionButton(.close)
+            floatActionButton.actionState = .close
             menuBar.moveMenuBarFromScreen()
         }
     }
@@ -107,7 +101,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         floatActionButton.isUserInteractionEnabled = true
         containerView.isUserInteractionEnabled = true
         if isEditMode {
-            changeFloatActionButton(.visible)
+            floatActionButton.isButtonHidden = false
         } else {
             menuBar.moveMenuBarBackToScreen()
         }
@@ -206,19 +200,12 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         floatActionButton.isUserInteractionEnabled = false
         switch floatActionButton.actionState {
         case .add:
-            changeFloatActionButton(.close)
+            floatActionButton.actionState = .close
             selectedChildController?.moveAllItemsFromScreen()
             menuBar.moveMenuBarFromScreen()
         case .close:
-            changeFloatActionButton(.add)
+            floatActionButton.actionState = .add
             selectedChildController?.moveItemsBackToScreen()
-        default: break
-        }
-    }
-    
-    private func changeFloatActionButton(_ state: FloatActionButton.ActionState) {
-        UIView.animate(withDuration: 0.5) {
-            self.floatActionButton.change(state)
         }
     }
     
