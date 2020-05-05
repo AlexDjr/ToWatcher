@@ -36,6 +36,14 @@ class AnimatableCollectionView: UICollectionView {
     
     // MARK: - Public methods
     func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
+        guard numberOfItems(inSection: 0) != 0 else {
+            switch direction {
+            case .fromScreen: fromScreenFinishedCallback?()
+            case .backToScreen: backToScreenFinishedCallback?()
+            }
+            return
+        }
+        
         setupItemsOnScreen()
         setupIndexPaths()
         

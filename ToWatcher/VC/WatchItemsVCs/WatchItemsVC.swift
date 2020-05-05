@@ -64,12 +64,13 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func moveAllItemsFromScreen() {
-        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showSearchVC()
             self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
+        
+        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
     }
     
     func moveItemsBackToScreen() {
@@ -85,21 +86,24 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         if isEditMode {
             isEditMode = false
             enableScroll(true)
-            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
-            collectionView.enableAllCells()
             
             collectionView.backToScreenFinishedCallback = {
                 self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
             }
+            
+            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
+            collectionView.enableAllCells()
+            
         } else {
             isEditMode = true
             enableScroll(false)
-            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
-            collectionView.switchSelectedItemToEditMode()
             
             collectionView.fromScreenFinishedCallback = {
                 self.delegate?.didFinishMoveItemsFromScreen()
             }
+            
+            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
+            collectionView.switchSelectedItemToEditMode()
         }
     }
     
@@ -152,17 +156,19 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         removeChildViewController(childViewController)
         childViewController = nil
         
-        collectionView.animateItems(withType: .itemSelected, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
         }
+        
+        collectionView.animateItems(withType: .itemSelected, andDirection: .backToScreen)
     }
     
     private func moveAllItemsBackToScreen() {
-        collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
         collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
         }
+        
+        collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
     }
     
     private func enableScroll(_ isEnabled: Bool) {
