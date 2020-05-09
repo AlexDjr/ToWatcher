@@ -26,11 +26,6 @@ class WatchItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        setupState(isForReused: true)
-    }
-    
     // MARK: Public methods
     func setImage(_ image: UIImage) {
         watchItmeView.setImage(image)
@@ -38,12 +33,7 @@ class WatchItemCell: UICollectionViewCell {
     
     func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
         self.state = state
-        
-        if isForReused {
-            watchItmeView.setupState(isForReused: true)
-        } else {
-            watchItmeView.setupState(state)
-        }
+        watchItmeView.setupState(state)
         
         switch state {
         case .enabled, .editing:

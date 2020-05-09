@@ -28,7 +28,7 @@ struct AppStyle {
     
     // WatchItemCell edit mode
     static let watchItemEditActionViewWidth: CGFloat = 100.0
-    static let watchItemEditActionViewMoveWidth: CGFloat = 200.0
+    static let watchItemEditRemoveWidth: CGFloat = 200.0
     static let watchItemEditHideActionViewGap: CGFloat = 25.0
     
     static let watchItemEditStickToFrameGap: CGFloat = 10.0

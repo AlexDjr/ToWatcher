@@ -92,7 +92,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             }
             
             collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
-            collectionView.enableAllCells()
+            collectionView.goFromEditMode()
             
         } else {
             isEditMode = true
@@ -103,7 +103,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             }
             
             collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
-            collectionView.switchSelectedItemToEditMode()
+            collectionView.goToEditMode()
         }
     }
     
@@ -131,10 +131,10 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             if let indexPath = collectionView.indexPathForItem(at: touchPoint) {
                 impactFeedbackgenerator.impactOccurred()
 
-                collectionView.selectedIndexPath = indexPath
                 if isEditMode {
                     moveItemsEditMode()
                 } else {
+                    collectionView.selectedIndexPath = indexPath
                     delegate?.didSelectItem(isEditMode: true)
                     moveItemsEditMode()
                 }

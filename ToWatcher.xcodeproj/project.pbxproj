@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */; };
+		FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */; };
 		FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA253CE9246035EB00297E53 /* WatchItemCellState.swift */; };
 		FA253CEC24618A8200297E53 /* WatchItemEditProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA253CEB24618A8200297E53 /* WatchItemEditProtocol.swift */; };
 		FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2C8A39227725E300E01545 /* AppStyle.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITextField+bottomBorder.swift"; path = "../UITextField+bottomBorder.swift"; sourceTree = "<group>"; };
+		FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemEditEndState.swift; sourceTree = "<group>"; };
 		FA253CE9246035EB00297E53 /* WatchItemCellState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCellState.swift; sourceTree = "<group>"; };
 		FA253CEB24618A8200297E53 /* WatchItemEditProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemEditProtocol.swift; sourceTree = "<group>"; };
 		FA2C8A39227725E300E01545 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				FA9D3A47245DD826000688BC /* WatchItemEditState.swift */,
 				FA253CE9246035EB00297E53 /* WatchItemCellState.swift */,
+				FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
+				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

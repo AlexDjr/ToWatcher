@@ -34,7 +34,7 @@ class WatchItemView: UIView {
     private var leftMainConstraint: NSLayoutConstraint!
     private var rightMainConstraint: NSLayoutConstraint!
     
-    private var isInDeletedState = false
+    private var isRemoving = false
     
     convenience init(_ contextCell: WatchItemCell) {
         self.init()
@@ -55,18 +55,8 @@ class WatchItemView: UIView {
         mainView.setImage(image)
     }
     
-    func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
-        if isForReused && isInDeletedState {
-            gestureRecognizer.isEnabled = false
-            isInDeletedState = false
-            mainView.transform = CGAffineTransform.identity
-            
-            let params: EndMovingParams = (shouldReturnToDefault: true, widthXPoint: nil)
-            moveViewToEndState(with: params, withAnimation: false)
-            return
-        }
-        
-        guard !isForReused else { return }
+    func setupState(_ state: WatchItemCellState = .enabled) {
+        guard !isRemoving else { isRemoving = false; return }
         
         mainView.setupState(state)
         switch state {
@@ -75,8 +65,7 @@ class WatchItemView: UIView {
             gestureRecognizer.isEnabled = false
             
             if currentEditState != .default {
-                let params: EndMovingParams = (shouldReturnToDefault: true, widthXPoint: nil)
-                moveViewToEndState(with: params, duration: AppStyle.animationDuration)
+                moveViewToEndState(.default, duration: AppStyle.animationDuration)
             }
         default: gestureRecognizer.isEnabled = false
         }
@@ -184,7 +173,7 @@ class WatchItemView: UIView {
         //        guard canMoveView else { return }
         
         switchCellStateIfNeeded(current: currentXPoint, new: newXPoint)
-        moveView(newXPoint)
+        moveMainView(newXPoint)
         showActionView(for: newXPoint)
         gestureRecognizer.setTranslation(.zero, in: self)
     }
@@ -216,11 +205,9 @@ class WatchItemView: UIView {
         }
     }
     
-    private func moveView(_ newConstant: CGFloat) {
-        leftMainConstraint.constant = newConstant
-        rightMainConstraint.constant = newConstant
+    private func moveMainView(_ newConstant: CGFloat) {
         UIView.animate(withDuration: 0.01) {
-            self.mainView.superview?.layoutIfNeeded()
+            self.changeConstraints(newConstant, isForAnimation: true)
             //            if abs(newConstant) == AppStyle.watchItemEditActionViewWidth {
             //                self.impactFeedbackgenerator.impactOccurred()
             //            }
@@ -244,7 +231,7 @@ class WatchItemView: UIView {
     }
     
     private func changeConstraints(of actionView: WatchItemActionView, with newConstant: CGFloat) {
-        if abs(newConstant) >= AppStyle.watchItemEditActionViewMoveWidth {
+        if abs(newConstant) >= AppStyle.watchItemEditRemoveWidth {
             if actionView.initialConstraint.isActive { actionView.initialConstraint.isActive = false }
             if !actionView.activeConstraint.isActive { actionView.activeConstraint.isActive = true }
         } else {
@@ -269,58 +256,76 @@ class WatchItemView: UIView {
         guard currentEditState != .default else { return }
         guard abs(leftMainConstraint.constant) != AppStyle.watchItemEditActionViewWidth else { return }
         
-        let params = getEndMovingParams()
-        moveViewToEndState(with: params)
+        let state = getEndState()
+        moveViewToEndState(state)
     }
     
-    private typealias EndMovingParams = (shouldReturnToDefault: Bool, widthXPoint: CGFloat?)
-    
-    private func getEndMovingParams() -> EndMovingParams {
-        var widthXPoint: CGFloat = 0.0
-        let direction = gestureRecognizer.direction
+    private func getEndState() -> WatchItemEditEndState {
+        var endState: WatchItemEditEndState = .default
+        
+        var widthXPoint = AppStyle.watchItemEditActionViewWidth
+        var currentXPoint = leftMainConstraint.constant
+        var forwardDirection: UIPanGestureRecognizer.GestureDirection = .right
+        var backwardDirection: UIPanGestureRecognizer.GestureDirection = .left
         
         var shouldReturnToDefault = false
-        switch self.currentEditState {
-        case .toWatched:
-            widthXPoint = AppStyle.watchItemEditActionViewWidth
-            let currentXPoint = leftMainConstraint.constant
-            shouldReturnToDefault = (direction == .right && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .left && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
-        case .toDelete:
+        var shouldAnimateRemoving = false
+        
+        if currentEditState == .toDelete {
             widthXPoint = -AppStyle.watchItemEditActionViewWidth
-            let currentXPoint = -leftMainConstraint.constant
-            shouldReturnToDefault = (direction == .left && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (direction == .right && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
-        default: break
+            currentXPoint = -leftMainConstraint.constant
+            forwardDirection = .left
+            backwardDirection = .right
+        }
+
+        shouldReturnToDefault = (gestureRecognizer.direction == forwardDirection && currentXPoint < AppStyle.watchItemEditEndMovingViewGap) || (gestureRecognizer.direction == backwardDirection && (AppStyle.watchItemEditActionViewWidth - currentXPoint) > AppStyle.watchItemEditEndMovingViewGap) || currentXPoint < 0
+        
+        shouldAnimateRemoving = currentXPoint >= AppStyle.watchItemEditRemoveWidth
+        
+        if shouldReturnToDefault {
+            endState = .default
+        } else if shouldAnimateRemoving {
+            endState = .remove
+        } else {
+            endState = .active(widthXPoint)
         }
         
-        return (shouldReturnToDefault, widthXPoint)
+        return endState
     }
     
-    private func moveViewToEndState(with params: EndMovingParams, duration: Double = 0.1, withAnimation: Bool = true) {
-        let shouldReturnToDefault = params.shouldReturnToDefault
-        
-        var newAlpha: CGFloat = 0.0
-        if shouldReturnToDefault {
-            leftMainConstraint.constant = 0.0
-            rightMainConstraint.constant = 0.0
-            newAlpha = 0.0
+    private func moveViewToEndState(_ endState: WatchItemEditEndState, duration: Double = 0.1, withAnimation: Bool = true) {
+        switch endState {
+        case .default:
             currentEditState = .default
-        } else {
-            guard let widthXPoint = params.widthXPoint else { return }
-            leftMainConstraint.constant = widthXPoint
-            rightMainConstraint.constant = widthXPoint
-            newAlpha = 1.0
+            moveView(0.0, duration: duration, alpha: 0.0, withAnimation: withAnimation)
+            
+        case .active(let widthXPoint):
+            moveView(widthXPoint, duration: duration, alpha: 1.0, withAnimation: withAnimation)
+            
+        case .remove:
+            itemRemovedCallback?()
         }
-        
+    }
+    
+    private func moveView(_ constant: CGFloat, duration: Double = 0.1, alpha: CGFloat, withAnimation: Bool = true) {
         if withAnimation {
             UIView.animate(withDuration: duration) {
-                self.mainView.superview?.layoutIfNeeded()
-                self.activeActionView.alpha = newAlpha
+                self.changeConstraints(constant, isForAnimation: true)
+                self.activeActionView.alpha = alpha
                 
                 self.impactFeedbackgenerator.impactOccurred()
             }
         } else {
-            mainView.superview?.layoutIfNeeded()
-            activeActionView.alpha = newAlpha
+            layoutIfNeeded()
+            activeActionView.alpha = alpha
+        }
+    }
+    
+    private func changeConstraints(_ constant: CGFloat, isForAnimation: Bool = false) {
+        leftMainConstraint.constant = constant
+        rightMainConstraint.constant = constant
+        if isForAnimation {
+            layoutIfNeeded()
         }
     }
 }
@@ -328,7 +333,7 @@ class WatchItemView: UIView {
 // MARK: - Animation
 extension WatchItemView {
     func animateRemoving(_ completion: ((Bool) -> ())?) {
-        isInDeletedState = true
+        isRemoving = true
         
         var direction: CGFloat = 1
         var hidingView = UIView()
@@ -342,8 +347,6 @@ extension WatchItemView {
             hidingView = deleteView
         default: break
         }
-
-        let transform = CGAffineTransform(translationX: 500 * direction, y: 0)
         
         UIView.animate(withDuration: 0.2,
                        delay: 0.0,
@@ -353,7 +356,11 @@ extension WatchItemView {
         UIView.animate(withDuration: AppStyle.animationDuration,
                        delay: 0.0,
                        options: .curveEaseInOut,
-                       animations: { self.mainView.transform = transform },
-                       completion: nil )
+                       animations: { self.changeConstraints((AppStyle.screenWidth + 80) * direction, isForAnimation: true) },
+                       completion: { _ in
+                            DispatchQueue.main.asyncAfter(deadline: .now() + AppStyle.animationDuration) {
+                                self.changeConstraints(0.0)
+                            }
+                        })
     }
 }
