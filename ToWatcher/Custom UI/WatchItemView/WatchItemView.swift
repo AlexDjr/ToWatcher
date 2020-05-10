@@ -82,8 +82,8 @@ class WatchItemView: UIView {
         
         itemRemovedCallback = { [weak self] in
             self?.animateRemoving() { _ in
-                guard let self = self, let cell = self.contextCell else { return }
-                cell.delegate?.didRemoveItem(cell, withType: self.currentEditState)
+                guard let self = self, let cell = self.contextCell, let watchItem = cell.watchItem else { return }
+                cell.delegate?.didRemoveItem(watchItem, withType: self.currentEditState)
             }
         }
         

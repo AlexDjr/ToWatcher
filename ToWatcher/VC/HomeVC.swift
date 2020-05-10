@@ -8,10 +8,10 @@
 
 import UIKit
 
-class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WatchItemDelegateProtocol, MenuItemDelegateProtocol {
+class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WatchItemDelegateProtocol, MenuItemDelegateProtocol, WatchItemEditProtocol {
 
     private var childControllers: [WatchItemsVC]?
-    private var selectedChildController: WatchItemsVC?
+    private var selectedChildVC: WatchItemsVC?
     
     private var containerView: UICollectionView!
     private var floatActionButton = FloatActionButton()
@@ -107,6 +107,14 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    // MARK: - WatchItemEditProtocol
+    func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
+        guard selectedChildVC is ToWatchVC, type == .toWatched else { return }
+        guard let watchedVC = childControllers?[1] else { return }
+        
+        watchedVC.addItem(item)
+    }
+    
     // MARK: - MenuItemDelegateProtocol
     func didSelectMenuItem(at indexPath: IndexPath) {
         containerView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
@@ -114,22 +122,22 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     // MARK: - Private methods
     private func setupChildControllers() {
-        let toWatchController = ToWatchVC()
-        toWatchController.delegate = self
-        self.add(asChildViewController: toWatchController)
+        let toWatchVC = ToWatchVC(homeVC: self)
+        toWatchVC.delegate = self
+        self.add(asChildVC: toWatchVC)
         
-        let watchedController = WatchedVC()
-        watchedController.delegate = self
-        self.add(asChildViewController: watchedController)
+        let watchedVC = WatchedVC(homeVC: self)
+        watchedVC.delegate = self
+        self.add(asChildVC: watchedVC)
         
-        childControllers = [toWatchController, watchedController]
-        selectedChildController = childControllers?[0]
+        childControllers = [toWatchVC, watchedVC]
+        selectedChildVC = childControllers?[0]
     }
     
     private func setupSelectedChildController() {
         guard let childControllers = childControllers else { return }
         let controllerIndex = containerView.indexPathsForVisibleItems.first!.item
-        selectedChildController = childControllers[controllerIndex]
+        selectedChildVC = childControllers[controllerIndex]
     }
     
     private func setupTopAndBottomSafeArea() {
@@ -190,25 +198,12 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         floatActionButton.widthAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true
     }
     
-    private func add(asChildViewController viewController: UIViewController) {
-        addChild(viewController)
-        viewController.didMove(toParent: self)
+    private func add(asChildVC vc: UIViewController) {
+        addChild(vc)
+        vc.didMove(toParent: self)
     }
     
-    @objc private func pressFloatActionButton() {
-        containerView.isUserInteractionEnabled = false
-        floatActionButton.isUserInteractionEnabled = false
-        switch floatActionButton.actionState {
-        case .add:
-            floatActionButton.actionState = .close
-            selectedChildController?.moveAllItemsFromScreen()
-            menuBar.moveMenuBarFromScreen()
-        case .close:
-            floatActionButton.actionState = .add
-            selectedChildController?.moveItemsBackToScreen()
-        }
-    }
-    
+    // MARK: - MenuBar
     private func scrollMenuBar(withOffset offset: CGPoint) {
         var scrollBounds = menuBar.menuView.bounds
         scrollBounds.origin = CGPoint(x: offset.x / 3, y: scrollBounds.origin.y)
@@ -233,6 +228,20 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         guard let indexPath = indexPath else { return nil }
         return IndexPath(item: indexPath.item + 1, section: indexPath.section)
     }
-   
+    
+    // MARK: - Actions
+    @objc private func pressFloatActionButton() {
+        containerView.isUserInteractionEnabled = false
+        floatActionButton.isUserInteractionEnabled = false
+        switch floatActionButton.actionState {
+        case .add:
+            floatActionButton.actionState = .close
+            selectedChildVC?.moveAllItemsFromScreen()
+            menuBar.moveMenuBarFromScreen()
+        case .close:
+            floatActionButton.actionState = .add
+            selectedChildVC?.moveItemsBackToScreen()
+        }
+    }
 }
 

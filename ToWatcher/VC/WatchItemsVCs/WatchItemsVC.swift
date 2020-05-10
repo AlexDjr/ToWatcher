@@ -8,14 +8,32 @@
 
 import UIKit
 
-class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-
+class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, WatchItemEditProtocol {
+    weak var homeVC: HomeVC?
+    
+    var watchItems: [WatchItem] = []
     var collectionView: WatchItemCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
     
     private var childViewController: UIViewController?
     private var selectedIndexPath: IndexPath?
     private var isEditMode = false
+    
+    init(homeVC: HomeVC) {
+        self.homeVC = homeVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if collectionView == nil {
+            setupCollectionView()
+        }
+    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -43,26 +61,31 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         
         moveItemsExceptSelectedFromScreen()
     }
-    
-    // MARK: - Public methods
-    func setupCollectionView() {
-        let layout = setupCollectionViewLayout()
-        
-        collectionView = WatchItemCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        
-        collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
+
+    // MARK: - UICollectionViewDataSource
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return watchItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchItemCell
+        cell.watchItem = watchItems[indexPath.item]
+        cell.delegate = self
+        return cell
+    }
+    
+    // MARK: - WatchItemEditProtocol
+    func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
+        guard let index = (watchItems.firstIndex { $0 == item }) else { return }
+        deleteCell(at: IndexPath(item: index, section: 0))
+        homeVC?.didRemoveItem(item, withType: type)
+    }
+    
+    // MARK: - Public methods
     func moveAllItemsFromScreen() {
         collectionView.fromScreenFinishedCallback = {
             self.showSearchVC()
@@ -91,8 +114,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
                 self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
             }
             
-            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
             collectionView.goFromEditMode()
+            collectionView.animateItems(withType: .editMode, andDirection: .backToScreen)
             
         } else {
             isEditMode = true
@@ -102,17 +125,53 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
                 self.delegate?.didFinishMoveItemsFromScreen()
             }
             
-            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
             collectionView.goToEditMode()
+            collectionView.animateItems(withType: .editMode, andDirection: .fromScreen)
+        }
+    }
+    
+    func addItem(_ item: WatchItem) {
+        if let collectionView = collectionView {
+            watchItems.insert(item, at: 0)
+            collectionView.reloadData()
+        } else {
+            setupCollectionView()
+            watchItems.insert(item, at: 0)
+            collectionView.reloadData()
         }
     }
     
     // MARK: - Private methods
+    private func setupCollectionView() {
+        let layout = setupCollectionViewLayout()
+        
+        collectionView = WatchItemCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
+    }
+    
     private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = AppStyle.itemsLineSpacing
         return layout
+    }
+    
+    private func deleteCell(at indexPath: IndexPath) {
+        moveItemsEditMode()
+        watchItems.remove(at: indexPath.row)
+        collectionView.deleteItems(at: [indexPath])
     }
     
     // MARK: - Gestures

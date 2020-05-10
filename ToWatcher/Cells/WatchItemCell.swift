@@ -14,6 +14,12 @@ class WatchItemCell: UICollectionViewCell {
     weak var delegate: WatchItemEditProtocol?
     
     var state: WatchItemCellState = .enabled
+    var watchItem: WatchItem? {
+        didSet {
+            guard let watchItem = watchItem else { return }
+            watchItmeView.setImage(watchItem.image)
+        }
+    }
     
     private lazy var watchItmeView = WatchItemView(self)
     
@@ -27,10 +33,6 @@ class WatchItemCell: UICollectionViewCell {
     }
     
     // MARK: Public methods
-    func setImage(_ image: UIImage) {
-        watchItmeView.setImage(image)
-    }
-    
     func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
         self.state = state
         watchItmeView.setupState(state)

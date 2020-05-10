@@ -45,6 +45,7 @@
 		FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */; };
 		FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */; };
 		FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */; };
+		FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC20246865AF002624F3 /* WatchItem.swift */; };
 		FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedVC.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +91,7 @@
 		FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemActionView.swift; sourceTree = "<group>"; };
 		FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer_ext.swift; sourceTree = "<group>"; };
 		FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+indexPathForVisibleRect.swift"; sourceTree = "<group>"; };
+		FAC0CC20246865AF002624F3 /* WatchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItem.swift; sourceTree = "<group>"; };
 		FAC5D60D22B173EB005ED487 /* WatchedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedVC.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				FA932E29226E07EF0087BE9E /* MenuItem.swift */,
+				FAC0CC20246865AF002624F3 /* WatchItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */,
+				FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
 				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,

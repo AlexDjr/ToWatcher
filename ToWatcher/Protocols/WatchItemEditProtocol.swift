@@ -9,5 +9,5 @@
 import UIKit
 
 protocol WatchItemEditProtocol: class {
-    func didRemoveItem(_ cell: UICollectionViewCell, withType type: WatchItemEditState)
+    func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState)
 }
