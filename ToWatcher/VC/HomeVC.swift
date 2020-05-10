@@ -37,6 +37,11 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         setupTopAndBottomSafeArea()
     }
     
+    // MARK: - Public methods
+    func enableInteractions(_ isEnabled: Bool) {
+        menuBar.isUserInteractionEnabled = isEnabled
+    }
+    
     //   MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2

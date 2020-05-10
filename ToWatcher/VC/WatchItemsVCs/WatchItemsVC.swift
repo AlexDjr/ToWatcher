@@ -109,6 +109,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         if isEditMode {
             isEditMode = false
             enableScroll(true)
+            homeVC?.enableInteractions(true)
             
             collectionView.backToScreenFinishedCallback = {
                 self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: true)
@@ -120,6 +121,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         } else {
             isEditMode = true
             enableScroll(false)
+            homeVC?.enableInteractions(false)
             
             collectionView.fromScreenFinishedCallback = {
                 self.delegate?.didFinishMoveItemsFromScreen()
