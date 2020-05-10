@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */; };
 		FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */; };
 		FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */; };
 		FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA253CE9246035EB00297E53 /* WatchItemCellState.swift */; };
@@ -29,7 +30,6 @@
 		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
-		FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
 		FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* UIView_ext.swift */; };
@@ -50,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCollectionView.swift; sourceTree = "<group>"; };
 		FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITextField+bottomBorder.swift"; path = "../UITextField+bottomBorder.swift"; sourceTree = "<group>"; };
 		FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemEditEndState.swift; sourceTree = "<group>"; };
 		FA253CE9246035EB00297E53 /* WatchItemCellState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCellState.swift; sourceTree = "<group>"; };
@@ -74,7 +75,6 @@
 		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
-		FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView_ext.swift; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* UIView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIView_ext.swift; path = ../UIView_ext.swift; sourceTree = "<group>"; };
@@ -111,7 +111,6 @@
 				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
-				FA3C7EF4244EE4F700B19C63 /* AnimatableCollectionView_ext.swift */,
 				FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */,
 			);
 			path = Extensions;
@@ -214,6 +213,7 @@
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
 				FA581CC92274AE70009FBF9A /* FloatActionButton.swift */,
 				FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */,
+				FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */,
 				FA9D3A4F245DD8C6000688BC /* WatchItemView */,
 			);
 			path = "Custom UI";
@@ -336,6 +336,7 @@
 				FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */,
 				FA350E9F226797FC00A167CB /* HomeVC.swift in Sources */,
 				FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */,
+				FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
@@ -353,7 +354,6 @@
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */,
-				FA3C7EF5244EE4F700B19C63 /* AnimatableCollectionView_ext.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
 				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,

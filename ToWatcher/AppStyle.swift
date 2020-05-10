@@ -18,6 +18,7 @@ struct AppStyle {
     static let menuBarFullHeight = topSafeAreaHeight + menuViewHeight + arrowViewHeight
     static let itemHeight: CGFloat = round(screenWidth * 0.42)
     static let itemCornerRadius: CGFloat = itemHeight * 0.42
+    static let itemsLineSpacing: CGFloat = round(AppStyle.itemHeight / 20)
     static let floatActionButtonHeight: CGFloat = 56
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
@@ -35,6 +36,10 @@ struct AppStyle {
     static let watchItemEditEndMovingViewGap: CGFloat = 25.0
     
     static let watchItemEditActionViewIconSize = CGSize(width: 44.0, height: 44.0)
+    
+    static let watchItemEditMinimizeScale = (AppStyle.screenWidth - itemsLineSpacing * 2) / AppStyle.screenWidth
+    static private let resultItemHeight = (AppStyle.itemHeight * watchItemEditMinimizeScale * 1000).rounded() / 1000
+    static let watchItemEditTranslationY = itemsLineSpacing - (AppStyle.itemHeight - resultItemHeight) / 2
     
     // MARK: - font
     static var appFontNameBold = "Montserrat-Bold"

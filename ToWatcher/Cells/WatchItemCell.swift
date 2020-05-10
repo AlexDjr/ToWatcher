@@ -43,6 +43,24 @@ class WatchItemCell: UICollectionViewCell {
         }
     }
     
+    func setTransform(_ transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection) {
+        guard type == .editMode else { self.transform = transform; return }
+    
+        let yScale = sqrt(transform.b * transform.b + transform.d * transform.d)
+        
+        switch direction {
+        case .fromScreen:
+            watchItmeView.mainView.transform = transform
+            watchItmeView.deleteView.transform = .init(scaleX: 1, y: yScale)
+            watchItmeView.watchedView.transform = .init(scaleX: 1, y: yScale)
+            
+        case .backToScreen:
+            watchItmeView.mainView.transform = .identity
+            watchItmeView.deleteView.transform = .identity
+            watchItmeView.watchedView.transform = .identity
+        }
+    }
+    
     // MARK: - Private methods
     private func setupView() {
         contentView.addSubview(watchItmeView)

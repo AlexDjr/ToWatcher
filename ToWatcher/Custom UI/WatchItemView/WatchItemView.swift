@@ -22,9 +22,9 @@ class WatchItemView: UIView {
         }
     }
     
-    private lazy var mainView = WatchItemMainView()
-    private lazy var deleteView = WatchItemActionView(.delete)
-    private lazy var watchedView = WatchItemActionView(.watched)
+    lazy var mainView = WatchItemMainView()
+    lazy var deleteView = WatchItemActionView(.delete)
+    lazy var watchedView = WatchItemActionView(.watched)
     
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -33,6 +33,8 @@ class WatchItemView: UIView {
     
     private var leftMainConstraint: NSLayoutConstraint!
     private var rightMainConstraint: NSLayoutConstraint!
+    private var watchedConstraint: NSLayoutConstraint!
+    private var deleteConstraint: NSLayoutConstraint!
     
     private var isRemoving = false
     
@@ -73,9 +75,9 @@ class WatchItemView: UIView {
     
     // MARK: - Private methods
     private func setupView() {
-        add(watchedView)
-        add(deleteView)
         addMainView()
+        addDeleteView()
+        addWatchedView()
         setupActionViewActiveConstraints()
         
         itemRemovedCallback = { [weak self] in
@@ -106,13 +108,26 @@ class WatchItemView: UIView {
         rightMainConstraint.isActive = true
     }
     
-    private func add(_ view: UIView) {
-        self.addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        view.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        view.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+    private func addWatchedView() {
+        self.insertSubview(watchedView, belowSubview: mainView)
+        watchedView.translatesAutoresizingMaskIntoConstraints = false
+        watchedView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        watchedView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        watchedView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        
+        watchedConstraint = watchedView.rightAnchor.constraint(equalTo: self.centerXAnchor)
+        watchedConstraint.isActive = true
+    }
+    
+    private func addDeleteView() {
+        self.insertSubview(deleteView, belowSubview: mainView)
+        deleteView.translatesAutoresizingMaskIntoConstraints = false
+        deleteView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        deleteView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        deleteView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        
+        deleteConstraint = deleteView.leftAnchor.constraint(equalTo: self.centerXAnchor)
+        deleteConstraint.isActive = true
     }
     
     private func setupActionViewActiveConstraints() {
@@ -324,6 +339,9 @@ class WatchItemView: UIView {
     private func changeConstraints(_ constant: CGFloat, isForAnimation: Bool = false) {
         leftMainConstraint.constant = constant
         rightMainConstraint.constant = constant
+        watchedConstraint.constant = constant
+        deleteConstraint.constant = constant
+        
         if isForAnimation {
             layoutIfNeeded()
         }

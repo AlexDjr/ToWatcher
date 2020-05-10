@@ -62,6 +62,10 @@ class AnimatableCollectionView: UICollectionView {
         }
     }
     
+    func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimationType, direction: AnimationDirection) {
+            item.transform = transform
+    }
+    
     // MARK: - Private methods
     private func animate(_ item: UICollectionViewCell,
                          withType type: AnimationType,
@@ -79,7 +83,7 @@ class AnimatableCollectionView: UICollectionView {
         UIView.animate(withDuration: AppStyle.animationDuration,
                        delay: delay,
                        options: .curveEaseInOut,
-                       animations: { item.transform = transform! },
+                       animations: { self.setTransform(item, transform: transform!, type: type, direction: direction) },
                        completion: completion)
     }
     
@@ -163,11 +167,12 @@ class AnimatableCollectionView: UICollectionView {
             case .fromScreen:
                 switch location {
                 case .before:
-                    transform = CGAffineTransform(translationX: 0, y: -25)
+                    transform = CGAffineTransform(translationX: 0, y: -AppStyle.watchItemEditTranslationY)
                 case .after:
-                    transform = CGAffineTransform(translationX: 0, y: 25)
+                    transform = CGAffineTransform(translationX: 0, y: AppStyle.watchItemEditTranslationY)
                 case .selected:
-                    transform = CGAffineTransform.identity
+                    let scale = AppStyle.watchItemEditMinimizeScale
+                    transform = CGAffineTransform(scaleX: scale, y: scale)
                 }
             case .backToScreen:
                 transform = CGAffineTransform.identity

@@ -1,14 +1,23 @@
 //
-//  AnimatableCollectionView.swift
+//  WatchItemCollectionView.swift
 //  ToWatcher
 //
-//  Created by Alex Delin on 21.04.2020.
+//  Created by Alex Delin on 10.05.2020.
 //  Copyright © 2020 Alex Delin. All rights reserved.
 //
 
 import UIKit
 
-extension AnimatableCollectionView {
+class WatchItemCollectionView: AnimatableCollectionView {
+    
+    override func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection) {
+        if let watchItemCell = item as? WatchItemCell {
+            watchItemCell.setTransform(transform, type: type, direction: direction)
+        } else {
+            item.transform = transform
+        }
+    }
+
     func goToEditMode() {
         for i in 0...self.numberOfItems(inSection: 0) - 1 {
             let indexPath = IndexPath(item: i, section: 0)

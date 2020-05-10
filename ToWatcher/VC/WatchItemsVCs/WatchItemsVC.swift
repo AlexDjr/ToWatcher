@@ -10,7 +10,7 @@ import UIKit
 
 class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
 
-    var collectionView: AnimatableCollectionView!
+    var collectionView: WatchItemCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
     
     private var childViewController: UIViewController?
@@ -48,7 +48,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         
-        collectionView = AnimatableCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView = WatchItemCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
@@ -111,7 +111,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = round(AppStyle.itemHeight / 20)
+        layout.minimumLineSpacing = AppStyle.itemsLineSpacing
         return layout
     }
     
