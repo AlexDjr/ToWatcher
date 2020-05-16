@@ -17,11 +17,11 @@ class WatchItemCell: UICollectionViewCell {
     var watchItem: WatchItem? {
         didSet {
             guard let watchItem = watchItem else { return }
-            watchItmeView.setImage(watchItem.image)
+            watchItemView.setImage(watchItem.image)
         }
     }
     
-    private lazy var watchItmeView = WatchItemView(self)
+    private lazy var watchItemView = WatchItemView(self)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,7 +35,7 @@ class WatchItemCell: UICollectionViewCell {
     // MARK: Public methods
     func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
         self.state = state
-        watchItmeView.setupState(state)
+        watchItemView.setupState(state)
         
         switch state {
         case .enabled, .editing:
@@ -52,24 +52,24 @@ class WatchItemCell: UICollectionViewCell {
         
         switch direction {
         case .fromScreen:
-            watchItmeView.mainView.transform = transform
-            watchItmeView.deleteView.transform = .init(scaleX: 1, y: yScale)
-            watchItmeView.watchedView.transform = .init(scaleX: 1, y: yScale)
+            watchItemView.mainView.transform = transform
+            watchItemView.deleteView.transform = .init(scaleX: 1, y: yScale)
+            watchItemView.watchedView.transform = .init(scaleX: 1, y: yScale)
             
         case .backToScreen:
-            watchItmeView.mainView.transform = .identity
-            watchItmeView.deleteView.transform = .identity
-            watchItmeView.watchedView.transform = .identity
+            watchItemView.mainView.transform = .identity
+            watchItemView.deleteView.transform = .identity
+            watchItemView.watchedView.transform = .identity
         }
     }
     
     // MARK: - Private methods
     private func setupView() {
-        contentView.addSubview(watchItmeView)
-        watchItmeView.translatesAutoresizingMaskIntoConstraints = false
-        watchItmeView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        watchItmeView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        watchItmeView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        watchItmeView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        contentView.addSubview(watchItemView)
+        watchItemView.translatesAutoresizingMaskIntoConstraints = false
+        watchItemView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        watchItemView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        watchItemView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        watchItemView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
 }
