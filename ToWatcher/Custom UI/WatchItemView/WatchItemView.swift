@@ -188,6 +188,10 @@ class WatchItemView: UIView {
         //        guard canMoveView else { return }
         
         switchCellStateIfNeeded(current: currentXPoint, new: newXPoint)
+        
+        let shouldStop = (contextCell as? WatchedItemCell) != nil && abs(newXPoint) > AppStyle.watchItemEditWatchedShouldStopGap && currentEditState == .toWatched
+        guard !shouldStop else { return }
+        
         moveMainView(newXPoint)
         showActionView(for: newXPoint)
         gestureRecognizer.setTranslation(.zero, in: self)

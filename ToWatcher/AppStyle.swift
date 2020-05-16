@@ -34,6 +34,7 @@ struct AppStyle {
     
     static let watchItemEditStickToFrameGap: CGFloat = 10.0
     static let watchItemEditEndMovingViewGap: CGFloat = 25.0
+    static let watchItemEditWatchedShouldStopGap: CGFloat = 20.0
     
     static let watchItemEditActionViewIconSize = CGSize(width: 44.0, height: 44.0)
     
