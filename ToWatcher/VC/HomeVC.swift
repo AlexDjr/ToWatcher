@@ -114,10 +114,12 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     // MARK: - WatchItemEditProtocol
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
-        guard selectedChildVC is ToWatchVC, type == .toWatched else { return }
-        guard let watchedVC = childControllers?[1] else { return }
-        
-        watchedVC.addItem(item)
+        menuBar.menuView.reloadData()
+    
+        if selectedChildVC is ToWatchVC, type == .toWatched {
+            guard let watchedVC = childControllers?[1] else { return }
+            watchedVC.addItem(item)
+        }
     }
     
     // MARK: - MenuItemDelegateProtocol

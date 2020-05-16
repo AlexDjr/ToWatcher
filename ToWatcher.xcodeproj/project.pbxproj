@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA0A5C132470670A0008599C /* MenuItemState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C122470670A0008599C /* MenuItemState.swift */; };
+		FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C142470672A0008599C /* MenuItemType.swift */; };
 		FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */; };
 		FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */; };
 		FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */; };
@@ -46,11 +48,14 @@
 		FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */; };
 		FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */; };
 		FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC20246865AF002624F3 /* WatchItem.swift */; };
+		FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC2224695E6E002624F3 /* MenuItemView.swift */; };
 		FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedVC.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA0A5C122470670A0008599C /* MenuItemState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemState.swift; sourceTree = "<group>"; };
+		FA0A5C142470672A0008599C /* MenuItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemType.swift; sourceTree = "<group>"; };
 		FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCollectionView.swift; sourceTree = "<group>"; };
 		FA0E509622AC4353002417BD /* UITextField+bottomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UITextField+bottomBorder.swift"; path = "../UITextField+bottomBorder.swift"; sourceTree = "<group>"; };
 		FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemEditEndState.swift; sourceTree = "<group>"; };
@@ -92,6 +97,7 @@
 		FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer_ext.swift; sourceTree = "<group>"; };
 		FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+indexPathForVisibleRect.swift"; sourceTree = "<group>"; };
 		FAC0CC20246865AF002624F3 /* WatchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItem.swift; sourceTree = "<group>"; };
+		FAC0CC2224695E6E002624F3 /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		FAC5D60D22B173EB005ED487 /* WatchedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedVC.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
+				FAC0CC2224695E6E002624F3 /* MenuItemView.swift */,
 				FA581CC92274AE70009FBF9A /* FloatActionButton.swift */,
 				FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */,
 				FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */,
@@ -228,6 +235,8 @@
 				FA9D3A47245DD826000688BC /* WatchItemEditState.swift */,
 				FA253CE9246035EB00297E53 /* WatchItemCellState.swift */,
 				FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */,
+				FA0A5C122470670A0008599C /* MenuItemState.swift */,
+				FA0A5C142470672A0008599C /* MenuItemType.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -331,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */,
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField+bottomBorder.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
@@ -349,7 +359,9 @@
 				FA9D3A48245DD826000688BC /* WatchItemEditState.swift in Sources */,
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
+				FA0A5C132470670A0008599C /* MenuItemState.swift in Sources */,
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
+				FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */,
 				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA253CEC24618A8200297E53 /* WatchItemEditProtocol.swift in Sources */,

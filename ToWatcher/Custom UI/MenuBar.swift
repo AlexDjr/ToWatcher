@@ -13,12 +13,13 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     weak var delegate: MenuItemDelegateProtocol?
     
     var menuView: UICollectionView!
-    var arrowView: UIView!
     var selectedIndexPath: IndexPath? {
         didSet {
             menuView.reloadData()
         }
     }
+    
+    private var arrowView: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,18 +30,26 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return menuItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = menuView.dequeueReusableCell(withReuseIdentifier: MenuItemCell.reuseIdentifier, for: indexPath) as! MenuItemCell
+        let menuItem = menuItems[indexPath.item]
         
-        cell.itemImage = menuItems[indexPath.item].image
-        cell.itemName = menuItems[indexPath.item].name
-        cell.itemState = indexPath == selectedIndexPath ? .active : .inactive
+        var cell = MenuItemCell()
+        var reuseIdentifier: String
+        
+        switch menuItem.type {
+        case .empty: reuseIdentifier = MenuItemCell.reuseIdentifierEmpty
+        case .toWatch: reuseIdentifier = MenuItemCell.reuseIdentifierToWatch
+        case .watched: reuseIdentifier = MenuItemCell.reuseIdentifierWatched
+        }
+        
+        cell = menuView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MenuItemCell
+        cell.menuItem = menuItem
+        cell.itemState = indexPath == selectedIndexPath ? .active : .inactive        
         
         return cell
     }
@@ -104,7 +113,9 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         menuView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifier)
+        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifierEmpty)
+        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifierToWatch)
+        menuView.register(MenuItemCell.self, forCellWithReuseIdentifier: MenuItemCell.reuseIdentifierWatched)
     }
     
     private func setupArrowView() {

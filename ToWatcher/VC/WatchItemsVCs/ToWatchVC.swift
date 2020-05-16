@@ -10,8 +10,14 @@ import UIKit
 
 class ToWatchVC: WatchItemsVC {
     
+    override var watchItems: [WatchItem] {
+        didSet {
+            toWatchItems = watchItems
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        watchItems = [WatchItem(image: #imageLiteral(resourceName: "6")), WatchItem(image: #imageLiteral(resourceName: "2")), WatchItem(image: #imageLiteral(resourceName: "7")), WatchItem(image: #imageLiteral(resourceName: "1")), WatchItem(image: #imageLiteral(resourceName: "3")), WatchItem(image: #imageLiteral(resourceName: "4")), WatchItem(image: #imageLiteral(resourceName: "5"))]
+        watchItems = toWatchItems
     }
 }

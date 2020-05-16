@@ -8,50 +8,24 @@
 
 import UIKit
 
-enum MenuItemState {
-    case active
-    case inactive
-}
-
 class MenuItemCell: UICollectionViewCell {
-    static let reuseIdentifier = "menuItemCell"
+    static let reuseIdentifierEmpty = "menuItemCellEmpty"
+    static let reuseIdentifierToWatch = "menuItemCellToWatch"
+    static let reuseIdentifierWatched = "menuItemCellWatched"
     
-    var itemState: MenuItemState {
+    var menuItem: MenuItem? {
         didSet {
-            switch itemState {
-            case .active:
-                itemNameLabel.textColor = AppStyle.menuItemActiveTextColor
-                itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysOriginal)
-            case .inactive:
-                itemNameLabel.textColor = AppStyle.menuItemInactiveTextColor
-                itemImageView.image = itemImageView.image?.withRenderingMode(.alwaysTemplate)
-                itemImageView.tintColor = AppStyle.menuItemInactiveTextColor
-            }
+            setupCell()
         }
     }
     
-    var itemImage: UIImage? {
+    var itemState: MenuItemState = .inactive {
         didSet {
-            itemImageView.image = itemImage
+            menuItmeView.setupState(itemState)
         }
     }
     
-    var itemName: String? {
-        didSet {
-            itemNameLabel.text = itemName
-        }
-    }
-    
-    private var itemNameLabel: UILabel = {
-        let itemNameLabel = UILabel()
-        itemNameLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.menuItemFontSize)
-        return itemNameLabel
-    }()
-    
-    private var itemImageView: UIImageView = {
-        let itemImageView = UIImageView(image: nil)
-        return itemImageView
-    }()
+    private lazy var menuItmeView = MenuItemView()
     
     override var isSelected: Bool {
         didSet {
@@ -59,34 +33,14 @@ class MenuItemCell: UICollectionViewCell {
         }
     }
     
-    override init(frame: CGRect) {
-        self.itemState = .inactive
-        super.init(frame: frame)
-        setupCell()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupCell() {
-        let stackView = setupStackView()
+    func setupCell() {
+        menuItmeView.menuItem = menuItem
         
-        contentView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    }
-    
-    private func setupStackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.alignment = .center
-        //        stackView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        
-        stackView.addArrangedSubview(itemImageView)
-        stackView.addArrangedSubview(itemNameLabel)
-        return stackView
+        contentView.addSubview(menuItmeView)
+        menuItmeView.translatesAutoresizingMaskIntoConstraints = false
+        menuItmeView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        menuItmeView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        menuItmeView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        menuItmeView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
 }

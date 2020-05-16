@@ -46,6 +46,7 @@ struct AppStyle {
     
     // MARK: - font sizes
     static let menuItemFontSize: CGFloat = 11
+    static let menuItemCounterFont: UIFont = UIFont(name: AppStyle.appFontNameBold, size: 16.0)!
     static let watchItemInfoLocalTitleFontSize: CGFloat = round(itemHeight / 7.5)
     static let watchItemInfoOriginalTitleFontSize: CGFloat = round(itemHeight / 12.5)
     static let searchTextFieldFontSize: CGFloat = watchItemInfoOriginalTitleFontSize
@@ -54,6 +55,8 @@ struct AppStyle {
     static let menuBarBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let menuItemActiveTextColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
     static let menuItemInactiveTextColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 1)
+    static let menuItemToWatchCounterColor: UIColor = #colorLiteral(red: 0, green: 0.5529411765, blue: 0.8352941176, alpha: 1)
+    static let menuItemWatchedCounterColor: UIColor = #colorLiteral(red: 0.3647058824, green: 0.8274509804, blue: 0.6196078431, alpha: 1)
     static let floatActionButtonBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let floatActionButtonIconAddColor: UIColor = #colorLiteral(red: 0, green: 0.5529411765, blue: 0.8352941176, alpha: 1)
     static let floatActionButtonIconCloseColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)

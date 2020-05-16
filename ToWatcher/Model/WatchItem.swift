@@ -19,3 +19,7 @@ class WatchItem: Equatable {
         return lhs.image == rhs.image
     }
 }
+
+
+var toWatchItems: [WatchItem] = [WatchItem(image: #imageLiteral(resourceName: "6")), WatchItem(image: #imageLiteral(resourceName: "2")), WatchItem(image: #imageLiteral(resourceName: "7")), WatchItem(image: #imageLiteral(resourceName: "1")), WatchItem(image: #imageLiteral(resourceName: "3")), WatchItem(image: #imageLiteral(resourceName: "4")), WatchItem(image: #imageLiteral(resourceName: "5"))]
+var watchedItems: [WatchItem] = [WatchItem(image: #imageLiteral(resourceName: "9")), WatchItem(image: #imageLiteral(resourceName: "10")), WatchItem(image: #imageLiteral(resourceName: "8")), WatchItem(image: #imageLiteral(resourceName: "11"))]
