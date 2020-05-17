@@ -16,14 +16,15 @@ struct AppStyle {
     static let menuViewHeight: CGFloat = 88
     static let arrowViewHeight: CGFloat = 18
     static let menuBarFullHeight = topSafeAreaHeight + menuViewHeight + arrowViewHeight
-    static let itemHeight: CGFloat = round(screenWidth * 0.42)
-    static let itemCornerRadius: CGFloat = itemHeight * 0.42
+    static let itemHeight: CGFloat = round(screenWidth * 0.42)    
+    static let itemCornerRadiusCoeff: CGFloat = 0.42
+    static let itemShadowRadiusCoeff: CGFloat = 1 / 34.77
     static let itemsLineSpacing: CGFloat = round(AppStyle.itemHeight / 20)
     static let floatActionButtonHeight: CGFloat = 56
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
     static let searchViewHeight: CGFloat = 40
-    static let searchViewTopPadding: CGFloat = 50
+    static let searchViewTopBottomPadding: CGFloat = 50
     static let searchViewLeftRightPadding: CGFloat = round(itemHeight / 3)
     static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
@@ -42,8 +43,38 @@ struct AppStyle {
     static private let resultItemHeight = (AppStyle.itemHeight * watchItemEditMinimizeScale * 1000).rounded() / 1000
     static let watchItemEditTranslationY = itemsLineSpacing - (AppStyle.itemHeight - resultItemHeight) / 2
     
+    // SearchItemCell
+    static let searchItemLeftRightPadding: CGFloat = itemsLineSpacing
+    static let searchItemMainViewHeight: CGFloat = round(((screenWidth - searchItemLeftRightPadding * 3) / 2 - 22.0) * 0.42)
+    static let searchItemMainViewWidth: CGFloat = round(searchItemMainViewHeight / 0.42)
+    
+    static var searchItemLocalTitleFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 11.0
+        case .iPhones_375: return 12.0
+        case .iPhone_414: return 13.0
+        }
+    }
+    
+    static var searchItemOriginalTitleFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 9.0
+        case .iPhones_375: return 10.0
+        case .iPhone_414: return 11.0
+        }
+    }
+    
+    static var searchItemYearFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 10.0
+        case .iPhones_375: return 12.0
+        case .iPhone_414: return 13.0
+        }
+    }
+    
     // MARK: - font
     static var appFontNameBold = "Montserrat-Bold"
+    static var appFontNameSemiBold = "Montserrat-SemiBold"
     
     // MARK: - font sizes
     static let menuItemFontSize: CGFloat = 11

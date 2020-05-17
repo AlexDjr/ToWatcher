@@ -29,8 +29,8 @@ class WatchItemMainView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        addShadow(AppStyle.itemRoundCorners, radius: AppStyle.itemCornerRadius)
-        roundedView.roundCorners(AppStyle.itemRoundCorners, radius: AppStyle.itemCornerRadius)
+        addShadow(AppStyle.itemRoundCorners, radius: self.frame.height * AppStyle.itemCornerRadiusCoeff)
+        roundedView.roundCorners(AppStyle.itemRoundCorners, radius: self.frame.height * AppStyle.itemCornerRadiusCoeff)
     }
     
     // MARK: Public methods

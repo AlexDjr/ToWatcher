@@ -11,6 +11,8 @@
 		FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C142470672A0008599C /* MenuItemType.swift */; };
 		FA0A5C17247078430008599C /* WatchedItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C16247078430008599C /* WatchedItemCell.swift */; };
 		FA0A5C19247173C00008599C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C18247173C00008599C /* SearchView.swift */; };
+		FA0A5C1B247180800008599C /* SearchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C1A247180800008599C /* SearchItemCell.swift */; };
+		FA0A5C1D2471A76F0008599C /* UIDevice_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0A5C1C2471A76F0008599C /* UIDevice_ext.swift */; };
 		FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */; };
 		FA0E509722AC4353002417BD /* UITextField_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E509622AC4353002417BD /* UITextField_ext.swift */; };
 		FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */; };
@@ -60,6 +62,8 @@
 		FA0A5C142470672A0008599C /* MenuItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemType.swift; sourceTree = "<group>"; };
 		FA0A5C16247078430008599C /* WatchedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedItemCell.swift; sourceTree = "<group>"; };
 		FA0A5C18247173C00008599C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		FA0A5C1A247180800008599C /* SearchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCell.swift; sourceTree = "<group>"; };
+		FA0A5C1C2471A76F0008599C /* UIDevice_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice_ext.swift; sourceTree = "<group>"; };
 		FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCollectionView.swift; sourceTree = "<group>"; };
 		FA0E509622AC4353002417BD /* UITextField_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UITextField_ext.swift; path = ../UITextField_ext.swift; sourceTree = "<group>"; };
 		FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemEditEndState.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 				FA0E509622AC4353002417BD /* UITextField_ext.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
 				FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */,
+				FA0A5C1C2471A76F0008599C /* UIDevice_ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				FA350EB2226B7ED000A167CB /* MenuItemCell.swift */,
+				FA0A5C1A247180800008599C /* SearchItemCell.swift */,
 				FA350EAE22679B4A00A167CB /* ContainerCell.swift */,
 				FA6D811522789B6300A60758 /* WatchItemCell.swift */,
 				FA0A5C16247078430008599C /* WatchedItemCell.swift */,
@@ -347,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */,
+				FA0A5C1D2471A76F0008599C /* UIDevice_ext.swift in Sources */,
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField_ext.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
@@ -358,6 +365,7 @@
 				FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */,
 				FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
+				FA0A5C1B247180800008599C /* SearchItemCell.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */,
