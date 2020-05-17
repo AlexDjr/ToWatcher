@@ -9,7 +9,7 @@
 import UIKit
 
 extension UITextField {
-    func addBottomBorder(){
+    func addBottomBorder() {
         let bottomBorder = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         bottomBorder.backgroundColor = self.tintColor
         

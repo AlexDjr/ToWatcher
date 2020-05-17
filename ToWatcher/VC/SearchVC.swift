@@ -9,10 +9,7 @@
 import UIKit
 
 class SearchVC: UIViewController {
-
-    lazy var searchTextField: UITextField = {
-        return setupSearchTextField()
-    }()
+    private var searchView: SearchView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,42 +23,22 @@ class SearchVC: UIViewController {
 
     // MARK: - Private Methods
     private func setupView() {
-        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         view.alpha = 0.0
         
-        setupSearchTextFieldView()
+        setupSearchView()
         animateShowView()
-        setFocusOnSearchTextFieldView()
+        setFocusOnSearchView()
     }
     
-    private func setupSearchTextFieldView() {
-        setupSearchImageView()
-        setupSearchTextFieldLayout()
-    }
-    
-    private func setupSearchTextFieldLayout() {
-        view.addSubview(searchTextField)
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
-        searchTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: AppStyle.searchTextFieldTopPadding).isActive = true
-        searchTextField.heightAnchor.constraint(equalToConstant: AppStyle.searchTextFieldHeight).isActive = true
-        searchTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: AppStyle.searchTextFieldLeftRightPadding).isActive = true
-        searchTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -AppStyle.searchTextFieldLeftRightPadding).isActive = true
-    }
-    
-    private func setupSearchImageView() {
-        let iconImageView = UIImageView(image: #imageLiteral(resourceName: "search-icon"))
-        searchTextField.leftView = iconImageView
-        searchTextField.leftViewMode = .always
-    }
-    
-    private func setupSearchTextField() -> UITextField {
-        let searchTextField = UITextField()
-        searchTextField.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        searchTextField.tintColor = AppStyle.searchTextFieldTintColor
-        searchTextField.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)
-        searchTextField.addBottomBorder()
-        
-        return searchTextField
+    private func setupSearchView() {
+        searchView = SearchView()
+        view.addSubview(searchView)
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        searchView.topAnchor.constraint(equalTo: view.topAnchor, constant: AppStyle.searchViewTopPadding).isActive = true
+        searchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewHeight).isActive = true
+        searchView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: AppStyle.searchViewLeftRightPadding).isActive = true
+        searchView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -AppStyle.searchViewLeftRightPadding).isActive = true
     }
     
     private func animateShowView() {
@@ -70,7 +47,7 @@ class SearchVC: UIViewController {
         }
     }
     
-    private func setFocusOnSearchTextFieldView() {
-        searchTextField.becomeFirstResponder()
+    private func setFocusOnSearchView() {
+        searchView.textField.becomeFirstResponder()
     }
 }

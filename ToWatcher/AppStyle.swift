@@ -22,9 +22,9 @@ struct AppStyle {
     static let floatActionButtonHeight: CGFloat = 56
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
-    static let searchTextFieldHeight: CGFloat = 40
-    static let searchTextFieldTopPadding: CGFloat = 50
-    static let searchTextFieldLeftRightPadding: CGFloat = round(itemHeight / 3)
+    static let searchViewHeight: CGFloat = 40
+    static let searchViewTopPadding: CGFloat = 50
+    static let searchViewLeftRightPadding: CGFloat = round(itemHeight / 3)
     static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
     // WatchItemCell edit mode
@@ -63,7 +63,7 @@ struct AppStyle {
     static let floatActionButtonIconCloseColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
     static let watchItemInfoLocalTitleTextColor: UIColor = menuItemActiveTextColor
     static let watchItemInfoOriginalTitleTextColor: UIColor = #colorLiteral(red: 0.6588235294, green: 0.6862745098, blue: 0.7019607843, alpha: 1)
-    static let searchTextFieldTintColor: UIColor = menuItemActiveTextColor
+    static let searchViewTintColor: UIColor = menuItemActiveTextColor
     
     // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")
