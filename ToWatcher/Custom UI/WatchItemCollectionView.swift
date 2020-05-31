@@ -10,7 +10,7 @@ import UIKit
 
 class WatchItemCollectionView: AnimatableCollectionView {
     
-    override func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection) {
+    override func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection, location: AnimatableCollectionView.AnimatedItemLocation) {
         if let watchItemCell = item as? WatchItemCell {
             watchItemCell.setTransform(transform, type: type, direction: direction)
         } else {

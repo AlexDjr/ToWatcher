@@ -23,7 +23,7 @@ class AnimatableCollectionView: UICollectionView {
         case backToScreen
     }
     
-    private enum AnimatedItemLocation {
+    enum AnimatedItemLocation {
         case before
         case after
         case selected
@@ -62,7 +62,7 @@ class AnimatableCollectionView: UICollectionView {
         }
     }
     
-    func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimationType, direction: AnimationDirection) {
+    func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimationType, direction: AnimationDirection, location: AnimatedItemLocation) {
             item.transform = transform
     }
     
@@ -83,7 +83,7 @@ class AnimatableCollectionView: UICollectionView {
         UIView.animate(withDuration: AppStyle.animationDuration,
                        delay: delay,
                        options: .curveEaseInOut,
-                       animations: { self.setTransform(item, transform: transform!, type: type, direction: direction) },
+                       animations: { self.setTransform(item, transform: transform!, type: type, direction: direction, location: location) },
                        completion: completion)
     }
     

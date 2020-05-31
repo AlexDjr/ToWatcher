@@ -35,6 +35,23 @@ class SearchItemCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
+    // MARK: - Public methods
+    func animateItem() {
+        let scaleX = AppStyle.screenWidth / mainView.frame.width
+        let scaleY = AppStyle.itemHeight / mainView.frame.height
+        let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        let newTransform = transform.translatedBy(x: 46, y: 0)
+        UIView.animate(withDuration: AppStyle.animationDuration,
+                       delay: 0.7,
+                       options: .curveEaseInOut,
+                       animations: {
+                        self.mainView.transform = newTransform
+                        self.localTitleLabel.isHidden = true
+                        self.originalTitleLabel.isHidden = true
+                        self.yearLabel.isHidden = true
+        })
+    }
+    
     // MARK: - Private methods
     private func setupView() {
         setupMainView()

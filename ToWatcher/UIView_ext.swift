@@ -20,8 +20,9 @@ extension UIView {
         layer.shadowPath = UIBezierPath(roundedRect: bounds,
                                         byRoundingCorners: corners,
                                         cornerRadii: CGSize(width: radius, height: radius)).cgPath
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
+        // TODO: Rasterization shouldn't be used if view is going to be transformed (scaled up) at any point (SearchItemCell)
+        // layer.shouldRasterize = true
+        // layer.rasterizationScale = UIScreen.main.scale
     }
     
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {

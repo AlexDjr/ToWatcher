@@ -10,7 +10,9 @@ import UIKit
 
 class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private var searchView: SearchView!
-    private var collectionView: UICollectionView!
+    private var collectionView: SearchItemCollectionView!
+    
+    private var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +45,22 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // cell.delegate = self
         return cell
     }
+    
+    // MARK: - UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath != self.collectionView.selectedIndexPath else { return }
+        
+        self.view.bringSubviewToFront(collectionView)
+//        delegate?.didSelectItem(isEditMode: false)
+        searchView.isHidden = true
+        let cell = collectionView.cellForItem(at: indexPath) as! SearchItemCell
+        cell.animateItem()
+        
+        selectedIndexPath = indexPath
+        self.collectionView.selectedIndexPath = indexPath
+        
+        moveItemsExceptSelectedFromScreen()
+    }
 
     // MARK: - Private Methods
     private func setupView() {
@@ -69,7 +87,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private func setupCollectionView() {
         let layout = setupCollectionViewLayout()
         
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView = SearchItemCollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
@@ -100,5 +118,11 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     private func setFocusOnSearchView() {
         searchView.textField.becomeFirstResponder()
+    }
+    
+    // MARK: - Items animation
+    private func moveItemsExceptSelectedFromScreen() {
+        collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
+        collectionView.fromScreenFinishedCallback = {  }
     }
 }
