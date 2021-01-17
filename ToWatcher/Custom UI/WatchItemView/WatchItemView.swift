@@ -58,7 +58,11 @@ class WatchItemView: UIView {
     }
     
     func setupState(_ state: WatchItemCellState = .enabled) {
-        guard !isRemoving else { isRemoving = false; return }
+        guard !isRemoving else {
+            isRemoving = false;
+            gestureRecognizer.isEnabled = false
+            return
+        }
         
         mainView.setupState(state)
         switch state {
