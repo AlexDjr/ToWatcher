@@ -9,6 +9,7 @@
 import UIKit
 
 class WatchedVC: WatchItemsVC {
+    private let watchedItemCellReuseIdentifier = "watchedItemCell"
     
     override var watchItems: [WatchItem] {
         didSet {
@@ -20,11 +21,11 @@ class WatchedVC: WatchItemsVC {
         super.viewDidLoad()
         watchItems = watchedItems
         
-        collectionView!.register(WatchedItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
+        collectionView!.register(WatchedItemCell.self, forCellWithReuseIdentifier: watchedItemCellReuseIdentifier)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchedItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: watchedItemCellReuseIdentifier, for: indexPath) as! WatchedItemCell
         cell.watchItem = watchItems[indexPath.item]
         cell.delegate = self
         return cell
