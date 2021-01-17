@@ -9,8 +9,6 @@
 import UIKit
 
 class WatchItemCell: UICollectionViewCell {
-    static let reuseIdentifier = "watchItemCell"
-    
     weak var delegate: WatchItemEditProtocol?
     
     var state: WatchItemCellState = .enabled

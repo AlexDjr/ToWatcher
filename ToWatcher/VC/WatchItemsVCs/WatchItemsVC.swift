@@ -11,6 +11,8 @@ import UIKit
 class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, WatchItemEditProtocol {
     weak var homeVC: HomeVC?
     
+    private var watchItemCellReuseIdentifier = "watchItemCell"
+    
     var watchItems: [WatchItem] = []
     var collectionView: WatchItemCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
@@ -72,7 +74,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WatchItemCell.reuseIdentifier, for: indexPath) as! WatchItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: watchItemCellReuseIdentifier, for: indexPath) as! WatchItemCell
         cell.watchItem = watchItems[indexPath.item]
         cell.delegate = self
         return cell
@@ -160,7 +162,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: WatchItemCell.reuseIdentifier)
+        collectionView!.register(WatchItemCell.self, forCellWithReuseIdentifier: watchItemCellReuseIdentifier)
     }
     
     private func setupCollectionViewLayout() -> UICollectionViewFlowLayout {
