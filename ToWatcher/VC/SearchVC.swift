@@ -10,6 +10,7 @@ import UIKit
 
 class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private var searchView: SearchView!
+    private var containerSearchView: UIView!
     private var collectionView: SearchItemCollectionView!
     
     private var selectedIndexPath: IndexPath?
@@ -51,37 +52,47 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         guard indexPath != self.collectionView.selectedIndexPath else { return }
         
         self.view.bringSubviewToFront(collectionView)
-//        delegate?.didSelectItem(isEditMode: false)
-        searchView.isHidden = true
+        containerSearchView.isHidden = true
         let cell = collectionView.cellForItem(at: indexPath) as! SearchItemCell
-        cell.animateItem()
-        
         selectedIndexPath = indexPath
         self.collectionView.selectedIndexPath = indexPath
         
-        moveItemsExceptSelectedFromScreen()
+        addSelectedItemToWatch()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: AppStyle.searchViewContainerHeight, left: 0, bottom: 0, right: 0)
     }
 
     // MARK: - Private Methods
     private func setupView() {
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         view.alpha = 0.0
-        
-        setupSearchView()
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         setupCollectionView()
+        setupSearchView()
         
         animateShowView()
-        setFocusOnSearchView()
+//        setFocusOnSearchView()
     }
     
     private func setupSearchView() {
+        containerSearchView = UIView()
+        containerSearchView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.addSubview(containerSearchView)
+        
+        containerSearchView.translatesAutoresizingMaskIntoConstraints = false
+        containerSearchView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        containerSearchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewContainerHeight).isActive = true
+        containerSearchView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        containerSearchView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
         searchView = SearchView()
-        view.addSubview(searchView)
+        containerSearchView.addSubview(searchView)
         searchView.translatesAutoresizingMaskIntoConstraints = false
-        searchView.topAnchor.constraint(equalTo: view.topAnchor, constant: AppStyle.searchViewTopBottomPadding).isActive = true
+        searchView.topAnchor.constraint(equalTo: containerSearchView.topAnchor, constant: AppStyle.searchViewTopBottomPadding).isActive = true
         searchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewHeight).isActive = true
-        searchView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: AppStyle.searchViewLeftRightPadding).isActive = true
-        searchView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -AppStyle.searchViewLeftRightPadding).isActive = true
+        searchView.leftAnchor.constraint(equalTo: containerSearchView.leftAnchor, constant: AppStyle.searchViewLeftRightPadding).isActive = true
+        searchView.rightAnchor.constraint(equalTo: containerSearchView.rightAnchor, constant: -AppStyle.searchViewLeftRightPadding).isActive = true
     }
     
     private func setupCollectionView() {
@@ -95,7 +106,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: AppStyle.searchViewTopBottomPadding).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -121,8 +132,17 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     // MARK: - Items animation
-    private func moveItemsExceptSelectedFromScreen() {
-        collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
-        collectionView.fromScreenFinishedCallback = {  }
+    private func addSelectedItemToWatch() {
+        let parent = self.parent as? WatchItemsVC
+        parent?.fullReload()
+        
+        collectionView.animateItems(withType: .searchItemSelected, andDirection: .fromScreen)
+        collectionView.fromScreenFinishedCallback = {
+            self.view.backgroundColor = .clear
+            guard let selectedIndexPath = self.selectedIndexPath else { return }
+            guard let selectedCell = self.collectionView.cellForItem(at: selectedIndexPath) as? SearchItemCell, let watchItem = selectedCell.watchItem else { return }
+            
+            parent?.addItemAfterSearch(watchItem)
+        }
     }
 }

@@ -54,7 +54,7 @@ class WatchItemCell: UICollectionViewCell {
             watchItemView.deleteView.transform = .init(scaleX: 1, y: yScale)
             watchItemView.watchedView.transform = .init(scaleX: 1, y: yScale)
             
-        case .backToScreen:
+        case .backToScreen, .backToScreenAfterAddItem:
             watchItemView.mainView.transform = .identity
             watchItemView.deleteView.transform = .identity
             watchItemView.watchedView.transform = .identity

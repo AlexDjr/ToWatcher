@@ -161,7 +161,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
                     self.transform = CGAffineTransform(translationX: 0, y: -AppStyle.menuBarFullHeight)
                 })
-            case .backToScreen:
+            case .backToScreen, .backToScreenAfterAddItem:
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
                     self.transform = .identity
                 })

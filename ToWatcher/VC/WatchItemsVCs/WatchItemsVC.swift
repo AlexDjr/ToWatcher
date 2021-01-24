@@ -20,6 +20,9 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     private var childViewController: UIViewController?
     private var selectedIndexPath: IndexPath?
     private var isEditMode = false
+    private var isItemAddedAfterSearch = false
+    
+    private var afterAnimationsCallback: (() -> ())?
     
     init(homeVC: HomeVC) {
         self.homeVC = homeVC
@@ -61,7 +64,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         selectedIndexPath = indexPath
         self.collectionView.selectedIndexPath = indexPath
         
-        moveItemsExceptSelectedFromScreen()
+        animateMovingItemsExceptSelectedFromScreen()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -95,14 +98,14 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             self.delegate?.didFinishMoveItemsFromScreen()
         }
         
-        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
+        animateMovingAllItemsFromScreen()
     }
     
     func moveItemsBackToScreen() {
-        if collectionView.selectedIndexPath != nil {
-            moveItemsExceptSelectedBackToScreen()
+        if selectedIndexPath != nil {
+            animateMovingItemsExceptSelectedBackToScreen()
         } else {
-            moveAllItemsBackToScreen()
+            animateMovingAllItemsBackToScreen()
         }
         collectionView.isUserInteractionEnabled = true
     }
@@ -135,13 +138,31 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func addItem(_ item: WatchItem) {
-        if let collectionView = collectionView {
-            watchItems.insert(item, at: 0)
-            collectionView.reloadData()
-        } else {
+        if collectionView == nil {
             setupCollectionView()
-            watchItems.insert(item, at: 0)
-            collectionView.reloadData()
+        }
+        
+        insertItem(item)
+        reloadCollectionViewData()
+    }
+    
+    func addItemAfterSearch(_ item: WatchItem) {
+        isItemAddedAfterSearch = true
+        delegate?.didAddItemAfterSearch()
+        
+        insertItem(item)
+        
+        afterAnimationsCallback = {
+            self.reloadCollectionView()
+            self.removeChildViewController(self.childViewController)
+        }
+    }
+    
+    func fullReload() {
+        unHideItemsIfNeeded()
+        reloadCollectionView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.animateMovingAllItemsFromScreen()
         }
     }
     
@@ -178,6 +199,28 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.deleteItems(at: [indexPath])
     }
     
+    private func reloadCollectionView() {
+        collectionView.visibleCells.forEach { $0.transform = .identity } // грязный хук. Иначе на одной ячейке остается transform после reloadData() и она прячется под другую ячейку
+        collectionView.setContentOffset(CGPoint(x: 0, y: -AppStyle.topSafeAreaHeight), animated: false)
+        reloadCollectionViewData()
+    }
+    
+    private func unHideItemsIfNeeded() {
+        for i in watchItems.indices {
+            let item = collectionView.cellForItem(at: IndexPath(item: i, section: 0))
+            item?.isHidden = false
+        }
+    }
+    
+    private func insertItem(_ item: WatchItem) {
+        watchItems.insert(item, at: 0)
+    }
+    
+    private func reloadCollectionViewData() {
+        collectionView.reloadData()
+    }
+    
+    
     // MARK: - Gestures
     private func setupLongPressGesture() {
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didLongPressedItem))
@@ -206,8 +249,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     // MARK: - Items animation
-    private func moveItemsExceptSelectedFromScreen() {
-        collectionView.animateItems(withType: .itemSelected, andDirection: .fromScreen)
+    private func animateMovingItemsExceptSelectedFromScreen() {
+        collectionView.animateItems(withType: .watchItemSelected, andDirection: .fromScreen)
         collectionView.fromScreenFinishedCallback = {
             self.showWatchItemInfoVC()
             self.collectionView.isUserInteractionEnabled = false
@@ -215,23 +258,35 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         }
     }
     
-    private func moveItemsExceptSelectedBackToScreen() {
+    private func animateMovingItemsExceptSelectedBackToScreen() {
         removeChildViewController(childViewController)
-        childViewController = nil
         
         collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
+            self.selectedIndexPath = nil
         }
         
-        collectionView.animateItems(withType: .itemSelected, andDirection: .backToScreen)
+        collectionView.animateItems(withType: .watchItemSelected, andDirection: .backToScreen)
     }
     
-    private func moveAllItemsBackToScreen() {
+    private func animateMovingAllItemsFromScreen() {
+        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
+    }
+    
+    private func animateMovingAllItemsBackToScreen() {
         collectionView.backToScreenFinishedCallback = {
             self.delegate?.didFinishMoveItemsBackToScreen(isEditMode: false)
+            self.afterAnimationsCallback?()
+            self.afterAnimationsCallback = nil
         }
         
-        collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
+        if isItemAddedAfterSearch {
+            collectionView.animateItems(withType: .allItems, andDirection: .backToScreenAfterAddItem)
+            isItemAddedAfterSearch = false
+        } else {
+            removeChildViewController(childViewController)
+            collectionView.animateItems(withType: .allItems, andDirection: .backToScreen)
+        }
     }
     
     private func enableScroll(_ isEnabled: Bool) {
@@ -283,6 +338,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         viewController.willMove(toParent: nil)
         viewController.view.removeFromSuperview()
         viewController.removeFromParent()
+        
+        childViewController = nil
     }
     
     private func setupViewController(_ viewController: UIViewController, withTopAnchorConstant topAnchorConstant: CGFloat) {

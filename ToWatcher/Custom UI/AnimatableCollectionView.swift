@@ -13,7 +13,8 @@ class AnimatableCollectionView: UICollectionView {
     var backToScreenFinishedCallback: (() -> ())?
     
     enum AnimationType {
-        case itemSelected
+        case watchItemSelected
+        case searchItemSelected
         case allItems
         case editMode
     }
@@ -21,6 +22,7 @@ class AnimatableCollectionView: UICollectionView {
     enum AnimationDirection {
         case fromScreen
         case backToScreen
+        case backToScreenAfterAddItem
     }
     
     enum AnimatedItemLocation {
@@ -38,14 +40,19 @@ class AnimatableCollectionView: UICollectionView {
     func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
         guard numberOfItems(inSection: 0) != 0 else {
             switch direction {
-            case .fromScreen: fromScreenFinishedCallback?()
-            case .backToScreen: backToScreenFinishedCallback?()
+            case .fromScreen:
+                fromScreenFinishedCallback?()
+                fromScreenFinishedCallback = nil
+            case .backToScreen, .backToScreenAfterAddItem:
+                backToScreenFinishedCallback?()
+                backToScreenFinishedCallback = nil
             }
             return
         }
         
         setupItemsOnScreen()
-        setupIndexPaths()
+        setupIndexPaths(direction: direction)
+        
         
         guard let selectedIndexPath = selectedIndexPath, let _ = firstItemIndexPath, let _ = lastItemIndexPath else { return }
         
@@ -62,7 +69,7 @@ class AnimatableCollectionView: UICollectionView {
         }
     }
     
-    func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimationType, direction: AnimationDirection, location: AnimatedItemLocation) {
+    func setAnimations(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimationType, direction: AnimationDirection, location: AnimatedItemLocation, delay: TimeInterval) {
             item.transform = transform
     }
     
@@ -83,7 +90,9 @@ class AnimatableCollectionView: UICollectionView {
         UIView.animate(withDuration: AppStyle.animationDuration,
                        delay: delay,
                        options: .curveEaseInOut,
-                       animations: { self.setTransform(item, transform: transform!, type: type, direction: direction, location: location) },
+                       animations: {
+                        self.setAnimations(item, transform: transform, type: type, direction: direction, location: location, delay: delay)
+                       },
                        completion: completion)
     }
     
@@ -94,8 +103,7 @@ class AnimatableCollectionView: UICollectionView {
         
         var delay: TimeInterval = 0.0
         let itemIndexPath = self.indexPath(for: item)!
-        
-        if type == .itemSelected {
+        if type == .watchItemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
@@ -103,7 +111,7 @@ class AnimatableCollectionView: UICollectionView {
                 case .after:    delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
                 case .selected: delay = 0.1 * Double(max(lastItemIndexPath!.item - selectedIndexPath!.item, selectedIndexPath!.item - firstItemIndexPath!.item) + 1)
                 }
-            case .backToScreen:
+            case .backToScreen, .backToScreenAfterAddItem:
                 switch location {
                 case .before:   delay = 0.1 * Double(selectedIndexPath!.item - itemIndexPath.item)
                 case .after:    delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
@@ -111,6 +119,17 @@ class AnimatableCollectionView: UICollectionView {
                 }
             }
             
+        } else if type == .searchItemSelected {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:   delay = 0.1 * Double(itemIndexPath.item - firstItemIndexPath!.item + 1)
+                case .after:    delay = 0.1 * Double(lastItemIndexPath!.item - itemIndexPath.item + 1)
+                case .selected:
+                    delay = 0.1 * Double(max(lastItemIndexPath!.item - selectedIndexPath!.item, selectedIndexPath!.item - firstItemIndexPath!.item) + 1)
+                }
+            default: break
+            }
         } else if type == .allItems {
             switch direction {
             case .fromScreen:
@@ -125,21 +144,22 @@ class AnimatableCollectionView: UICollectionView {
                 case .after:    delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
                 case .selected: delay = 0.0
                 }
+            case .backToScreenAfterAddItem:
+                delay = 0.1 * Double(itemIndexPath.item - selectedIndexPath!.item)
             }
         } else if type == .editMode {
             delay = 0.0
         }
-        
         return delay
     }
     
     private func setupAnimationParamTransform(for item: UICollectionViewCell,
                                               withType type: AnimationType,
                                               andDirection direction: AnimationDirection,
-                                              andLocation location: AnimatedItemLocation) -> CGAffineTransform? {
-        var transform: CGAffineTransform? = nil
+                                              andLocation location: AnimatedItemLocation) -> CGAffineTransform {
+        var transform: CGAffineTransform = CGAffineTransform.identity
         
-        if type == .itemSelected {
+        if type == .watchItemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
@@ -151,16 +171,33 @@ class AnimatableCollectionView: UICollectionView {
                     let frameInView = self.superview!.convert(item.frame, from: self)
                     transform = CGAffineTransform(translationX: 0, y: -(frameInView.minY - AppStyle.topSafeAreaHeight))
                 }
-            case .backToScreen:
+            case .backToScreen, .backToScreenAfterAddItem:
                 transform = CGAffineTransform.identity
             }
             
+        } else if type == .searchItemSelected {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    transform = CGAffineTransform(translationX: 0, y: -1000)
+                case .after:
+                    transform = CGAffineTransform(translationX: 0, y: 1000)
+                case .selected:
+                    transform = CGAffineTransform(translationX: 0, y: -000.1) //грязный хук, чтобы было хоть какое-то изменение transform, иначе не работает
+                }
+            default: break
+            }
         } else if type == .allItems {
             switch direction {
             case .fromScreen:
                 transform = CGAffineTransform(translationX: 0, y: 1000)
             case .backToScreen:
                 transform = CGAffineTransform.identity
+            case .backToScreenAfterAddItem:
+                let frameInView = self.superview!.convert(item.frame, from: self)
+                let deltaY = AppStyle.menuBarFullHeight - (frameInView.minY - 1000) + (AppStyle.itemHeight + AppStyle.itemsLineSpacing) * CGFloat(indexPath(for: item)!.row + 1)
+                transform = (CGAffineTransform.identity).translatedBy(x: 0, y: deltaY)
             }
         } else if type == .editMode {
             switch direction {
@@ -174,7 +211,7 @@ class AnimatableCollectionView: UICollectionView {
                     let scale = AppStyle.watchItemEditMinimizeScale
                     transform = CGAffineTransform(scaleX: scale, y: scale)
                 }
-            case .backToScreen:
+            case .backToScreen, .backToScreenAfterAddItem:
                 transform = CGAffineTransform.identity
             }
         }
@@ -188,7 +225,7 @@ class AnimatableCollectionView: UICollectionView {
                                                andLocation location: AnimatedItemLocation) -> ((Bool) -> ())? {
         var completion: ((Bool) -> ())?  = nil
         
-        if type == .itemSelected {
+        if type == .watchItemSelected {
             switch direction {
             case .fromScreen:
                 switch location {
@@ -203,7 +240,7 @@ class AnimatableCollectionView: UICollectionView {
                         }
                     }
                 }
-            case .backToScreen:
+            case .backToScreen, .backToScreenAfterAddItem:
                 switch location {
                 case .before:
                     completion = { finished in
@@ -221,9 +258,26 @@ class AnimatableCollectionView: UICollectionView {
                     }
                 }
             }
+        } else if type == .searchItemSelected {
+            switch direction {
+            case .fromScreen:
+                switch location {
+                case .before:
+                    completion = nil
+                case .after:
+                    completion = nil
+                case .selected:
+                    completion = { finished in
+                        if finished {
+                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
+                        }
+                    }
+                }
+            default: break
+            }
         } else if type == .allItems || type == .editMode {
             switch direction {
-            case .fromScreen, .backToScreen:
+            case .fromScreen, .backToScreen, .backToScreenAfterAddItem:
                 switch location {
                 case .before:
                     completion = nil
@@ -249,8 +303,9 @@ class AnimatableCollectionView: UICollectionView {
         if direction == .fromScreen {
             if location == .selected {
                 fromScreenFinishedCallback?()
+                fromScreenFinishedCallback = nil
             }
-        } else if direction == .backToScreen {
+        } else if direction == .backToScreen || direction == .backToScreenAfterAddItem {
             let itemIndexPath = indexPath(for: item)
             
             let itemWasRemoved = itemIndexPath == nil
@@ -260,7 +315,7 @@ class AnimatableCollectionView: UICollectionView {
                 return }
             
             var isWholeAnimationFinished: Bool
-            if type == .editMode {
+            if type == .editMode || direction == .backToScreenAfterAddItem {
                 isWholeAnimationFinished = true
             } else {
                 isWholeAnimationFinished = itemIndexPath == self.firstItemIndexPath!
@@ -296,12 +351,17 @@ class AnimatableCollectionView: UICollectionView {
         itemsOnScreen = self.visibleCells.sorted { self.indexPath(for: $0)!.item < self.indexPath(for: $1)!.item }
     }
     
-    private func setupIndexPaths() {
+    private func setupIndexPaths(direction: AnimationDirection) {
         firstItemIndexPath = self.indexPath(for: itemsOnScreen.first!)!
         lastItemIndexPath = self.indexPath(for: itemsOnScreen.last!)!
         
         if selectedIndexPath == nil {
             selectedIndexPath = firstItemIndexPath
+        }
+        
+        if direction == .backToScreenAfterAddItem {
+            selectedIndexPath = IndexPath(item: 0, section: 0)
+            firstItemIndexPath = selectedIndexPath
         }
     }
     

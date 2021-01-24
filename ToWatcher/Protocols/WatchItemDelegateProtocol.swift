@@ -12,4 +12,5 @@ protocol WatchItemDelegateProtocol: class {
     func didSelectItem(isEditMode: Bool)
     func didFinishMoveItemsFromScreen()
     func didFinishMoveItemsBackToScreen(isEditMode: Bool)
+    func didAddItemAfterSearch()
 }

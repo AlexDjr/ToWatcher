@@ -112,6 +112,11 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    func didAddItemAfterSearch() {
+        menuBar.menuView.reloadData()
+        pressFloatActionButton()
+    }
+    
     // MARK: - WatchItemEditProtocol
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
         menuBar.menuView.reloadData()
