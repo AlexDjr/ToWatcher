@@ -26,6 +26,7 @@ struct AppStyle {
     static let searchViewHeight: CGFloat = 40
     static let searchViewTopBottomPadding: CGFloat = 50
     static let searchViewLeftRightPadding: CGFloat = round(itemHeight / 3)
+    static let searchViewContainerHeight = AppStyle.searchViewHeight + AppStyle.searchViewTopBottomPadding * 2
     static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
     // WatchItemCell edit mode

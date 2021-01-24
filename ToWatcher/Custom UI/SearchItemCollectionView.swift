@@ -9,11 +9,13 @@
 import UIKit
 
 class SearchItemCollectionView: AnimatableCollectionView {
-    override func setTransform(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection, location: AnimatableCollectionView.AnimatedItemLocation) {
-        if let _ = item as? SearchItemCell, type == .itemSelected, location == .selected {
-            let frameInView = self.superview!.convert(item.frame, from: self)
-            let transform = CGAffineTransform(translationX: 0, y: -(frameInView.minY - AppStyle.menuBarFullHeight - 50))
+    override func setAnimations(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection, location: AnimatableCollectionView.AnimatedItemLocation, delay: TimeInterval) {
+        if let item = item as? SearchItemCell, type == .searchItemSelected, location == .selected {
             
+            let frameInSuperview = self.superview!.convert(item.frame, from: self)
+            let transform = item.getAnimationTransform(with: frameInSuperview.minY)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { item.hideDescription() }
             item.transform = transform
         } else {
             item.transform = transform

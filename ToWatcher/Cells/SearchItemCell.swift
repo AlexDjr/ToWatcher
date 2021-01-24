@@ -36,20 +36,36 @@ class SearchItemCell: UICollectionViewCell {
     }
     
     // MARK: - Public methods
-    func animateItem() {
-        let scaleX = AppStyle.screenWidth / mainView.frame.width
+    func getAnimationTransform(with currentY: CGFloat) -> CGAffineTransform {
         let scaleY = AppStyle.itemHeight / mainView.frame.height
-        let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
-        let newTransform = transform.translatedBy(x: 46, y: 0)
-        UIView.animate(withDuration: AppStyle.animationDuration,
-                       delay: 0.7,
+        let scaleX = AppStyle.screenWidth / mainView.frame.width
+        let transformScaled = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        
+        let transformedWidth = self.frame.size.applying(transformScaled).width
+        let deltaX = (transformedWidth - AppStyle.screenWidth) / (2 * scaleX)
+        let xScaledTransform = transformScaled.translatedBy(x: deltaX, y: 0)
+         
+        let halfHeightDeltaAfterScale = (AppStyle.itemHeight - frame.height) / 2
+        let delta = currentY - (AppStyle.menuBarFullHeight - AppStyle.topSafeAreaHeight) - halfHeightDeltaAfterScale
+        let yXScaledTransform = xScaledTransform.translatedBy(x: 0, y: -delta / scaleY)
+        
+//                       completion: { _ in
+//                        // получается не такая тень, как на главной =(
+////                        self.mainView.addShadow(AppStyle.itemRoundCorners, radius: self.mainView.frame.height * AppStyle.itemCornerRadiusCoeff)
+//                       })
+        
+        return yXScaledTransform
+    }
+    
+    func hideDescription() {
+        UIView.animate(withDuration: 0.1,
+                       delay: 0.0,
                        options: .curveEaseInOut,
                        animations: {
-                        self.mainView.transform = newTransform
-                        self.localTitleLabel.isHidden = true
-                        self.originalTitleLabel.isHidden = true
-                        self.yearLabel.isHidden = true
-        })
+                        self.localTitleLabel.alpha = 0.0
+                        self.originalTitleLabel.alpha = 0.0
+                        self.yearLabel.alpha = 0.0
+                       })
     }
     
     // MARK: - Private methods
