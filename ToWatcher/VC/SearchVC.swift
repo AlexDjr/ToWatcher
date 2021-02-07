@@ -67,7 +67,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     // MARK: - Private Methods
     private func setupView() {
         view.alpha = 0.0
-        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = AppStyle.mainBGColor
         setupCollectionView()
         setupSearchView()
         
@@ -77,7 +77,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     private func setupSearchView() {
         containerSearchView = UIView()
-        containerSearchView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        containerSearchView.backgroundColor = AppStyle.mainBGColor
         view.addSubview(containerSearchView)
         
         containerSearchView.translatesAutoresizingMaskIntoConstraints = false

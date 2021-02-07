@@ -89,7 +89,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
     
     // MARK: - Private Methods
     private func setupView() {
-        backgroundColor = AppStyle.menuBarBGColor
+        backgroundColor = AppStyle.mainBGColor
         setupMenuView()
         setupArrowView()
         selectFirstMenuItem()
@@ -102,7 +102,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         menuView.isScrollEnabled = false
         menuView.isPagingEnabled = true
         menuView.showsHorizontalScrollIndicator = false
-        menuView.backgroundColor = AppStyle.menuBarBGColor
+        menuView.backgroundColor = AppStyle.mainBGColor
         menuView.dataSource = self
         menuView.delegate = self
         
@@ -128,7 +128,7 @@ class MenuBar: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIC
         arrowView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         arrowView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        arrowView.backgroundColor = AppStyle.menuBarBGColor
+        arrowView.backgroundColor = AppStyle.mainBGColor
         
         setupArrowImageView()
     }
