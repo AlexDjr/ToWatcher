@@ -26,6 +26,10 @@ class WatchItemView: UIView {
     lazy var deleteView = WatchItemActionView(.delete)
     lazy var watchedView = WatchItemActionView(.watched)
     
+    private var localTitleLabel = UILabel()
+    private var originalTitleLabel = UILabel()
+    private var yearLabel = UILabel()
+    
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
     
@@ -53,8 +57,12 @@ class WatchItemView: UIView {
     }
     
     // MARK: - Public methods
-    func setImage(_ image: UIImage) {
-        mainView.setImage(image)
+    func setWatchItemInfo(_ watchItem: WatchItem) {
+        mainView.setImage(watchItem.image)
+        
+        originalTitleLabel.text = watchItem.originalTitle
+        localTitleLabel.text = watchItem.localTitle
+        yearLabel.text = watchItem.year
     }
     
     func setupState(_ state: WatchItemCellState = .enabled) {
@@ -80,6 +88,7 @@ class WatchItemView: UIView {
     // MARK: - Private methods
     private func setupView() {
         addMainView()
+        addTitles()
         addDeleteView()
         addWatchedView()
         setupActionViewActiveConstraints()
@@ -110,6 +119,55 @@ class WatchItemView: UIView {
         leftMainConstraint.isActive = true
         rightMainConstraint = mainView.rightAnchor.constraint(equalTo: self.rightAnchor)
         rightMainConstraint.isActive = true
+    }
+    
+    private func addTitles() {
+        setupOriginalTitleLabel()
+        setupLocalTitleLabel()
+        setupYearLabel()
+    }
+    
+    private func setupOriginalTitleLabel() {
+        originalTitleLabel.numberOfLines = 2
+        originalTitleLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.watchItemOriginalTitleFontSize)!
+        originalTitleLabel.textColor = AppStyle.mainBGColor
+        originalTitleLabel.addShadow(radius: 2.0)
+        
+        mainView.addSubview(originalTitleLabel)
+        originalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        originalTitleLabel.topAnchor.constraint(equalTo: mainView.topAnchor, constant: AppStyle.watchItemLabelsPadding).isActive = true
+        originalTitleLabel.leftAnchor.constraint(equalTo: mainView.leftAnchor, constant: AppStyle.watchItemLabelsPadding).isActive = true
+        originalTitleLabel.rightAnchor.constraint(equalTo: mainView.rightAnchor, constant: -AppStyle.watchItemOriginalTitleRightPadding).isActive = true
+        originalTitleLabel.heightAnchor.constraint(equalToConstant: 14).isActive = true
+    }
+    
+    private func setupLocalTitleLabel() {
+        localTitleLabel.numberOfLines = 2
+        localTitleLabel.sizeToFit()
+        localTitleLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemLocalTitleFontSize)!
+        localTitleLabel.textColor = AppStyle.mainBGColor
+        localTitleLabel.addShadow(radius: 3.0)
+        
+        mainView.addSubview(localTitleLabel)
+        localTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        localTitleLabel.topAnchor.constraint(equalTo: originalTitleLabel.bottomAnchor, constant: 0).isActive = true
+        localTitleLabel.leftAnchor.constraint(equalTo: mainView.leftAnchor, constant: AppStyle.watchItemLabelsPadding).isActive = true
+        localTitleLabel.rightAnchor.constraint(equalTo: mainView.rightAnchor, constant: -AppStyle.watchItemLabelsPadding).isActive = true
+        localTitleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 60).isActive = true
+    }
+    
+    private func setupYearLabel() {
+        yearLabel.numberOfLines = 1
+        yearLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemYearFontSize)!
+        yearLabel.textColor = AppStyle.mainBGColor
+        yearLabel.addShadow(radius: 2.0)
+        
+        mainView.addSubview(yearLabel)
+        yearLabel.translatesAutoresizingMaskIntoConstraints = false
+        yearLabel.leftAnchor.constraint(equalTo: mainView.leftAnchor, constant: AppStyle.watchItemLabelsPadding).isActive = true
+        yearLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        yearLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -AppStyle.watchItemYearBottomPadding).isActive = true
+        yearLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
     }
     
     private func addWatchedView() {

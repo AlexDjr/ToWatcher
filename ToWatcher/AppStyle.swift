@@ -29,6 +29,31 @@ struct AppStyle {
     static let searchViewContainerHeight = AppStyle.searchViewHeight + AppStyle.searchViewTopBottomPadding * 2
     static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
+    static var watchItemLabelsPadding: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 10.0
+        case .iPhones_375: return 17.0
+        case .iPhone_414: return 20.0
+        }
+    }
+    
+    static var watchItemOriginalTitleRightPadding: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 34.0
+        case .iPhones_375: return 36.0
+        case .iPhone_414: return 38.0
+        }
+    }
+    
+    static var watchItemYearBottomPadding: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 32.0
+        case .iPhones_375: return 42.0
+        case .iPhone_414: return 46.0
+        }
+    }
+    
+    
     // WatchItemCell edit mode
     static let watchItemEditActionViewWidth: CGFloat = 100.0
     static let watchItemEditRemoveWidth: CGFloat = 200.0
@@ -84,8 +109,32 @@ struct AppStyle {
     static let watchItemInfoOriginalTitleFontSize: CGFloat = round(itemHeight / 12.5)
     static let searchTextFieldFontSize: CGFloat = watchItemInfoOriginalTitleFontSize
     
+    static var watchItemLocalTitleFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 20.0
+        case .iPhones_375: return 21.0
+        case .iPhone_414: return 22.0
+        }
+    }
+    
+    static var watchItemOriginalTitleFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 9.0
+        case .iPhones_375: return 10.0
+        case .iPhone_414: return 11.0
+        }
+    }
+    
+    static var watchItemYearFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 17.0
+        case .iPhones_375: return 19.0
+        case .iPhone_414: return 20.0
+        }
+    }
+    
     // MARK: - colors
-    static let menuBarBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let mainBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let menuItemActiveTextColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
     static let menuItemInactiveTextColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 1)
     static let menuItemToWatchCounterColor: UIColor = #colorLiteral(red: 0, green: 0.5529411765, blue: 0.8352941176, alpha: 1)

@@ -37,6 +37,7 @@
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
+		FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
 		FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* UIView_ext.swift */; };
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
@@ -91,6 +92,7 @@
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
+		FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel_ext.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* UIView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIView_ext.swift; path = ../UIView_ext.swift; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
+				FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField_ext.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
 				FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */,
@@ -382,6 +385,7 @@
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
 				FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */,
 				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
+				FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
 				FA253CEC24618A8200297E53 /* WatchItemEditProtocol.swift in Sources */,
 				FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */,
