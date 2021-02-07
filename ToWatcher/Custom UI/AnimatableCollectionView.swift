@@ -284,10 +284,8 @@ class AnimatableCollectionView: UICollectionView {
                 case .after:
                     completion = nil
                 case .selected:
-                    completion = { finished in
-                        if finished {
-                            self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
-                        }
+                    completion = { _ in
+                        self.runActionsAfterAnimation(for: item, withType: type, andDirection: direction, andLocation: location)
                     }
                 }
             }
