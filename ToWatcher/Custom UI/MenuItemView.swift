@@ -94,7 +94,7 @@ class MenuItemView: UIView {
     
     private func setupCounterView() {
         counterView = UIView()
-        counterView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        counterView.backgroundColor = AppStyle.mainBGColor
         counterView.layer.cornerRadius = 13.0
         
         itemImageView.addSubview(counterView)
