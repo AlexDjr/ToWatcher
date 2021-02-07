@@ -15,7 +15,7 @@ class WatchItemCell: UICollectionViewCell {
     var watchItem: WatchItem? {
         didSet {
             guard let watchItem = watchItem else { return }
-            watchItemView.setImage(watchItem.image)
+            watchItemView.setWatchItemInfo(watchItem)
         }
     }
     
