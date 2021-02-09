@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import KeychainAccess
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    private let token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTNmYTUwYWIzMWQwZDExMzdkZTliZjM5MzdmZmQxZiIsInN1YiI6IjViYjM1MTA4MGUwYTI2M2UwNTAwOWRkMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.y_r3nkfpPKk1C5PRd80EtWMPVfS2kwb4uSt8ILOmRUE"
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        try? Keychain().set(token, key: "token")
+        
         return true
     }
 

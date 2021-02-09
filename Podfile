@@ -6,4 +6,6 @@ target 'ToWatcher' do
 
   # Pods for ToWatcher
   pod 'Alamofire', '~> 5.2'
+  pod 'Kingfisher'
+  pod 'KeychainAccess'
 end

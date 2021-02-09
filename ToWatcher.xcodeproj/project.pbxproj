@@ -52,6 +52,10 @@
 		FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A49245DD864000688BC /* WatchItemMainView.swift */; };
 		FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */; };
 		FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */; };
+		FA9E74FD25D30B4100DFF57D /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E74FC25D30B4100DFF57D /* Movie.swift */; };
+		FA9E758F25D4839D00DFF57D /* String_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E758E25D4839D00DFF57D /* String_ext.swift */; };
+		FAB6FCC825D5BD5A00EEBD7A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */; };
+		FAB6FCD225D5CAB100EEBD7A /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FCD125D5CAB100EEBD7A /* SearchDelegate.swift */; };
 		FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */; };
 		FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC20246865AF002624F3 /* WatchItem.swift */; };
 		FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC2224695E6E002624F3 /* MenuItemView.swift */; };
@@ -110,6 +114,10 @@
 		FA9D3A49245DD864000688BC /* WatchItemMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemMainView.swift; sourceTree = "<group>"; };
 		FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemActionView.swift; sourceTree = "<group>"; };
 		FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer_ext.swift; sourceTree = "<group>"; };
+		FA9E74FC25D30B4100DFF57D /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		FA9E758E25D4839D00DFF57D /* String_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_ext.swift; sourceTree = "<group>"; };
+		FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		FAB6FCD125D5CAB100EEBD7A /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+indexPathForVisibleRect.swift"; sourceTree = "<group>"; };
 		FAC0CC20246865AF002624F3 /* WatchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItem.swift; sourceTree = "<group>"; };
 		FAC0CC2224695E6E002624F3 /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
@@ -151,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
+				FA9E758E25D4839D00DFF57D /* String_ext.swift */,
 				FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField_ext.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
@@ -166,6 +175,7 @@
 				FA2C8A3B227745CE00E01545 /* WatchItemDelegateProtocol.swift */,
 				FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */,
 				FA253CEB24618A8200297E53 /* WatchItemEditProtocol.swift */,
+				FAB6FCD125D5CAB100EEBD7A /* SearchDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -193,6 +203,8 @@
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA2C8A39227725E300E01545 /* AppStyle.swift */,
+				FA9E74FB25D30B2000DFF57D /* Model */,
+				FAB6FCC625D5BD0E00EEBD7A /* Network */,
 				FA9D3A46245DD80C000688BC /* Types */,
 				FA0E509822AC4CE5002417BD /* Extensions */,
 				FA2C8A3D22774F7F00E01545 /* Protocols */,
@@ -291,6 +303,23 @@
 				FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */,
 			);
 			path = WatchItemView;
+			sourceTree = "<group>";
+		};
+		FA9E74FB25D30B2000DFF57D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA9E74FC25D30B4100DFF57D /* Movie.swift */,
+			);
+			name = Model;
+			path = ../Model;
+			sourceTree = "<group>";
+		};
+		FAB6FCC625D5BD0E00EEBD7A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		FAC5D60F22B17400005ED487 /* WatchItemsVCs */ = {
@@ -431,6 +460,7 @@
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField_ext.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
+				FA9E758F25D4839D00DFF57D /* String_ext.swift in Sources */,
 				FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */,
 				FA9D3A45245DD7CA000688BC /* WatchItemView.swift in Sources */,
 				FA0A5C19247173C00008599C /* SearchView.swift in Sources */,
@@ -440,6 +470,7 @@
 				FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
 				FA0A5C1B247180800008599C /* SearchItemCell.swift in Sources */,
+				FA9E74FD25D30B4100DFF57D /* Movie.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */,
@@ -448,10 +479,12 @@
 				FA9D3A48245DD826000688BC /* WatchItemEditState.swift in Sources */,
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
+				FAB6FCC825D5BD5A00EEBD7A /* NetworkManager.swift in Sources */,
 				FA0A5C17247078430008599C /* WatchedItemCell.swift in Sources */,
 				FA0A5C132470670A0008599C /* MenuItemState.swift in Sources */,
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
 				FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */,
+				FAB6FCD225D5CAB100EEBD7A /* SearchDelegate.swift in Sources */,
 				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
 				FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,

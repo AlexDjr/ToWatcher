@@ -58,7 +58,7 @@ class WatchItemView: UIView {
     
     // MARK: - Public methods
     func setWatchItemInfo(_ watchItem: WatchItem) {
-        mainView.setImage(watchItem.image)
+        mainView.setImage(watchItem.imageURL)
         
         originalTitleLabel.text = watchItem.originalTitle
         localTitleLabel.text = watchItem.localTitle

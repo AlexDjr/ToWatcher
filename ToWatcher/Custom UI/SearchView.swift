@@ -10,10 +10,13 @@ import UIKit
 
 class SearchView: UIView {
     var textField: UITextField!
+    var delegate: SearchDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        
+        textField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -38,5 +41,19 @@ class SearchView: UIView {
         let iconImageView = UIImageView(image: #imageLiteral(resourceName: "search-icon"))
         textField.leftView = iconImageView
         textField.leftViewMode = .always
+    }
+}
+
+
+extension SearchView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var searchString = ""
+        
+        if let text = textField.text, let textRange = Range(range, in: text) {
+            searchString = text.replacingCharacters(in: textRange, with: string)
+        }
+        
+        delegate?.didSearchTextChanged(searchString)
+        return true
     }
 }
