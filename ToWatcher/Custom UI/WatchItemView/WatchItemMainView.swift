@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class WatchItemMainView: UIView {
     private var originalImage: UIImage?
@@ -34,8 +35,8 @@ class WatchItemMainView: UIView {
     }
     
     // MARK: Public methods
-    func setImage(_ image: UIImage) {
-        itemImageView.image = image
+    func setImage(_ imageURL: URL) {
+        itemImageView.kf.setImage(with: imageURL)
     }
 
     func setupState(_ state: WatchItemCellState) {

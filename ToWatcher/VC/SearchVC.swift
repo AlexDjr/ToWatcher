@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Alamofire
+import Kingfisher
 
-class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchDelegate {
     private var searchView: SearchView!
     private var containerSearchView: UIView!
     private var collectionView: SearchItemCollectionView!
     
     private var selectedIndexPath: IndexPath?
+    private var searchItems: [WatchItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +40,12 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return toWatchItems.count
+        return searchItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchItemCell.reuseIdentifier, for: indexPath) as! SearchItemCell
-        cell.watchItem = toWatchItems[indexPath.item]
+        cell.watchItem =  searchItems[indexPath.item]
         // cell.delegate = self
         return cell
     }
@@ -64,12 +67,38 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         return UIEdgeInsets(top: AppStyle.searchViewContainerHeight, left: 0, bottom: 0, right: 0)
     }
 
+    // MARK: - SearchDelegate
+    func didSearchTextChanged(_ searchString: String) {
+        guard !searchString.isEmpty else {
+            searchItems = []
+            collectionView.reloadData()
+            return
+        }
+        
+        print("searchString = \(searchString)")
+        
+        NetworkManager.shared.search(searchString) { result in
+            switch result {
+            case .success(let watchItems):
+                self.searchItems = watchItems
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print("ERROR = \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
     // MARK: - Private Methods
     private func setupView() {
         view.alpha = 0.0
         view.backgroundColor = AppStyle.mainBGColor
         setupCollectionView()
         setupSearchView()
+        searchView.delegate = self
         
         animateShowView()
 //        setFocusOnSearchView()
