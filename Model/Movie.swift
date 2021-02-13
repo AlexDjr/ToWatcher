@@ -26,6 +26,6 @@ struct Genre: Decodable {
 }
 
 struct SearchResponse: Decodable {
-    var page: Int
+    var totalPages: Int
     var results: [Movie]
 }

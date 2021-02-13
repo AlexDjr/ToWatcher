@@ -18,6 +18,10 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private var selectedIndexPath: IndexPath?
     private var searchItems: [WatchItem] = []
     
+    private var page = 1
+    private var totalPages = 0
+    private var searchString = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -66,6 +70,15 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: AppStyle.searchViewContainerHeight, left: 0, bottom: 0, right: 0)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard page < totalPages else { return }
+        
+        let isLastItem = indexPath.item == searchItems.count - 1
+        if isLastItem {
+            loadMoreItems(indexPath.item)
+        }
+    }
 
     // MARK: - SearchDelegate
     func didSearchTextChanged(_ searchString: String) {
@@ -76,19 +89,17 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
         
         print("searchString = \(searchString)")
+        page = 1
+        self.searchString = searchString
         
-        NetworkManager.shared.search(searchString) { result in
-            switch result {
-            case .success(let watchItems):
-                self.searchItems = watchItems
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-                
-            case .failure(let error):
-                print("ERROR = \(error.localizedDescription)")
-            }
+        search() { items, totalPages in
+            self.searchItems = items
+            self.totalPages = totalPages
+            self.page += 1
             
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     
@@ -158,6 +169,34 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     private func setFocusOnSearchView() {
         searchView.textField.becomeFirstResponder()
+    }
+    
+    private func search(_ completion: @escaping (SearchResult) -> ()) {
+        NetworkManager.shared.search(searchString, page: page) { result in
+            switch result {
+            case .success(let searchResult):
+                completion(searchResult)
+                
+            case .failure(let error):
+                print("ERROR = \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func loadMoreItems(_ lastItem: Int) {
+        search() { items, _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.searchItems.append(contentsOf: items)
+                
+                var indexPaths: [IndexPath] = []
+                for i in items.indices {
+                    indexPaths.append(IndexPath(item: lastItem + 1 + i, section: 0))
+                }
+                
+                self.collectionView.insertItems(at: indexPaths)
+                self.page += 1
+            }
+        }
     }
     
     // MARK: - Items animation
