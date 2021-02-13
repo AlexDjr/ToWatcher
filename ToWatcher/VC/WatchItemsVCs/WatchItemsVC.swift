@@ -161,8 +161,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     func fullReload() {
         unHideItemsIfNeeded()
         reloadCollectionView()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.animateMovingAllItemsFromScreen()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) {
+            self.animateMovingAllItemsFromScreen(isSuperFast: true)
         }
     }
     
@@ -269,8 +269,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.animateItems(withType: .watchItemSelected, andDirection: .backToScreen)
     }
     
-    private func animateMovingAllItemsFromScreen() {
-        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen)
+    private func animateMovingAllItemsFromScreen(isSuperFast: Bool = false) {
+        collectionView.animateItems(withType: .allItems, andDirection: .fromScreen, isSuperFast: isSuperFast)
     }
     
     private func animateMovingAllItemsBackToScreen() {
