@@ -12,6 +12,18 @@ class AnimatableCollectionView: UICollectionView {
     var fromScreenFinishedCallback: (() -> ())?
     var backToScreenFinishedCallback: (() -> ())?
     
+    private var isSuperFast: Bool = false {
+        didSet {
+            if isSuperFast {
+                animationDuration = 0.0
+            } else {
+                animationDuration = AppStyle.animationDuration
+            }
+        }
+    }
+    
+    private var animationDuration: Double = 0.0
+    
     enum AnimationType {
         case watchItemSelected
         case searchItemSelected
@@ -37,7 +49,9 @@ class AnimatableCollectionView: UICollectionView {
     private var itemsOnScreen: [UICollectionViewCell]!
     
     // MARK: - Public methods
-    func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection) {
+    func animateItems(withType type: AnimationType, andDirection direction: AnimationDirection, isSuperFast: Bool = false) {
+        self.isSuperFast = isSuperFast
+        
         guard numberOfItems(inSection: 0) != 0 else {
             switch direction {
             case .fromScreen:
@@ -87,7 +101,7 @@ class AnimatableCollectionView: UICollectionView {
         let transform = setupAnimationParamTransform(for: item, withType: type, andDirection: direction, andLocation: location)
         let completion = setupAnimationParamCompletion(for: item, withType: type, andDirection: direction, andLocation: location)
         
-        UIView.animate(withDuration: AppStyle.animationDuration,
+        UIView.animate(withDuration: animationDuration,
                        delay: delay,
                        options: .curveEaseInOut,
                        animations: {
