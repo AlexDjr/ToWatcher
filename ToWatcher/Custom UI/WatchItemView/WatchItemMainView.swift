@@ -36,7 +36,7 @@ class WatchItemMainView: UIView {
     
     // MARK: Public methods
     func setImage(_ imageURL: URL) {
-        itemImageView.kf.setImage(with: imageURL)
+        itemImageView.kf.setImage(with: imageURL, placeholder: UIImage(named: "placeholder")!)
     }
 
     func setupState(_ state: WatchItemCellState) {
