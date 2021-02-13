@@ -10,11 +10,13 @@ import Foundation
 import Alamofire
 import KeychainAccess
 
+typealias SearchResult = (items: [WatchItem], totalPages: Int)
+
 class NetworkManager {
     static let shared = NetworkManager()
     
     // MARK: - Public methods
-    func search(_ searchString: String, completion: @escaping (Result<[WatchItem], Error>) -> ()) {
+    func search(_ searchString: String, page: Int, completion: @escaping (Result<SearchResult, Error>) -> ()) {
         let token = (try? Keychain().getString("token")) ?? ""
         
         let headers: HTTPHeaders = [
@@ -24,7 +26,7 @@ class NetworkManager {
         
         var parameters: [String: Any] = [:]
         parameters["language"] = "ru-RU"
-        parameters["page"] = 1
+        parameters["page"] = page
         parameters["query"] = searchString
         
         let decoder: JSONDecoder = JSONDecoder()
@@ -42,13 +44,14 @@ class NetworkManager {
                 do {
                     guard let data = response.data else { return }
                     let searchResponse = try decoder.decode(SearchResponse.self, from: data)
+                    let totalPages = searchResponse.totalPages
                     let movies = searchResponse.results
                    
                     let watchItems = movies.map { WatchItem(imageURL: URL(string: "\(baseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
                                                             localTitle: $0.title,
                                                             originalTitle: $0.originalTitle,
                                                             year: $0.releaseDate.year()) }
-                    completion(.success(watchItems))
+                    completion(.success((watchItems, totalPages)))
                     
                 } catch let error {
                     completion(.failure(error))
