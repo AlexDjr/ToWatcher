@@ -27,7 +27,8 @@ class SearchView: UIView {
     private func setupView() {
         textField = UITextField()
         textField.backgroundColor = AppStyle.mainBGColor
-        textField.tintColor = AppStyle.searchViewTintColor
+        textField.tintColor = AppStyle.searchViewTextColor
+        textField.textColor = AppStyle.searchViewTextColor
         textField.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)
         textField.addBottomBorder()
         

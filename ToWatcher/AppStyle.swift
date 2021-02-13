@@ -144,7 +144,7 @@ struct AppStyle {
     static let floatActionButtonIconCloseColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
     static let watchItemInfoLocalTitleTextColor: UIColor = menuItemActiveTextColor
     static let watchItemInfoOriginalTitleTextColor: UIColor = #colorLiteral(red: 0.6588235294, green: 0.6862745098, blue: 0.7019607843, alpha: 1)
-    static let searchViewTintColor: UIColor = menuItemActiveTextColor
+    static let searchViewTextColor: UIColor = menuItemActiveTextColor
     
     // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")
