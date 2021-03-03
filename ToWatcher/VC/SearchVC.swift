@@ -49,8 +49,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchItemCell.reuseIdentifier, for: indexPath) as! SearchItemCell
-        cell.watchItem =  searchItems[indexPath.item]
-        // cell.delegate = self
+        cell.watchItem = searchItems[indexPath.item]
         return cell
     }
     
@@ -60,7 +59,6 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         self.view.bringSubviewToFront(collectionView)
         containerSearchView.isHidden = true
-        let cell = collectionView.cellForItem(at: indexPath) as! SearchItemCell
         selectedIndexPath = indexPath
         self.collectionView.selectedIndexPath = indexPath
         
