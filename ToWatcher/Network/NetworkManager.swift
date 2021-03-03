@@ -15,39 +15,42 @@ typealias SearchResult = (items: [WatchItem], totalPages: Int)
 class NetworkManager {
     static let shared = NetworkManager()
     
+    private static let token = (try? Keychain().getString("token")) ?? ""
+    
+    private let baseURL = "https://api.themoviedb.org/3"
+    private let headers: HTTPHeaders = [
+        "Authorization": "Bearer \(NetworkManager.token)",
+        "Accept": "application/json"
+    ]
+    
+    private var parameters: [String: Any] = ["language":"ru-RU"]
+    
+    private let decoder: JSONDecoder = {
+        let decoder: JSONDecoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+    
     // MARK: - Public methods
     func search(_ searchString: String, page: Int, completion: @escaping (Result<SearchResult, Error>) -> ()) {
-        let token = (try? Keychain().getString("token")) ?? ""
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)",
-            "Accept": "application/json"
-        ]
-        
-        var parameters: [String: Any] = [:]
-        parameters["language"] = "ru-RU"
         parameters["page"] = page
         parameters["query"] = searchString
         
-        let decoder: JSONDecoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        
-        let baseURL = "https://image.tmdb.org/t/p/"
+        let imageBaseURL = "https://image.tmdb.org/t/p/"
         let backdropSize = "w780"
         
-        AF.request("https://api.themoviedb.org/3/search/movie", parameters: parameters, headers: headers)
+        AF.request("\(baseURL)/search/movie", parameters: parameters, headers: headers)
             .validate(statusCode: 200..<300)
             .responseData { response in
             switch response.result {
             case .success:
                 do {
                     guard let data = response.data else { return }
-                    let searchResponse = try decoder.decode(SearchResponse.self, from: data)
+                    let searchResponse = try self.decoder.decode(SearchResponse.self, from: data)
                     let totalPages = searchResponse.totalPages
                     let movies = searchResponse.results
                    
-                    let watchItems = movies.map { WatchItem(imageURL: URL(string: "\(baseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
+                    let watchItems = movies.map { WatchItem(id: $0.id, imageURL: URL(string: "\(imageBaseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
                                                             localTitle: $0.title,
                                                             originalTitle: $0.originalTitle,
                                                             year: $0.releaseDate.year()) }
@@ -60,6 +63,28 @@ class NetworkManager {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func getMovieInfo(_ id: Int, completion: @escaping (Result<Movie, Error>) -> ()) {
+        parameters["append_to_response"] = "credits"
         
+        AF.request("\(baseURL)/movie/\(id)", parameters: parameters, headers: headers)
+            .validate(statusCode: 200..<300)
+            .responseData { response in
+                switch response.result {
+                case .success:
+                    do {
+                        guard let data = response.data else { return }
+                        let movie = try self.decoder.decode(Movie.self, from: data)
+                        
+                        completion(.success((movie)))
+                        
+                    } catch let error {
+                        completion(.failure(error))
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
     }
 }

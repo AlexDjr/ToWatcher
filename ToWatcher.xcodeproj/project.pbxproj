@@ -52,10 +52,13 @@
 		FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A49245DD864000688BC /* WatchItemMainView.swift */; };
 		FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */; };
 		FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */; };
-		FA9E74FD25D30B4100DFF57D /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E74FC25D30B4100DFF57D /* Movie.swift */; };
+		FA9E74FD25D30B4100DFF57D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E74FC25D30B4100DFF57D /* Search.swift */; };
 		FA9E758F25D4839D00DFF57D /* String_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E758E25D4839D00DFF57D /* String_ext.swift */; };
+		FAB6002B25DC4D2300EEBD7A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6002A25DC4D2300EEBD7A /* Movie.swift */; };
+		FAB6002E25DC5DF500EEBD7A /* Int_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */; };
 		FAB6FCC825D5BD5A00EEBD7A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */; };
 		FAB6FCD225D5CAB100EEBD7A /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FCD125D5CAB100EEBD7A /* SearchDelegate.swift */; };
+		FAB6FED425DAFFE700EEBD7A /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FED325DAFFE700EEBD7A /* ScoreView.swift */; };
 		FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */; };
 		FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC20246865AF002624F3 /* WatchItem.swift */; };
 		FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC2224695E6E002624F3 /* MenuItemView.swift */; };
@@ -114,10 +117,13 @@
 		FA9D3A49245DD864000688BC /* WatchItemMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemMainView.swift; sourceTree = "<group>"; };
 		FA9D3A4B245DD87A000688BC /* WatchItemActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemActionView.swift; sourceTree = "<group>"; };
 		FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer_ext.swift; sourceTree = "<group>"; };
-		FA9E74FC25D30B4100DFF57D /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		FA9E74FC25D30B4100DFF57D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		FA9E758E25D4839D00DFF57D /* String_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_ext.swift; sourceTree = "<group>"; };
+		FAB6002A25DC4D2300EEBD7A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int_ext.swift; sourceTree = "<group>"; };
 		FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		FAB6FCD125D5CAB100EEBD7A /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
+		FAB6FED325DAFFE700EEBD7A /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+indexPathForVisibleRect.swift"; sourceTree = "<group>"; };
 		FAC0CC20246865AF002624F3 /* WatchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItem.swift; sourceTree = "<group>"; };
 		FAC0CC2224695E6E002624F3 /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 			children = (
 				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
 				FA9E758E25D4839D00DFF57D /* String_ext.swift */,
+				FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */,
 				FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField_ext.swift */,
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
@@ -271,6 +278,7 @@
 		FA932E58226F181C0087BE9E /* Custom UI */ = {
 			isa = PBXGroup;
 			children = (
+				FA9D3A4F245DD8C6000688BC /* WatchItemView */,
 				FA350EB02267A3C700A167CB /* MenuBar.swift */,
 				FAC0CC2224695E6E002624F3 /* MenuItemView.swift */,
 				FA581CC92274AE70009FBF9A /* FloatActionButton.swift */,
@@ -278,7 +286,7 @@
 				FA0CB7A22468349E00005C14 /* WatchItemCollectionView.swift */,
 				FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */,
 				FA0A5C18247173C00008599C /* SearchView.swift */,
-				FA9D3A4F245DD8C6000688BC /* WatchItemView */,
+				FAB6FED325DAFFE700EEBD7A /* ScoreView.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -308,7 +316,8 @@
 		FA9E74FB25D30B2000DFF57D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FA9E74FC25D30B4100DFF57D /* Movie.swift */,
+				FA9E74FC25D30B4100DFF57D /* Search.swift */,
+				FAB6002A25DC4D2300EEBD7A /* Movie.swift */,
 			);
 			name = Model;
 			path = ../Model;
@@ -470,7 +479,7 @@
 				FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
 				FA0A5C1B247180800008599C /* SearchItemCell.swift in Sources */,
-				FA9E74FD25D30B4100DFF57D /* Movie.swift in Sources */,
+				FA9E74FD25D30B4100DFF57D /* Search.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */,
@@ -484,6 +493,9 @@
 				FA0A5C132470670A0008599C /* MenuItemState.swift in Sources */,
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
 				FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */,
+				FAB6002E25DC5DF500EEBD7A /* Int_ext.swift in Sources */,
+				FAB6002B25DC4D2300EEBD7A /* Movie.swift in Sources */,
+				FAB6FED425DAFFE700EEBD7A /* ScoreView.swift in Sources */,
 				FAB6FCD225D5CAB100EEBD7A /* SearchDelegate.swift in Sources */,
 				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
 				FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */,
