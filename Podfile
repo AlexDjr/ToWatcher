@@ -8,4 +8,5 @@ target 'ToWatcher' do
   pod 'Alamofire', '~> 5.2'
   pod 'Kingfisher'
   pod 'KeychainAccess'
+  pod 'MKRingProgressView'
 end
