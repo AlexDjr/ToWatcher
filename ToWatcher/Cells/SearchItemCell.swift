@@ -21,7 +21,7 @@ class SearchItemCell: UICollectionViewCell {
             guard let watchItem = watchItem else { return }
             mainView.setImage(watchItem.imageURL)
             localTitleLabel.text = watchItem.localTitle
-            originalTitleLabel.text = watchItem.originalTitle
+            originalTitleLabel.text = watchItem.localTitle == watchItem.originalTitle ? "" : watchItem.originalTitle
             yearLabel.text = watchItem.year
         }
     }

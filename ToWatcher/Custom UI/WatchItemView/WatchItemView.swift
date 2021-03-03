@@ -60,7 +60,7 @@ class WatchItemView: UIView {
     func setWatchItemInfo(_ watchItem: WatchItem) {
         mainView.setImage(watchItem.imageURL)
         
-        originalTitleLabel.text = watchItem.originalTitle
+        originalTitleLabel.text = watchItem.localTitle == watchItem.originalTitle ? "" : watchItem.originalTitle
         localTitleLabel.text = watchItem.localTitle
         yearLabel.text = watchItem.year
     }
