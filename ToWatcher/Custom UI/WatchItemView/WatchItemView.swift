@@ -85,6 +85,26 @@ class WatchItemView: UIView {
         }
     }
     
+    func hideLabels() {
+        UIView.animate(withDuration: AppStyle.animationDuration, delay: 0.4, options: [],
+                       animations: {
+                        self.originalTitleLabel.alpha = 0.0
+                        self.localTitleLabel.alpha = 0.0
+                        self.yearLabel.alpha = 0.0
+                       },
+                       completion: nil)
+    }
+    
+    func showLabels() {
+        UIView.animate(withDuration: AppStyle.animationDuration, delay: 0.2, options: [],
+                       animations: {
+                        self.originalTitleLabel.alpha = 1.0
+                        self.localTitleLabel.alpha = 1.0
+                        self.yearLabel.alpha = 1.0
+                       },
+                       completion: nil)
+    }
+    
     // MARK: - Private methods
     private func setupView() {
         addMainView()
