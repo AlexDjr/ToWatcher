@@ -101,13 +101,14 @@ struct AppStyle {
     // MARK: - font
     static var appFontNameBold = "Montserrat-Bold"
     static var appFontNameSemiBold = "Montserrat-SemiBold"
+    static var appFontNameRegular = "Montserrat-Regular"
     
     // MARK: - font sizes
     static let menuItemFontSize: CGFloat = 11
     static let menuItemCounterFont: UIFont = UIFont(name: AppStyle.appFontNameBold, size: 16.0)!
     static let watchItemInfoLocalTitleFontSize: CGFloat = round(itemHeight / 7.5)
-    static let watchItemInfoOriginalTitleFontSize: CGFloat = round(itemHeight / 12.5)
-    static let searchTextFieldFontSize: CGFloat = watchItemInfoOriginalTitleFontSize
+    static let watchItemInfoLabelsFontSize: CGFloat = round(itemHeight / 11.5)
+    static let searchTextFieldFontSize: CGFloat = watchItemInfoLabelsFontSize
     
     static var watchItemLocalTitleFontSize: CGFloat {
         switch UIDevice.current.screenType {
@@ -142,7 +143,7 @@ struct AppStyle {
     static let floatActionButtonBGColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     static let floatActionButtonIconAddColor: UIColor = #colorLiteral(red: 0, green: 0.5529411765, blue: 0.8352941176, alpha: 1)
     static let floatActionButtonIconCloseColor: UIColor = #colorLiteral(red: 0.2156862745, green: 0.2784313725, blue: 0.3137254902, alpha: 1)
-    static let watchItemInfoLocalTitleTextColor: UIColor = menuItemActiveTextColor
+    static let watchItemInfoLabelsTextColor: UIColor = menuItemActiveTextColor
     static let watchItemInfoOriginalTitleTextColor: UIColor = #colorLiteral(red: 0.6588235294, green: 0.6862745098, blue: 0.7019607843, alpha: 1)
     static let searchViewTextColor: UIColor = menuItemActiveTextColor
     

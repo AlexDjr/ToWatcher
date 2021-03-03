@@ -250,9 +250,16 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     // MARK: - Items animation
     private func animateMovingItemsExceptSelectedFromScreen() {
+        guard let indexPath = self.selectedIndexPath else { return }
+        
         collectionView.animateItems(withType: .watchItemSelected, andDirection: .fromScreen)
+        
+        let watchItem = self.watchItems[indexPath.item]
+        
+        NetworkManager.shared.getMovieInfo(watchItem.id) { _ in } // TODO: по идее должен использовать кэш и не ходить второй раз в есть
+        
         collectionView.fromScreenFinishedCallback = {
-            self.showWatchItemInfoVC()
+            self.showWatchItemInfoVC(watchItem)
             self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
@@ -303,8 +310,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     // MARK: - Work with VCs
-    private func showWatchItemInfoVC() {
-        childViewController = WatchItemInfoVC()
+    private func showWatchItemInfoVC(_ watchItem: WatchItem) {
+        childViewController = WatchItemInfoVC(watchItem: watchItem)
         add(asChildViewController: childViewController)
     }
     
@@ -313,24 +320,16 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         add(asChildViewController: childViewController)
     }
     
-    private func setupTopAnchorConstant(forViewController viewController: UIViewController) -> CGFloat {
-        var topAnchorConstant: CGFloat = 0.0
-        if viewController is WatchItemInfoVC {
-            topAnchorConstant = AppStyle.topSafeAreaHeight + AppStyle.itemHeight
-        } else if viewController is SearchVC {
-            topAnchorConstant = AppStyle.topSafeAreaHeight
-        }
-        return topAnchorConstant
-    }
-    
     private func add(asChildViewController viewController: UIViewController?) {
         guard let viewController = viewController else { return }
         addChild(viewController)
         view.addSubview(viewController.view)
+        if viewController is WatchItemInfoVC {
+            view.exchangeSubview(at: 0, withSubviewAt: 1)
+        }
         viewController.didMove(toParent: self)
         
-        let topAnchorConstant = setupTopAnchorConstant(forViewController: viewController)
-        setupViewController(viewController, withTopAnchorConstant: topAnchorConstant)
+        setupViewController(viewController, withTopAnchorConstant: AppStyle.topSafeAreaHeight)
     }
     
     private func removeChildViewController(_ viewController: UIViewController?) {
