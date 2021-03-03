@@ -61,6 +61,14 @@ class WatchItemCell: UICollectionViewCell {
         }
     }
     
+    func hideLabels() {
+        watchItemView.hideLabels()
+    }
+    
+    func showLabels() {
+        watchItemView.showLabels()
+    }
+    
     // MARK: - Private methods
     private func setupView() {
         contentView.addSubview(watchItemView)

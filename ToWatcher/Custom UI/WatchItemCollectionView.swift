@@ -11,10 +11,15 @@ import UIKit
 class WatchItemCollectionView: AnimatableCollectionView {
     
     override func setAnimations(_ item: UICollectionViewCell, transform: CGAffineTransform, type: AnimatableCollectionView.AnimationType, direction: AnimatableCollectionView.AnimationDirection, location: AnimatableCollectionView.AnimatedItemLocation, delay: TimeInterval) {
-        if let watchItemCell = item as? WatchItemCell {
-            watchItemCell.setTransform(transform, type: type, direction: direction)
-        } else {
-            item.transform = transform
+        guard let watchItemCell = item as? WatchItemCell else { item.transform = transform; return }
+        
+        watchItemCell.setTransform(transform, type: type, direction: direction)
+        if type == .watchItemSelected && location == .selected {
+            switch direction {
+            case .fromScreen: watchItemCell.hideLabels()
+            case .backToScreen: watchItemCell.showLabels()
+            default: break
+            }
         }
     }
 
