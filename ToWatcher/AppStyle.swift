@@ -21,6 +21,7 @@ struct AppStyle {
     static let itemShadowRadiusCoeff: CGFloat = 1 / 34.77
     static let itemsLineSpacing: CGFloat = round(AppStyle.itemHeight / 20)
     static let floatActionButtonHeight: CGFloat = 56
+    static let scoreViewHeight: CGFloat = 56
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
     static let searchViewHeight: CGFloat = 40
@@ -146,6 +147,10 @@ struct AppStyle {
     static let watchItemInfoLabelsTextColor: UIColor = menuItemActiveTextColor
     static let watchItemInfoOriginalTitleTextColor: UIColor = #colorLiteral(red: 0.6588235294, green: 0.6862745098, blue: 0.7019607843, alpha: 1)
     static let searchViewTextColor: UIColor = menuItemActiveTextColor
+    static let scoreHighColor: UIColor = menuItemWatchedCounterColor
+    static let scoreMiddleColor: UIColor = #colorLiteral(red: 1, green: 0.7568627451, blue: 0, alpha: 1)
+    static let scoreLowColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
+    static let scoreBGColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 0.5484267979)
     
     // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")

@@ -60,14 +60,19 @@ class WatchItemInfoVC: UIViewController {
         NetworkManager.shared.getMovieInfo(watchItem.id) { result in
             switch result {
             case .success(let movie):
+                self.infoView.isHidden = false
+                
                 self.yearLabel.text = movie.year
                 self.durationLabel.text = "\(movie.duration)"
                 self.genresLabel.text = movie.genres.isEmpty ? "---" : movie.genres.joined(separator: " • ")
                 self.overviewLabel.text = movie.overview
+                
+                self.scoreView.score = movie.score
                 print(">>> genres = \(movie.genres), duration = \(movie.duration)")
                 
             case .failure(let error):
                 print("ERROR = \(error.localizedDescription)")
+                self.infoView.isHidden = true
             }
         }
         setupView()
@@ -119,6 +124,8 @@ class WatchItemInfoVC: UIViewController {
     }
     
     private func setupInfoView() {
+        infoView.isHidden = true
+        
         scrollView.addSubview(infoView)
         infoView.translatesAutoresizingMaskIntoConstraints = false
         infoView.topAnchor.constraint(equalTo: originalTitle.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
@@ -134,7 +141,7 @@ class WatchItemInfoVC: UIViewController {
         infoLabelsView.translatesAutoresizingMaskIntoConstraints = false
         infoLabelsView.topAnchor.constraint(equalTo: infoView.topAnchor).isActive = true
         infoLabelsView.bottomAnchor.constraint(equalTo: infoView.bottomAnchor).isActive = true
-        infoLabelsView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4 * 2 + 56).isActive = true
+        infoLabelsView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4 * 2 + AppStyle.scoreViewHeight).isActive = true
         infoLabelsView.rightAnchor.constraint(equalTo: infoView.rightAnchor, constant: -AppStyle.watchItemInfoPadding).isActive = true
         
         yearLabel.text = ""
@@ -166,8 +173,8 @@ class WatchItemInfoVC: UIViewController {
     private func setupScoreView() {
         infoView.addSubview(scoreView)
         scoreView.translatesAutoresizingMaskIntoConstraints = false
-        scoreView.heightAnchor.constraint(equalToConstant: 56.0).isActive = true
-        scoreView.widthAnchor.constraint(equalToConstant: 56.0).isActive = true
+        scoreView.heightAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
         scoreView.centerYAnchor.constraint(equalTo: infoView.centerYAnchor).isActive = true
         scoreView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4).isActive = true
     }

@@ -14,7 +14,7 @@ struct Movie: Decodable {
     var originalTitle: String
     var localTitle: String
     var overview: String
-    var voteAverage: Double?
+    var score: Double?
     var year: String
     var genres: [String]
     var duration: String
@@ -27,7 +27,7 @@ struct Movie: Decodable {
         case originalTitle
         case localTitle = "title"
         case overview
-        case voteAverage
+        case score = "voteAverage"
         case year = "releaseDate"
         case genres
         case duration = "runtime"
@@ -42,7 +42,7 @@ struct Movie: Decodable {
         originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle) ?? ""
         localTitle = try container.decodeIfPresent(String.self, forKey: .localTitle) ?? ""
         overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? ""
-        voteAverage = try container.decodeIfPresent(Double.self, forKey: .voteAverage) ?? 0.0
+        score = try container.decodeIfPresent(Double.self, forKey: .score) ?? 0.0
         year = try container.decodeIfPresent(String.self, forKey: .year).year()
         genres = (try container.decodeIfPresent([Genre].self, forKey: .genres))?.map { $0.name } ?? []
         
