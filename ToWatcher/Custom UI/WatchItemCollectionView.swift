@@ -16,8 +16,8 @@ class WatchItemCollectionView: AnimatableCollectionView {
         watchItemCell.setTransform(transform, type: type, direction: direction)
         if type == .watchItemSelected && location == .selected {
             switch direction {
-            case .fromScreen: watchItemCell.hideLabels()
-            case .backToScreen: watchItemCell.showLabels()
+            case .fromScreen: watchItemCell.hideInfo()
+            case .backToScreen: watchItemCell.showInfo()
             default: break
             }
         }

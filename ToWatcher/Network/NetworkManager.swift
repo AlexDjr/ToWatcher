@@ -51,9 +51,10 @@ class NetworkManager {
                     let movies = searchResponse.results
                    
                     let watchItems = movies.map { WatchItem(id: $0.id, imageURL: URL(string: "\(imageBaseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
-                                                            localTitle: $0.title,
+                                                            localTitle: $0.localTitle,
                                                             originalTitle: $0.originalTitle,
-                                                            year: $0.releaseDate.year()) }
+                                                            year: $0.year,
+                                                            score: $0.score) }
                     completion(.success((watchItems, totalPages)))
                     
                 } catch let error {

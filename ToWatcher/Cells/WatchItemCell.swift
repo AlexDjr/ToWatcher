@@ -61,12 +61,12 @@ class WatchItemCell: UICollectionViewCell {
         }
     }
     
-    func hideLabels() {
-        watchItemView.hideLabels()
+    func hideInfo() {
+        watchItemView.hideInfo()
     }
     
-    func showLabels() {
-        watchItemView.showLabels()
+    func showInfo() {
+        watchItemView.showInfo()
     }
     
     // MARK: - Private methods

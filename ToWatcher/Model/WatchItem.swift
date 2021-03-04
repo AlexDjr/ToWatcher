@@ -15,13 +15,15 @@ class WatchItem: Equatable {
     var localTitle: String
     var originalTitle: String
     var year: String
+    var score: Double
     
-    init(id: Int, imageURL: URL, localTitle: String, originalTitle: String, year: String) {
+    init(id: Int, imageURL: URL, localTitle: String, originalTitle: String, year: String, score: Double) {
         self.id = id
         self.imageURL = imageURL
         self.localTitle = localTitle
         self.originalTitle = originalTitle
         self.year = year
+        self.score = score
     }
     
     static func == (lhs: WatchItem, rhs: WatchItem) -> Bool {
@@ -32,7 +34,7 @@ class WatchItem: Equatable {
 //var toWatchItems: [WatchItem] = [WatchItem(movie: Movie(id: 111, originalTitle: "Человек-паук. Возвращение домой", title: "Spider-Man: Homecoming", releaseDate: "2013-07-26"))]
 //var watchedItems: [WatchItem] = [WatchItem(movie: Movie(id: 222, originalTitle: "Снежные ангелы", title: "Snow Angels", releaseDate: "2007-04-20"))]
 
-var toWatchItems: [WatchItem] = [WatchItem(id: 315635, imageURL: URL(string: "https://image.tmdb.org/t/p//w780/9xj4OXUbX2FYorf6Vat6Rlq1u01.jpg")!, localTitle: "Человек-паук. Возвращение домой", originalTitle: "Spider-Man: Homecoming", year: "2017")]//,
+var toWatchItems: [WatchItem] = [WatchItem(id: 315635, imageURL: URL(string: "https://image.tmdb.org/t/p//w780/9xj4OXUbX2FYorf6Vat6Rlq1u01.jpg")!, localTitle: "Человек-паук. Возвращение домой", originalTitle: "Spider-Man: Homecoming", year: "2017", score: 7.4)]//,
 //                                 WatchItem(id: 1, imageURL: URL(string: "https://image.tmdb.org/t/p//w780/5r2BZajlRZqnOc6s2BS0aiFDcne.jpg")!, localTitle: "Как трусливый Роберт Форд убил Джесси Джеймса", originalTitle: "The Assassination of Jesse James by the Coward Robert Ford", year: "2007"),
 //                                 WatchItem(id: 1, imageURL: URL(string: "https://image.tmdb.org/t/p//w780/5tFt6iuGnKapHl5tw0X0cKcnuVo.jpg")!, localTitle: "Дамбо", originalTitle: "Dumbo", year: "2019"),
 //                                 WatchItem(id: 1, imageURL: URL(string: "https://image.tmdb.org/t/p//w780/5eb7l7AE2yU0mvb38fR5qLNhDDH.jpg")!, localTitle: "Король говорит!", originalTitle: "The King's Speech", year: "2010"),
