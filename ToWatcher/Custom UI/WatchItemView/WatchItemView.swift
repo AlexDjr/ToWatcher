@@ -29,6 +29,7 @@ class WatchItemView: UIView {
     private var localTitleLabel = UILabel()
     private var originalTitleLabel = UILabel()
     private var yearLabel = UILabel()
+    private var scoreView = ScoreView()
     
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -63,6 +64,7 @@ class WatchItemView: UIView {
         originalTitleLabel.text = watchItem.localTitle == watchItem.originalTitle ? "" : watchItem.originalTitle
         localTitleLabel.text = watchItem.localTitle
         yearLabel.text = watchItem.year
+        scoreView.score = watchItem.score
     }
     
     func setupState(_ state: WatchItemCellState = .enabled) {
@@ -74,33 +76,39 @@ class WatchItemView: UIView {
         
         mainView.setupState(state)
         switch state {
-        case .editing: gestureRecognizer.isEnabled = true
+        case .editing:
+            gestureRecognizer.isEnabled = true
         case .enabled:
+            UIView.animate(withDuration: AppStyle.animationDuration) { self.scoreView.alpha = 1.0 }
             gestureRecognizer.isEnabled = false
             
             if currentEditState != .default {
                 moveViewToEndState(.default, duration: AppStyle.animationDuration)
             }
-        default: gestureRecognizer.isEnabled = false
+        case .disabled:
+            UIView.animate(withDuration: AppStyle.animationDuration) { self.scoreView.alpha = 0.0 }
+            gestureRecognizer.isEnabled = false
         }
     }
     
-    func hideLabels() {
+    func hideInfo() {
         UIView.animate(withDuration: AppStyle.animationDuration, delay: 0.4, options: [],
                        animations: {
                         self.originalTitleLabel.alpha = 0.0
                         self.localTitleLabel.alpha = 0.0
                         self.yearLabel.alpha = 0.0
+                        self.scoreView.alpha = 0.0
                        },
                        completion: nil)
     }
     
-    func showLabels() {
+    func showInfo() {
         UIView.animate(withDuration: AppStyle.animationDuration, delay: 0.2, options: [],
                        animations: {
                         self.originalTitleLabel.alpha = 1.0
                         self.localTitleLabel.alpha = 1.0
                         self.yearLabel.alpha = 1.0
+                        self.scoreView.alpha = 1.0
                        },
                        completion: nil)
     }
@@ -109,6 +117,7 @@ class WatchItemView: UIView {
     private func setupView() {
         addMainView()
         addTitles()
+        setupScoreView()
         addDeleteView()
         addWatchedView()
         setupActionViewActiveConstraints()
@@ -188,6 +197,15 @@ class WatchItemView: UIView {
         yearLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         yearLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -AppStyle.watchItemYearBottomPadding).isActive = true
         yearLabel.heightAnchor.constraint(equalToConstant: 23).isActive = true
+    }
+    
+    private func setupScoreView() {
+        mainView.addSubview(scoreView)
+        scoreView.translatesAutoresizingMaskIntoConstraints = false
+        scoreView.heightAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
+        scoreView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -14).isActive = true
+        scoreView.rightAnchor.constraint(equalTo: mainView.rightAnchor, constant: -14).isActive = true
     }
     
     private func addWatchedView() {

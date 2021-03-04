@@ -56,13 +56,17 @@ class ScoreView: UIView {
     
     // MARK: - Private methods
     private func setupScore(_ score: Double?) {
+        setupScoreColor(score)
+        setupScoreValue(score)
+    }
+    
+    private func setupScoreColor(_ score: Double?) {
         var color = UIColor.clear
         
         guard let score = score else {
             ringProgressView.progress = 0.0
             ringProgressView.startColor = color
             ringProgressView.endColor = color
-            scoreLabel.text = "0.0"
             return
         }
         
@@ -78,6 +82,14 @@ class ScoreView: UIView {
         
         ringProgressView.startColor = color
         ringProgressView.endColor = color
+    }
+    
+    private func setupScoreValue(_ score: Double?) {
+        guard let score = score else {
+            ringProgressView.progress = 0.0
+            scoreLabel.text = "0.0"
+            return
+        }
         
         ringProgressView.progress = score / 10
         scoreLabel.text = "\(score)"
