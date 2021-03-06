@@ -38,7 +38,7 @@ class WatchItemInfoVC: UIViewController {
     
     private var infoView = UIView()
     private var infoLabelsView = UIView()
-    private var scoreView = ScoreView()
+    private var scoreView = ScoreView(.big)
     
     private lazy var overviewLabel: UILabel = {
         return setupTitle(font: UIFont(name: AppStyle.appFontNameRegular, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 0, minimumScale: 1.0)
@@ -132,8 +132,17 @@ class WatchItemInfoVC: UIViewController {
         infoView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         infoView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
         
-        setupLabels()
         setupScoreView()
+        setupLabels()
+    }
+    
+    private func setupScoreView() {
+        infoView.addSubview(scoreView)
+        scoreView.translatesAutoresizingMaskIntoConstraints = false
+        scoreView.heightAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
+        scoreView.centerYAnchor.constraint(equalTo: infoView.centerYAnchor).isActive = true
+        scoreView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4).isActive = true
     }
     
     private func setupLabels() {
@@ -141,7 +150,7 @@ class WatchItemInfoVC: UIViewController {
         infoLabelsView.translatesAutoresizingMaskIntoConstraints = false
         infoLabelsView.topAnchor.constraint(equalTo: infoView.topAnchor).isActive = true
         infoLabelsView.bottomAnchor.constraint(equalTo: infoView.bottomAnchor).isActive = true
-        infoLabelsView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4 * 2 + AppStyle.scoreViewHeight).isActive = true
+        infoLabelsView.leftAnchor.constraint(equalTo: scoreView.rightAnchor, constant: AppStyle.watchItemInfoPadding * 4).isActive = true
         infoLabelsView.rightAnchor.constraint(equalTo: infoView.rightAnchor, constant: -AppStyle.watchItemInfoPadding).isActive = true
         
         yearLabel.text = ""
@@ -168,15 +177,6 @@ class WatchItemInfoVC: UIViewController {
         genresLabel.bottomAnchor.constraint(equalTo: infoLabelsView.bottomAnchor).isActive = true
         genresLabel.leftAnchor.constraint(equalTo: infoLabelsView.leftAnchor).isActive = true
         genresLabel.rightAnchor.constraint(equalTo: infoLabelsView.rightAnchor).isActive = true
-    }
-    
-    private func setupScoreView() {
-        infoView.addSubview(scoreView)
-        scoreView.translatesAutoresizingMaskIntoConstraints = false
-        scoreView.heightAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
-        scoreView.widthAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
-        scoreView.centerYAnchor.constraint(equalTo: infoView.centerYAnchor).isActive = true
-        scoreView.leftAnchor.constraint(equalTo: infoView.leftAnchor, constant: AppStyle.watchItemInfoPadding * 4).isActive = true
     }
     
     private func setupOverviewLabel() {

@@ -15,7 +15,7 @@ class SearchItemCollectionView: AnimatableCollectionView {
             let frameInSuperview = self.superview!.convert(item.frame, from: self)
             let transform = item.getAnimationTransform(with: frameInSuperview.minY)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { item.hideDescription() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { item.hideInfo() }
             item.transform = transform
         } else {
             item.transform = transform

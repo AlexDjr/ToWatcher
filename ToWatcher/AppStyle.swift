@@ -21,7 +21,21 @@ struct AppStyle {
     static let itemShadowRadiusCoeff: CGFloat = 1 / 34.77
     static let itemsLineSpacing: CGFloat = round(AppStyle.itemHeight / 20)
     static let floatActionButtonHeight: CGFloat = 56
-    static let scoreViewHeight: CGFloat = 56
+    
+    static var bigScoreViewHeight: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 50.0
+        default: return 56.0
+        }
+    }
+    
+    static var smallScoreViewHeight: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 20.0
+        default: return 22.0
+        }
+    }
+    
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
     static let searchViewHeight: CGFloat = 40
@@ -77,7 +91,7 @@ struct AppStyle {
     
     static var searchItemLocalTitleFontSize: CGFloat {
         switch UIDevice.current.screenType {
-        case .iPhones_320: return 11.0
+        case .iPhones_320: return 10.0
         case .iPhones_375: return 12.0
         case .iPhone_414: return 13.0
         }
@@ -85,7 +99,7 @@ struct AppStyle {
     
     static var searchItemOriginalTitleFontSize: CGFloat {
         switch UIDevice.current.screenType {
-        case .iPhones_320: return 9.0
+        case .iPhones_320: return 8.0
         case .iPhones_375: return 10.0
         case .iPhone_414: return 11.0
         }
@@ -93,7 +107,7 @@ struct AppStyle {
     
     static var searchItemYearFontSize: CGFloat {
         switch UIDevice.current.screenType {
-        case .iPhones_320: return 10.0
+        case .iPhones_320: return 8.0
         case .iPhones_375: return 12.0
         case .iPhone_414: return 13.0
         }
@@ -110,6 +124,13 @@ struct AppStyle {
     static let watchItemInfoLocalTitleFontSize: CGFloat = round(itemHeight / 7.5)
     static let watchItemInfoLabelsFontSize: CGFloat = round(itemHeight / 11.5)
     static let searchTextFieldFontSize: CGFloat = watchItemInfoLabelsFontSize
+    static let bigScoreViewFontSize: CGFloat = 18
+    static var smallScoreViewFontSize: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 8
+        default: return 9
+        }
+    }
     
     static var watchItemLocalTitleFontSize: CGFloat {
         switch UIDevice.current.screenType {

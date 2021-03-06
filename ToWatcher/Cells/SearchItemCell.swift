@@ -15,6 +15,7 @@ class SearchItemCell: UICollectionViewCell {
     private var localTitleLabel = UILabel()
     private var originalTitleLabel = UILabel()
     private var yearLabel = UILabel()
+    private var scoreView = ScoreView(.small)
     
     var watchItem: WatchItem? {
         didSet {
@@ -23,6 +24,7 @@ class SearchItemCell: UICollectionViewCell {
             localTitleLabel.text = watchItem.localTitle
             originalTitleLabel.text = watchItem.localTitle == watchItem.originalTitle ? "" : watchItem.originalTitle
             yearLabel.text = watchItem.year
+            scoreView.score = watchItem.score
         }
     }
     
@@ -57,7 +59,7 @@ class SearchItemCell: UICollectionViewCell {
         return yXScaledTransform
     }
     
-    func hideDescription() {
+    func hideInfo() {
         UIView.animate(withDuration: 0.1,
                        delay: 0.0,
                        options: .curveEaseInOut,
@@ -65,6 +67,7 @@ class SearchItemCell: UICollectionViewCell {
                         self.localTitleLabel.alpha = 0.0
                         self.originalTitleLabel.alpha = 0.0
                         self.yearLabel.alpha = 0.0
+                        self.scoreView.alpha = 0.0
                        })
     }
     
@@ -73,6 +76,7 @@ class SearchItemCell: UICollectionViewCell {
         setupMainView()
         setupLocalTitleLabel()
         setupOriginalTitleLabel()
+        setupScoreView()
         setupYearLabel()
     }
     
@@ -92,7 +96,7 @@ class SearchItemCell: UICollectionViewCell {
         
         contentView.addSubview(localTitleLabel)
         localTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        localTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2.0).isActive = true
+        localTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -2.0).isActive = true
         localTitleLabel.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
         localTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
@@ -104,11 +108,20 @@ class SearchItemCell: UICollectionViewCell {
         
         contentView.addSubview(originalTitleLabel)
         originalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        originalTitleLabel.topAnchor.constraint(equalTo: localTitleLabel.bottomAnchor, constant: 2.0).isActive = true
+        originalTitleLabel.topAnchor.constraint(equalTo: localTitleLabel.bottomAnchor, constant: 1.0).isActive = true
         originalTitleLabel.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
         originalTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
-    
+
+    private func setupScoreView() {
+        contentView.addSubview(scoreView)
+        scoreView.translatesAutoresizingMaskIntoConstraints = false
+        scoreView.heightAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
+        scoreView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        scoreView.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
+    }
+
     private func setupYearLabel() {
         yearLabel.numberOfLines = 1
         yearLabel.textColor = AppStyle.menuItemActiveTextColor
@@ -116,8 +129,8 @@ class SearchItemCell: UICollectionViewCell {
         
         contentView.addSubview(yearLabel)
         yearLabel.translatesAutoresizingMaskIntoConstraints = false
-        yearLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 2.0).isActive = true
-        yearLabel.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
+        yearLabel.centerYAnchor.constraint(equalTo: scoreView.centerYAnchor).isActive = true
+        yearLabel.leftAnchor.constraint(equalTo: scoreView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
         yearLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
     
