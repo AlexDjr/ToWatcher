@@ -29,7 +29,7 @@ class WatchItemView: UIView {
     private var localTitleLabel = UILabel()
     private var originalTitleLabel = UILabel()
     private var yearLabel = UILabel()
-    private var scoreView = ScoreView()
+    private var scoreView = ScoreView(.big)
     
     private var gestureRecognizer = UIPanGestureRecognizer()
     private let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -202,8 +202,8 @@ class WatchItemView: UIView {
     private func setupScoreView() {
         mainView.addSubview(scoreView)
         scoreView.translatesAutoresizingMaskIntoConstraints = false
-        scoreView.heightAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
-        scoreView.widthAnchor.constraint(equalToConstant: AppStyle.scoreViewHeight).isActive = true
+        scoreView.heightAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
         scoreView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -14).isActive = true
         scoreView.rightAnchor.constraint(equalTo: mainView.rightAnchor, constant: -14).isActive = true
     }
