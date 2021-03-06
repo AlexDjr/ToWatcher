@@ -130,6 +130,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     // MARK: - MenuItemDelegateProtocol
     func didSelectMenuItem(at indexPath: IndexPath) {
         containerView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        guard let childControllers = childControllers else { return }
+        selectedChildVC = childControllers[indexPath.item]
     }
     
     // MARK: - Private methods
