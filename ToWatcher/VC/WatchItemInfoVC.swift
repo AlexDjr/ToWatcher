@@ -110,7 +110,7 @@ class WatchItemInfoVC: UIViewController {
         localTitle.translatesAutoresizingMaskIntoConstraints = false
         localTitle.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: AppStyle.itemHeight + AppStyle.watchItemInfoPadding).isActive = true
         localTitle.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
-        localTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 2 * AppStyle.watchItemInfoPadding).isActive = true
+        localTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
     }
     
     private func setupOriginalTitle() {
@@ -120,7 +120,7 @@ class WatchItemInfoVC: UIViewController {
         originalTitle.translatesAutoresizingMaskIntoConstraints = false
         originalTitle.topAnchor.constraint(equalTo: localTitle.bottomAnchor, constant: AppStyle.watchItemInfoLineSpacing).isActive = true
         originalTitle.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
-        originalTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 2 * AppStyle.watchItemInfoPadding).isActive = true
+        originalTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
     }
     
     private func setupInfoView() {
