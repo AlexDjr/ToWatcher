@@ -107,7 +107,7 @@ struct AppStyle {
     
     static var searchItemYearFontSize: CGFloat {
         switch UIDevice.current.screenType {
-        case .iPhones_320: return 8.0
+        case .iPhones_320: return 9.0
         case .iPhones_375: return 12.0
         case .iPhone_414: return 13.0
         }
