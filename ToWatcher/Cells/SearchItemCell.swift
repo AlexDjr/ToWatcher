@@ -12,9 +12,31 @@ class SearchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "searchItemCell"
     
     private lazy var mainView = WatchItemMainView()
-    private var localTitleLabel = UILabel()
-    private var originalTitleLabel = UILabel()
-    private var yearLabel = UILabel()
+    
+    private var localTitleLabel: UILabel = {
+        let localTitleLabel = UILabel()
+        localTitleLabel.numberOfLines = 2
+        localTitleLabel.textColor = AppStyle.menuItemActiveTextColor
+        localTitleLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.searchItemLocalTitleFontSize)!
+        return localTitleLabel
+    }()
+    
+    private var originalTitleLabel: UILabel = {
+        let originalTitleLabel = UILabel()
+        originalTitleLabel.numberOfLines = 1
+        originalTitleLabel.textColor = AppStyle.menuItemInactiveTextColor
+        originalTitleLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemOriginalTitleFontSize)!
+        return originalTitleLabel
+    }()
+    
+    private var yearLabel: UILabel = {
+        let yearLabel = UILabel()
+        yearLabel.numberOfLines = 1
+        yearLabel.textColor = AppStyle.menuItemActiveTextColor
+        yearLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemYearFontSize)!
+        return yearLabel
+    }()
+    
     private var scoreView = ScoreView(.small)
     
     var watchItem: WatchItem? {
@@ -74,10 +96,7 @@ class SearchItemCell: UICollectionViewCell {
     // MARK: - Private methods
     private func setupView() {
         setupMainView()
-        setupLocalTitleLabel()
-        setupOriginalTitleLabel()
-        setupScoreView()
-        setupYearLabel()
+        setupStackView()
     }
     
     private func setupMainView() {
@@ -89,49 +108,44 @@ class SearchItemCell: UICollectionViewCell {
         mainView.rightAnchor.constraint(equalTo: contentView.leftAnchor, constant: AppStyle.searchItemMainViewWidth).isActive = true
     }
     
-    private func setupLocalTitleLabel() {
-        localTitleLabel.numberOfLines = 2
-        localTitleLabel.textColor = AppStyle.menuItemActiveTextColor
-        localTitleLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.searchItemLocalTitleFontSize)!
+    private func setupStackView() {
+        var spacing: CGFloat = 0.0
+        var customSpacing: CGFloat = 0.0
         
-        contentView.addSubview(localTitleLabel)
-        localTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        localTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -2.0).isActive = true
-        localTitleLabel.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
-        localTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-    }
-    
-    private func setupOriginalTitleLabel() {
-        originalTitleLabel.numberOfLines = 1
-        originalTitleLabel.textColor = AppStyle.menuItemInactiveTextColor
-        originalTitleLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemOriginalTitleFontSize)!
+        switch UIDevice.current.screenType {
+        case .iPhones_320:
+            spacing = 1.0
+            customSpacing = 1.0
+        case .iPhones_375:
+            spacing = 2.0
+            customSpacing = 1.0
+        case .iPhone_414:
+            spacing = 4.0
+            customSpacing = 2.0
+        }
         
-        contentView.addSubview(originalTitleLabel)
-        originalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        originalTitleLabel.topAnchor.constraint(equalTo: localTitleLabel.bottomAnchor, constant: 1.0).isActive = true
-        originalTitleLabel.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
-        originalTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-    }
-
-    private func setupScoreView() {
-        contentView.addSubview(scoreView)
-        scoreView.translatesAutoresizingMaskIntoConstraints = false
-        scoreView.heightAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
-        scoreView.widthAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
-        scoreView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        scoreView.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
-    }
-
-    private func setupYearLabel() {
-        yearLabel.numberOfLines = 1
-        yearLabel.textColor = AppStyle.menuItemActiveTextColor
-        yearLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemYearFontSize)!
+        let horizontalStackView = UIStackView()
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.spacing = AppStyle.itemsLineSpacing
+        horizontalStackView.alignment = .center
         
-        contentView.addSubview(yearLabel)
-        yearLabel.translatesAutoresizingMaskIntoConstraints = false
-        yearLabel.centerYAnchor.constraint(equalTo: scoreView.centerYAnchor).isActive = true
-        yearLabel.leftAnchor.constraint(equalTo: scoreView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
-        yearLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        horizontalStackView.addArrangedSubview(scoreView)
+        horizontalStackView.addArrangedSubview(yearLabel)
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = spacing
+        stackView.alignment = .leading
+        
+        stackView.addArrangedSubview(localTitleLabel)
+        stackView.setCustomSpacing(customSpacing, after: localTitleLabel)
+        stackView.addArrangedSubview(originalTitleLabel)
+        stackView.addArrangedSubview(horizontalStackView)
+        
+        self.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -2.0).isActive = true
+        stackView.leftAnchor.constraint(equalTo: mainView.rightAnchor, constant: AppStyle.itemsLineSpacing).isActive = true
+        stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
-    
 }
