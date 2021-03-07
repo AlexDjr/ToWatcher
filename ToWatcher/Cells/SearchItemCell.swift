@@ -11,31 +11,19 @@ import UIKit
 class SearchItemCell: UICollectionViewCell {
     static let reuseIdentifier = "searchItemCell"
     
-    private lazy var mainView = WatchItemMainView()
+    private var mainView = WatchItemMainView()
     
-    private var localTitleLabel: UILabel = {
-        let localTitleLabel = UILabel()
-        localTitleLabel.numberOfLines = 2
-        localTitleLabel.textColor = AppStyle.menuItemActiveTextColor
-        localTitleLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.searchItemLocalTitleFontSize)!
-        return localTitleLabel
-    }()
+    private var localTitleLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.searchItemLocalTitleFontSize)!,
+                                                color: AppStyle.menuItemActiveTextColor,
+                                                numberOfLines: 2)
     
-    private var originalTitleLabel: UILabel = {
-        let originalTitleLabel = UILabel()
-        originalTitleLabel.numberOfLines = 1
-        originalTitleLabel.textColor = AppStyle.menuItemInactiveTextColor
-        originalTitleLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemOriginalTitleFontSize)!
-        return originalTitleLabel
-    }()
+    private var originalTitleLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemOriginalTitleFontSize)!,
+                                                   color: AppStyle.menuItemInactiveTextColor,
+                                                   numberOfLines: 1)
     
-    private var yearLabel: UILabel = {
-        let yearLabel = UILabel()
-        yearLabel.numberOfLines = 1
-        yearLabel.textColor = AppStyle.menuItemActiveTextColor
-        yearLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemYearFontSize)!
-        return yearLabel
-    }()
+    private var yearLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemYearFontSize)!,
+                                          color: AppStyle.menuItemActiveTextColor,
+                                          numberOfLines: 1)
     
     private var scoreView = ScoreView(.small)
     
@@ -124,18 +112,12 @@ class SearchItemCell: UICollectionViewCell {
             customSpacing = 2.0
         }
         
-        let horizontalStackView = UIStackView()
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.spacing = AppStyle.itemsLineSpacing
-        horizontalStackView.alignment = .center
+        let horizontalStackView = UIStackView().set(axis: .horizontal, spacing: AppStyle.itemsLineSpacing, alignment: .center)
         
         horizontalStackView.addArrangedSubview(scoreView)
         horizontalStackView.addArrangedSubview(yearLabel)
         
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = spacing
-        stackView.alignment = .leading
+        let stackView = UIStackView().set(axis: .vertical, spacing: spacing, alignment: .leading)
         
         stackView.addArrangedSubview(localTitleLabel)
         stackView.setCustomSpacing(customSpacing, after: localTitleLabel)

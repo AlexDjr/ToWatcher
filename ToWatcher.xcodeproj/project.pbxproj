@@ -37,6 +37,8 @@
 		FA350EE7226C886C00A167CB /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */; };
 		FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */; };
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
+		FA3D3C5B25F6A5370060DA53 /* UIStackView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */; };
+		FA3D3C5E25F6A8D40060DA53 /* UIScrollView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
@@ -64,6 +66,7 @@
 		FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC0CC2224695E6E002624F3 /* MenuItemView.swift */; };
 		FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedVC.swift */; };
 		FAC8533A2482A55F00484EC8 /* SearchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */; };
+		FACB8DB125F5408200815A78 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8DB025F5408200815A78 /* PersonView.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +105,8 @@
 		FA350EDF226C886B00A167CB /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FA350EE0226C886B00A167CB /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView_ext.swift; sourceTree = "<group>"; };
+		FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView_ext.swift; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel_ext.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
@@ -129,6 +134,7 @@
 		FAC0CC2224695E6E002624F3 /* MenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemView.swift; sourceTree = "<group>"; };
 		FAC5D60D22B173EB005ED487 /* WatchedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedVC.swift; sourceTree = "<group>"; };
 		FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCollectionView.swift; sourceTree = "<group>"; };
+		FACB8DB025F5408200815A78 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -172,6 +178,8 @@
 				FABEB1AD22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift */,
 				FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */,
 				FA0A5C1C2471A76F0008599C /* UIDevice_ext.swift */,
+				FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */,
+				FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -287,6 +295,7 @@
 				FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */,
 				FA0A5C18247173C00008599C /* SearchView.swift */,
 				FAB6FED325DAFFE700EEBD7A /* ScoreView.swift */,
+				FACB8DB025F5408200815A78 /* PersonView.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -464,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA3D3C5E25F6A8D40060DA53 /* UIScrollView_ext.swift in Sources */,
 				FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */,
 				FA0A5C1D2471A76F0008599C /* UIDevice_ext.swift in Sources */,
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
@@ -492,6 +502,7 @@
 				FA0A5C17247078430008599C /* WatchedItemCell.swift in Sources */,
 				FA0A5C132470670A0008599C /* MenuItemState.swift in Sources */,
 				FA9D3A4A245DD864000688BC /* WatchItemMainView.swift in Sources */,
+				FACB8DB125F5408200815A78 /* PersonView.swift in Sources */,
 				FA0A5C152470672A0008599C /* MenuItemType.swift in Sources */,
 				FAB6002E25DC5DF500EEBD7A /* Int_ext.swift in Sources */,
 				FAB6002B25DC4D2300EEBD7A /* Movie.swift in Sources */,
@@ -510,6 +521,7 @@
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
 				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,
+				FA3D3C5B25F6A5370060DA53 /* UIStackView_ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

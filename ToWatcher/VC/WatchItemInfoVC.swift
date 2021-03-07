@@ -9,40 +9,45 @@
 import UIKit
 
 class WatchItemInfoVC: UIViewController {
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        return scrollView
-    }()
+    private var scrollView = UIScrollView.standart()
     
-    private lazy var localTitle: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 2, minimumScale: 0.8)
-    }()
+    private var localTitle = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)!,
+                                                color: AppStyle.watchItemInfoLabelsTextColor,
+                                                numberOfLines: 2,
+                                                minimumScale: 0.8)
     
-    private lazy var originalTitle: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoOriginalTitleTextColor, numberOfLines: 2, minimumScale: 0.8)
-    }()
+    private var originalTitle = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                                                   color: AppStyle.watchItemInfoOriginalTitleTextColor,
+                                                   numberOfLines: 2,
+                                                   minimumScale: 0.8)
     
-    private lazy var yearLabel: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 1, minimumScale: 0.8)
-    }()
+    private var yearLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                                               color: AppStyle.watchItemInfoLabelsTextColor,
+                                               numberOfLines: 1,
+                                               minimumScale: 0.8)
     
-    private lazy var durationLabel: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 1, minimumScale: 0.8)
-    }()
+    private var durationLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                                                   color: AppStyle.watchItemInfoLabelsTextColor,
+                                                   numberOfLines: 1,
+                                                   minimumScale: 0.8)
     
-    private lazy var genresLabel: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 2, minimumScale: 0.8)
-    }()
+    private var genresLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                                                 color: AppStyle.watchItemInfoLabelsTextColor,
+                                                 numberOfLines: 2,
+                                                 minimumScale: 0.8)
     
     private var infoView = UIView()
     private var infoLabelsView = UIView()
     private var scoreView = ScoreView(.big)
     
-    private lazy var overviewLabel: UILabel = {
-        return setupTitle(font: UIFont(name: AppStyle.appFontNameRegular, size: AppStyle.watchItemInfoLabelsFontSize)!, color: AppStyle.watchItemInfoLabelsTextColor, numberOfLines: 0, minimumScale: 1.0)
-    }()
+    private var overviewLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameRegular, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                                                   color: AppStyle.watchItemInfoLabelsTextColor,
+                                                   numberOfLines: 0,
+                                                   minimumScale: 1.0)
+    
+    private var castScrollView = UIScrollView.standart()
+    private var directorView = PersonView()
+    private var actorsViews = [PersonView]()
     
     private var watchItem: WatchItem
     
@@ -68,7 +73,17 @@ class WatchItemInfoVC: UIViewController {
                 self.overviewLabel.text = movie.overview
                 
                 self.scoreView.score = movie.score
-                print(">>> genres = \(movie.genres), duration = \(movie.duration)")
+                
+                if let director = movie.director {
+                    self.directorView = PersonView(director)
+                }
+                
+                movie.cast.forEach { actor in
+                    let personView = PersonView(actor)
+                    self.actorsViews.append(personView)
+                }
+                
+                self.setupCastScrollView()
                 
             case .failure(let error):
                 print("ERROR = \(error.localizedDescription)")
@@ -187,20 +202,78 @@ class WatchItemInfoVC: UIViewController {
         overviewLabel.topAnchor.constraint(equalTo: infoView.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
         overviewLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
         overviewLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
-        
-        scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: AppStyle.floatActionButtonHeight + AppStyle.bottomSafeAreaHeight).isActive = true
     }
     
-    private func setupTitle(font: UIFont, color: UIColor, numberOfLines: Int, minimumScale: CGFloat) -> UILabel {
-        let title = UILabel()
-        title.numberOfLines = numberOfLines
-        title.font = font
-        title.textColor = color
-        title.textAlignment = .left
-        title.adjustsFontSizeToFitWidth = true
-        title.minimumScaleFactor = minimumScale
+    private func setupCastScrollView() {
+        castScrollView.contentInset = UIEdgeInsets(top: 0.0, left: AppStyle.watchItemInfoPadding, bottom: 0.0, right: AppStyle.watchItemInfoPadding)
         
-        return title
+        scrollView.addSubview(castScrollView)
+        castScrollView.translatesAutoresizingMaskIntoConstraints = false
+        castScrollView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
+        castScrollView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
+        castScrollView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: castScrollView.bottomAnchor, constant: AppStyle.floatActionButtonHeight + AppStyle.floatActionButtonPadding * 2).isActive = true
+        setupDirectorView()
+        setupActorsView()
+    }
+    
+    private func setupDirectorView() {
+        guard directorView.person != nil else { return }
+        
+        let directorTitleLabel = castTitleLabel()
+        directorTitleLabel.text = "Режиссер"
+        
+        let directorStackView = UIStackView().set(axis: .vertical, spacing: 4.0, alignment: .center)
+        directorStackView.addArrangedSubview(directorTitleLabel)
+        directorStackView.addArrangedSubview(directorView)
+        
+        castScrollView.addSubview(directorStackView)
+        directorStackView.translatesAutoresizingMaskIntoConstraints = false
+        directorStackView.topAnchor.constraint(equalTo: castScrollView.topAnchor).isActive = true
+        directorStackView.heightAnchor.constraint(lessThanOrEqualTo: castScrollView.heightAnchor).isActive = true
+        directorStackView.leftAnchor.constraint(equalTo: castScrollView.leftAnchor).isActive = true
+        directorStackView.widthAnchor.constraint(equalToConstant: AppStyle.directorViewWidth).isActive = true
+    }
+    
+    private func setupActorsView() {
+        guard !actorsViews.isEmpty else { return }
+        
+        let actorsHStackView = UIStackView().set(axis: .horizontal, spacing: 2.0, alignment: .top)
+        
+        for view in actorsViews {
+            view.widthAnchor.constraint(equalToConstant: AppStyle.actorViewWidth).isActive = true
+            actorsHStackView.addArrangedSubview(view)
+        }
+        
+        let actorsTitleLabel = castTitleLabel()
+        actorsTitleLabel.text = "Актеры"
+        
+        let view = UIView()
+        view.addSubview(actorsTitleLabel)
+        actorsTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        actorsTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        actorsTitleLabel.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        view.widthAnchor.constraint(equalToConstant: AppStyle.actorViewWidth).isActive = true
+        
+        let actorsVStackView = UIStackView().set(axis: .vertical, spacing: 4.0, alignment: .leading)
+        actorsVStackView.addArrangedSubview(view)
+        actorsVStackView.addArrangedSubview(actorsHStackView)
+        
+        castScrollView.addSubview(actorsVStackView)
+        actorsVStackView.translatesAutoresizingMaskIntoConstraints = false
+        actorsVStackView.topAnchor.constraint(equalTo: castScrollView.topAnchor).isActive = true
+        actorsVStackView.heightAnchor.constraint(lessThanOrEqualTo: castScrollView.heightAnchor).isActive = true
+        actorsVStackView.leftAnchor.constraint(equalTo: castScrollView.leftAnchor, constant: AppStyle.directorViewWidth + AppStyle.watchItemInfoPadding * 3).isActive = true
+        
+        castScrollView.contentLayoutGuide.rightAnchor.constraint(equalTo: actorsVStackView.rightAnchor).isActive = true
+    }
+    
+    private func castTitleLabel() -> UILabel {
+        return UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
+                            color: AppStyle.watchItemInfoLabelsTextColor,
+                            numberOfLines: 1,
+                            minimumScale: 1.0,
+                            alignment: .center)
     }
     
     private func animateShowView() {
