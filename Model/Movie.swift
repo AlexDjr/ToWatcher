@@ -52,7 +52,7 @@ struct Movie: Decodable {
         let credits = try container.decodeIfPresent(Credits.self, forKey: .cast)
         let fullCast = credits?.cast ?? []
         let fullCrew = credits?.crew ?? []
-        cast = Array(fullCast.prefix(3))
+        cast = Array(fullCast.prefix(5))
         director = fullCrew.first { $0.job == "Director" }
     }
 }
@@ -70,8 +70,8 @@ struct Credits: Decodable {
 struct Person: Decodable {
     var name: String
     var originalName: String
-    var profilePath: String
     var job: String
+    var imageURL: URL
     
     
     enum CodingKeys: String, CodingKey {
@@ -84,9 +84,14 @@ struct Person: Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        let imageBaseURL = "https://image.tmdb.org/t/p/"
+        let backdropSize = "w185"
+        
+        
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         originalName = try container.decodeIfPresent(String.self, forKey: .originalName) ?? ""
-        profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath) ?? ""
         job = try container.decodeIfPresent(String.self, forKey: .job) ?? ""
+        let profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath) ?? ""
+        imageURL = URL(string: "\(imageBaseURL)\(backdropSize)\(profilePath)")!
     }
 }

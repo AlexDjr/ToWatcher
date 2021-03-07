@@ -206,7 +206,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     private func setupFloatActionButton() {
         view.addSubview(floatActionButton)
         floatActionButton.translatesAutoresizingMaskIntoConstraints = false
-        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.bottomSafeAreaHeight - 10).isActive = true
+        floatActionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -AppStyle.floatActionButtonPadding - AppStyle.bottomSafeAreaHeight).isActive = true
         floatActionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         floatActionButton.heightAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true
         floatActionButton.widthAnchor.constraint(equalToConstant: AppStyle.floatActionButtonHeight).isActive = true

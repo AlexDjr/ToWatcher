@@ -20,7 +20,11 @@ struct AppStyle {
     static let itemCornerRadiusCoeff: CGFloat = 0.42
     static let itemShadowRadiusCoeff: CGFloat = 1 / 34.77
     static let itemsLineSpacing: CGFloat = round(AppStyle.itemHeight / 20)
-    static let floatActionButtonHeight: CGFloat = 56
+    static let floatActionButtonHeight: CGFloat = 56.0
+    static let floatActionButtonPadding: CGFloat = 10.0
+    static let personImageViewHeight: CGFloat = 56.0
+    static let actorViewWidth: CGFloat = 95.0
+    static let directorViewWidth: CGFloat = 96.0
     
     static var bigScoreViewHeight: CGFloat {
         switch UIDevice.current.screenType {

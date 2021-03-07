@@ -78,10 +78,7 @@ class MenuItemView: UIView {
     }
     
     private func setupStackView() {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.alignment = .center
+        let stackView = UIStackView().set(axis: .vertical, spacing: 4.0, alignment: .center)
         
         stackView.addArrangedSubview(itemImageView)
         stackView.addArrangedSubview(itemNameLabel)

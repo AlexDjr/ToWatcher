@@ -26,33 +26,23 @@ class WatchItemView: UIView {
     lazy var deleteView = WatchItemActionView(.delete)
     lazy var watchedView = WatchItemActionView(.watched)
     
-    private var originalTitleLabel: UILabel = {
-        let originalTitleLabel = UILabel()
-        originalTitleLabel.numberOfLines = 2
-        originalTitleLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.watchItemOriginalTitleFontSize)!
-        originalTitleLabel.textColor = AppStyle.mainBGColor
-        originalTitleLabel.addShadow(radius: 2.0)
-        return originalTitleLabel
-    }()
+    private var originalTitleLabel = UILabel()
+        .set(font: UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.watchItemOriginalTitleFontSize)!,
+             color: AppStyle.mainBGColor,
+             numberOfLines: 2)
+        .addShadow(radius: 2.0)
     
-    private var localTitleLabel: UILabel = {
-        let localTitleLabel = UILabel()
-        localTitleLabel.numberOfLines = 2
-        localTitleLabel.sizeToFit()
-        localTitleLabel.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemLocalTitleFontSize)!
-        localTitleLabel.textColor = AppStyle.mainBGColor
-        localTitleLabel.addShadow(radius: 3.0)
-        return localTitleLabel
-    }()
+    private var localTitleLabel = UILabel()
+        .set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemLocalTitleFontSize)!,
+             color: AppStyle.mainBGColor,
+             numberOfLines: 2)
+        .addShadow(radius: 3.0)
     
-    private var yearLabel: UILabel = {
-        let yearLabel = UILabel()
-        yearLabel.numberOfLines = 1
-        yearLabel.font = UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.watchItemYearFontSize)!
-        yearLabel.textColor = AppStyle.mainBGColor
-        yearLabel.addShadow(radius: 2.0)
-        return yearLabel
-    }()
+    private var yearLabel = UILabel()
+        .set(font: UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.watchItemYearFontSize)!,
+             color: AppStyle.mainBGColor,
+             numberOfLines: 1)
+        .addShadow(radius: 2.0)
     
     private var scoreView = ScoreView(.big)
     
@@ -178,10 +168,7 @@ class WatchItemView: UIView {
     }
     
     private func addStackView() {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 0.0
-        stackView.alignment = .leading
+        let stackView = UIStackView().set(axis: .vertical, spacing: 0.0, alignment: .leading)
         
         stackView.addArrangedSubview(originalTitleLabel)
         stackView.addArrangedSubview(localTitleLabel)
