@@ -21,6 +21,8 @@ class WatchItemInfoVC: UIViewController {
                                                    numberOfLines: 2,
                                                    minimumScale: 0.8)
     
+    private var titlesStackView = UIStackView().set(axis: .vertical, spacing: AppStyle.watchItemInfoLineSpacing, alignment: .leading)
+    
     private var yearLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLabelsFontSize)!,
                                                color: AppStyle.watchItemInfoLabelsTextColor,
                                                numberOfLines: 1,
@@ -103,8 +105,7 @@ class WatchItemInfoVC: UIViewController {
     
     private func setupWatchItemInfoView() {
         setupScrollView()
-        setupLocalTitle()
-        setupOriginalTitle()
+        setupTitles()
         setupInfoView()
         setupOverviewLabel()
     }
@@ -118,24 +119,20 @@ class WatchItemInfoVC: UIViewController {
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    private func setupLocalTitle() {
+    private func setupTitles() {
+        originalTitle.isHidden = watchItem.localTitle == watchItem.originalTitle
         localTitle.text = watchItem.localTitle
-        
-        scrollView.addSubview(localTitle)
-        localTitle.translatesAutoresizingMaskIntoConstraints = false
-        localTitle.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: AppStyle.itemHeight + AppStyle.watchItemInfoPadding).isActive = true
-        localTitle.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
-        localTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
-    }
-    
-    private func setupOriginalTitle() {
         originalTitle.text = watchItem.originalTitle
         
-        scrollView.addSubview(originalTitle)
-        originalTitle.translatesAutoresizingMaskIntoConstraints = false
-        originalTitle.topAnchor.constraint(equalTo: localTitle.bottomAnchor, constant: AppStyle.watchItemInfoLineSpacing).isActive = true
-        originalTitle.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
-        originalTitle.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
+        
+        titlesStackView.addArrangedSubview(localTitle)
+        titlesStackView.addArrangedSubview(originalTitle)
+        
+        scrollView.addSubview(titlesStackView)
+        titlesStackView.translatesAutoresizingMaskIntoConstraints = false
+        titlesStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: AppStyle.itemHeight + AppStyle.watchItemInfoPadding).isActive = true
+        titlesStackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: AppStyle.watchItemInfoPadding).isActive = true
+        titlesStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -2 * AppStyle.watchItemInfoPadding).isActive = true
     }
     
     private func setupInfoView() {
@@ -143,7 +140,7 @@ class WatchItemInfoVC: UIViewController {
         
         scrollView.addSubview(infoView)
         infoView.translatesAutoresizingMaskIntoConstraints = false
-        infoView.topAnchor.constraint(equalTo: originalTitle.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
+        infoView.topAnchor.constraint(equalTo: titlesStackView.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
         infoView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         infoView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
         
