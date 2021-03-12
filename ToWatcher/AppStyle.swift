@@ -25,6 +25,7 @@ struct AppStyle {
     static let personImageViewHeight: CGFloat = 56.0
     static let actorViewWidth: CGFloat = 95.0
     static let directorViewWidth: CGFloat = 96.0
+    static let searchLoaderHeight: CGFloat = 30.0
     
     static var bigScoreViewHeight: CGFloat {
         switch UIDevice.current.screenType {

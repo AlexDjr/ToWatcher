@@ -9,4 +9,5 @@ target 'ToWatcher' do
   pod 'Kingfisher'
   pod 'KeychainAccess'
   pod 'MKRingProgressView'
+  pod 'NVActivityIndicatorView'
 end

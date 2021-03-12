@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Kingfisher
+import NVActivityIndicatorView
 
 class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchDelegate {
     private var searchView: SearchView!
@@ -21,6 +22,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private var page = 1
     private var totalPages = 0
     private var searchString = ""
+    
+    private var loader = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: AppStyle.searchLoaderHeight, height: AppStyle.searchLoaderHeight), type: .ballRotateChase, color: AppStyle.menuItemToWatchCounterColor)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +93,17 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         page = 1
         self.searchString = searchString
         
+        let startSearchTime = Date().timeIntervalSince1970
+        loader.startAnimating()
+        
         search() { items, totalPages in
+            let stopSearchTime = Date().timeIntervalSince1970
+            let delta = Int((stopSearchTime - startSearchTime) * 1000)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000 - delta)) {
+                self.loader.stopAnimating()
+            }
+            
             self.searchItems = items
             self.totalPages = totalPages
             self.page += 1
@@ -107,6 +120,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         view.backgroundColor = AppStyle.mainBGColor
         setupCollectionView()
         setupSearchView()
+        setupLoader()
         searchView.delegate = self
         
         animateShowView()
@@ -131,6 +145,14 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         searchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewHeight).isActive = true
         searchView.leftAnchor.constraint(equalTo: containerSearchView.leftAnchor, constant: AppStyle.searchViewLeftRightPadding).isActive = true
         searchView.rightAnchor.constraint(equalTo: containerSearchView.rightAnchor, constant: -AppStyle.searchViewLeftRightPadding).isActive = true
+    }
+    
+    private func setupLoader() {
+        searchView.addSubview(loader)
+        
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loader.centerYAnchor.constraint(equalTo: searchView.centerYAnchor).isActive = true
+        loader.leftAnchor.constraint(equalTo: searchView.rightAnchor, constant: (AppStyle.searchViewLeftRightPadding - AppStyle.searchLoaderHeight) / 2).isActive = true
     }
     
     private func setupCollectionView() {
@@ -177,6 +199,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 
             case .failure(let error):
                 print("ERROR = \(error.localizedDescription)")
+                self.loader.stopAnimating()
             }
         }
     }
