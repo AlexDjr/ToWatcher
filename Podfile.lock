@@ -3,18 +3,23 @@ PODS:
   - KeychainAccess (4.2.1)
   - Kingfisher (6.1.0)
   - MKRingProgressView (2.2.3)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - KeychainAccess
   - Kingfisher
   - MKRingProgressView
+  - NVActivityIndicatorView
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - KeychainAccess
     - Kingfisher
     - MKRingProgressView
+    - NVActivityIndicatorView
   trunk:
     - Alamofire
 
@@ -23,7 +28,8 @@ SPEC CHECKSUMS:
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: f5d8d60a0ef3edd642fd781bae60918599901aff
   MKRingProgressView: 404b3157e7a533ab8668d29ec20042c35d12ca1d
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
 
-PODFILE CHECKSUM: e6ae48456378736544ad07ace5d57506c2d4bf9b
+PODFILE CHECKSUM: 32743096651271eeff881fbd0e02a7ac2172bee1
 
 COCOAPODS: 1.10.1
