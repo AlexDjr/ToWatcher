@@ -44,6 +44,9 @@
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
 		FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811322788A9F00A60758 /* UIView_ext.swift */; };
 		FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D811522789B6300A60758 /* WatchItemCell.swift */; };
+		FA6F255625FCD7040001EBF5 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F255525FCD7040001EBF5 /* AlertView.swift */; };
+		FA6F255925FD43DF0001EBF5 /* AFError_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F255825FD43DE0001EBF5 /* AFError_ext.swift */; };
+		FA6F255C25FD4D4A0001EBF5 /* UIColor_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F255B25FD4D4A0001EBF5 /* UIColor_ext.swift */; };
 		FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */; };
 		FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */; };
 		FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA91D8B822AAA77900243988 /* SearchVC.swift */; };
@@ -112,6 +115,9 @@
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
 		FA6D811322788A9F00A60758 /* UIView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIView_ext.swift; path = ../UIView_ext.swift; sourceTree = "<group>"; };
 		FA6D811522789B6300A60758 /* WatchItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemCell.swift; sourceTree = "<group>"; };
+		FA6F255525FCD7040001EBF5 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		FA6F255825FD43DE0001EBF5 /* AFError_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFError_ext.swift; sourceTree = "<group>"; };
+		FA6F255B25FD4D4A0001EBF5 /* UIColor_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor_ext.swift; sourceTree = "<group>"; };
 		FA8E046B22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemDelegateProtocol.swift; sourceTree = "<group>"; };
 		FA8FC99822AE3F5500F66F8F /* AnimatableCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableCollectionView.swift; sourceTree = "<group>"; };
 		FA91D8B822AAA77900243988 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -180,6 +186,8 @@
 				FA0A5C1C2471A76F0008599C /* UIDevice_ext.swift */,
 				FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */,
 				FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */,
+				FA6F255825FD43DE0001EBF5 /* AFError_ext.swift */,
+				FA6F255B25FD4D4A0001EBF5 /* UIColor_ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -296,6 +304,7 @@
 				FA0A5C18247173C00008599C /* SearchView.swift */,
 				FAB6FED325DAFFE700EEBD7A /* ScoreView.swift */,
 				FACB8DB025F5408200815A78 /* PersonView.swift */,
+				FA6F255525FCD7040001EBF5 /* AlertView.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -478,6 +487,7 @@
 				FA0A5C1D2471A76F0008599C /* UIDevice_ext.swift in Sources */,
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField_ext.swift in Sources */,
+				FA6F255625FCD7040001EBF5 /* AlertView.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
 				FA9E758F25D4839D00DFF57D /* String_ext.swift in Sources */,
 				FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */,
@@ -497,6 +507,7 @@
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA9D3A48245DD826000688BC /* WatchItemEditState.swift in Sources */,
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
+				FA6F255C25FD4D4A0001EBF5 /* UIColor_ext.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,
 				FAB6FCC825D5BD5A00EEBD7A /* NetworkManager.swift in Sources */,
 				FA0A5C17247078430008599C /* WatchedItemCell.swift in Sources */,
@@ -520,6 +531,7 @@
 				FAC0CC21246865AF002624F3 /* WatchItem.swift in Sources */,
 				FA350EAF22679B4A00A167CB /* ContainerCell.swift in Sources */,
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
+				FA6F255925FD43DF0001EBF5 /* AFError_ext.swift in Sources */,
 				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,
 				FA3D3C5B25F6A5370060DA53 /* UIStackView_ext.swift in Sources */,
 			);

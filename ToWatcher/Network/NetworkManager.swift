@@ -95,5 +95,6 @@ class NetworkManager {
     
     func cancelSearchRequests() {
         searchRequests.forEach { $0.cancel() }
+        searchRequests.removeAll()
     }
 }

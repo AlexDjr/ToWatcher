@@ -58,7 +58,7 @@ class SearchItemCell: UICollectionViewCell {
         let xScaledTransform = transformScaled.translatedBy(x: deltaX, y: 0)
          
         let halfHeightDeltaAfterScale = (AppStyle.itemHeight - frame.height) / 2
-        let delta = currentY - (AppStyle.menuBarFullHeight - AppStyle.topSafeAreaHeight) - halfHeightDeltaAfterScale
+        let delta = currentY - (AppStyle.menuBarFullHeight) - halfHeightDeltaAfterScale
         let yXScaledTransform = xScaledTransform.translatedBy(x: 0, y: -delta / scaleY)
         
 //                       completion: { _ in
