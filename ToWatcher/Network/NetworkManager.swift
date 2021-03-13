@@ -31,6 +31,8 @@ class NetworkManager {
         return decoder
     }()
     
+    private var searchRequests: [DataRequest] = []
+    
     // MARK: - Public methods
     func search(_ searchString: String, page: Int, completion: @escaping (Result<SearchResult, Error>) -> ()) {
         parameters["page"] = page
@@ -39,31 +41,33 @@ class NetworkManager {
         let imageBaseURL = "https://image.tmdb.org/t/p/"
         let backdropSize = "w780"
         
-        AF.request("\(baseURL)/search/movie", parameters: parameters, headers: headers)
+        let request = AF.request("\(baseURL)/search/movie", parameters: parameters, headers: headers)
             .validate(statusCode: 200..<300)
             .responseData { response in
-            switch response.result {
-            case .success:
-                do {
-                    guard let data = response.data else { return }
-                    let searchResponse = try self.decoder.decode(SearchResponse.self, from: data)
-                    let totalPages = searchResponse.totalPages
-                    let movies = searchResponse.results
-                   
-                    let watchItems = movies.map { WatchItem(id: $0.id, imageURL: URL(string: "\(imageBaseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
-                                                            localTitle: $0.localTitle,
-                                                            originalTitle: $0.originalTitle,
-                                                            year: $0.year,
-                                                            score: $0.score) }
-                    completion(.success((watchItems, totalPages)))
-                    
-                } catch let error {
+                switch response.result {
+                case .success:
+                    do {
+                        guard let data = response.data else { return }
+                        let searchResponse = try self.decoder.decode(SearchResponse.self, from: data)
+                        let totalPages = searchResponse.totalPages
+                        let movies = searchResponse.results
+                        
+                        let watchItems = movies.map { WatchItem(id: $0.id, imageURL: URL(string: "\(imageBaseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
+                                                                localTitle: $0.localTitle,
+                                                                originalTitle: $0.originalTitle,
+                                                                year: $0.year,
+                                                                score: $0.score) }
+                        completion(.success((watchItems, totalPages)))
+                        
+                    } catch let error {
+                        completion(.failure(error))
+                    }
+                case let .failure(error):
                     completion(.failure(error))
                 }
-            case let .failure(error):
-                completion(.failure(error))
             }
-        }
+        
+        searchRequests.append(request)
     }
     
     func getMovieInfo(_ id: Int, completion: @escaping (Result<Movie, Error>) -> ()) {
@@ -87,5 +91,9 @@ class NetworkManager {
                     completion(.failure(error))
                 }
             }
+    }
+    
+    func cancelSearchRequests() {
+        searchRequests.forEach { $0.cancel() }
     }
 }

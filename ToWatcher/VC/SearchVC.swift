@@ -22,6 +22,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private var page = 1
     private var totalPages = 0
     private var searchString = ""
+    private var isLoadingMoreCanceled = false
     
     private var loader = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: AppStyle.searchLoaderHeight, height: AppStyle.searchLoaderHeight), type: .ballRotateChase, color: AppStyle.menuItemToWatchCounterColor)
     
@@ -52,7 +53,10 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchItemCell.reuseIdentifier, for: indexPath) as! SearchItemCell
-        cell.watchItem = searchItems[indexPath.item]
+        
+        if indexPath.item < searchItems.count {
+            cell.watchItem = searchItems[indexPath.item]
+        }
         return cell
     }
     
@@ -96,6 +100,9 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let startSearchTime = Date().timeIntervalSince1970
         loader.startAnimating()
         
+        isLoadingMoreCanceled = true
+        NetworkManager.shared.cancelSearchRequests()
+        
         search() { items, totalPages in
             let stopSearchTime = Date().timeIntervalSince1970
             let delta = Int((stopSearchTime - startSearchTime) * 1000)
@@ -110,6 +117,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.isLoadingMoreCanceled = false
             }
         }
     }
@@ -207,6 +215,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private func loadMoreItems(_ lastItem: Int) {
         search() { items, _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                guard !self.isLoadingMoreCanceled else { return }
+                
                 self.searchItems.append(contentsOf: items)
                 
                 var indexPaths: [IndexPath] = []
