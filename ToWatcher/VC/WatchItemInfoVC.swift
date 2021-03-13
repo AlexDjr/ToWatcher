@@ -74,8 +74,6 @@ class WatchItemInfoVC: UIViewController {
                 self.genresLabel.text = movie.genres.isEmpty ? "---" : movie.genres.joined(separator: " • ")
                 self.overviewLabel.text = movie.overview
                 
-                self.scoreView.score = movie.score
-                
                 if let director = movie.director {
                     self.directorView = PersonView(director)
                 }
@@ -149,6 +147,8 @@ class WatchItemInfoVC: UIViewController {
     }
     
     private func setupScoreView() {
+        scoreView.score = watchItem.score
+        
         infoView.addSubview(scoreView)
         scoreView.translatesAutoresizingMaskIntoConstraints = false
         scoreView.heightAnchor.constraint(equalToConstant: scoreView.viewHeight).isActive = true
