@@ -324,12 +324,16 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         guard let viewController = viewController else { return }
         addChild(viewController)
         view.addSubview(viewController.view)
+        
+        var topAnchorConstraint: CGFloat = 0.0
+        
         if viewController is WatchItemInfoVC {
+            topAnchorConstraint = AppStyle.topSafeAreaHeight
             view.exchangeSubview(at: 0, withSubviewAt: 1)
         }
         viewController.didMove(toParent: self)
         
-        setupViewController(viewController, withTopAnchorConstant: AppStyle.topSafeAreaHeight)
+        setupViewController(viewController, withTopAnchorConstant: topAnchorConstraint)
     }
     
     private func removeChildViewController(_ viewController: UIViewController?) {

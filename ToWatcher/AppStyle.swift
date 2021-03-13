@@ -26,6 +26,24 @@ struct AppStyle {
     static let actorViewWidth: CGFloat = 95.0
     static let directorViewWidth: CGFloat = 96.0
     static let searchLoaderHeight: CGFloat = 30.0
+    static let alertViewHeight: CGFloat = topSafeAreaHeight + 60.0
+    static let alertOKButtonWidth: CGFloat = 60.0
+    static let alertViewPadding: CGFloat = 11.0
+    
+    static var alertOKButtonCornerRadius: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 12.5
+        case .iPhones_375: return 13.5
+        case .iPhone_414: return 14.0
+        }
+    }
+    
+    static var alertImageHeight: CGFloat {
+        switch UIDevice.current.screenType {
+        case .iPhones_320: return 20.0
+        default: return 26.0
+        }
+    }
     
     static var bigScoreViewHeight: CGFloat {
         switch UIDevice.current.screenType {
@@ -44,9 +62,10 @@ struct AppStyle {
     static let watchItemInfoPadding: CGFloat = 10
     static let watchItemInfoLineSpacing: CGFloat = 4
     static let searchViewHeight: CGFloat = 40
-    static let searchViewTopBottomPadding: CGFloat = 50
+    static let searchViewTopPadding: CGFloat = 70
+    static let searchViewBottomPadding: CGFloat = 30
     static let searchViewLeftRightPadding: CGFloat = round(itemHeight / 3)
-    static let searchViewContainerHeight = AppStyle.searchViewHeight + AppStyle.searchViewTopBottomPadding * 2
+    static let searchViewContainerHeight = searchViewHeight + searchViewTopPadding + searchViewBottomPadding
     static let itemRoundCorners: UIRectCorner = [.topRight, .bottomLeft]
     
     static var watchItemLabelsPadding: CGFloat {
@@ -177,6 +196,8 @@ struct AppStyle {
     static let scoreMiddleColor: UIColor = #colorLiteral(red: 1, green: 0.7568627451, blue: 0, alpha: 1)
     static let scoreLowColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
     static let scoreBGColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 0.5484267979)
+    static let alertViewColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
+    static let alertTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
     // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")
@@ -185,6 +206,7 @@ struct AppStyle {
     static let floatActionBarIconImage: UIImage = #imageLiteral(resourceName: "plus")
     static let watchItemActionWatchedImage: UIImage = #imageLiteral(resourceName: "action_view_watched")
     static let watchItemActionDeleteImage: UIImage = #imageLiteral(resourceName: "action_view_delete")
+    static let alertImage: UIImage = #imageLiteral(resourceName: "alert")
     
     // MARK: - animations
     static let animationDuration = 0.4

@@ -16,6 +16,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private var containerSearchView: UIView!
     private var collectionView: SearchItemCollectionView!
     
+    private var alertView = AlertView()
+    
     private var selectedIndexPath: IndexPath?
     private var searchItems: [WatchItem] = []
     
@@ -90,6 +92,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         guard !searchString.isEmpty else {
             searchItems = []
             collectionView.reloadData()
+            NetworkManager.shared.cancelSearchRequests()
+            loader.stopAnimating()
             return
         }
         
@@ -129,6 +133,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setupCollectionView()
         setupSearchView()
         setupLoader()
+        setupAlertView()
         searchView.delegate = self
         
         animateShowView()
@@ -142,14 +147,14 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         containerSearchView.translatesAutoresizingMaskIntoConstraints = false
         containerSearchView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        containerSearchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewContainerHeight).isActive = true
+        containerSearchView.heightAnchor.constraint(equalToConstant: AppStyle.topSafeAreaHeight + AppStyle.searchViewContainerHeight).isActive = true
         containerSearchView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         containerSearchView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
         searchView = SearchView()
         containerSearchView.addSubview(searchView)
         searchView.translatesAutoresizingMaskIntoConstraints = false
-        searchView.topAnchor.constraint(equalTo: containerSearchView.topAnchor, constant: AppStyle.searchViewTopBottomPadding).isActive = true
+        searchView.topAnchor.constraint(equalTo: containerSearchView.topAnchor, constant: AppStyle.topSafeAreaHeight + AppStyle.searchViewTopPadding).isActive = true
         searchView.heightAnchor.constraint(equalToConstant: AppStyle.searchViewHeight).isActive = true
         searchView.leftAnchor.constraint(equalTo: containerSearchView.leftAnchor, constant: AppStyle.searchViewLeftRightPadding).isActive = true
         searchView.rightAnchor.constraint(equalTo: containerSearchView.rightAnchor, constant: -AppStyle.searchViewLeftRightPadding).isActive = true
@@ -161,6 +166,11 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         loader.translatesAutoresizingMaskIntoConstraints = false
         loader.centerYAnchor.constraint(equalTo: searchView.centerYAnchor).isActive = true
         loader.leftAnchor.constraint(equalTo: searchView.rightAnchor, constant: (AppStyle.searchViewLeftRightPadding - AppStyle.searchLoaderHeight) / 2).isActive = true
+    }
+    
+    private func setupAlertView() {
+        view.addSubview(alertView)
+        alertView.setup()
     }
     
     private func setupCollectionView() {
@@ -203,11 +213,11 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         NetworkManager.shared.search(searchString, page: page) { result in
             switch result {
             case .success(let searchResult):
+                self.alertView.hideIfNeeded()
                 completion(searchResult)
                 
             case .failure(let error):
-                print("ERROR = \(error.localizedDescription)")
-                self.loader.stopAnimating()
+                self.handleError(error)
             }
         }
     }
@@ -227,6 +237,18 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 self.collectionView.insertItems(at: indexPaths)
                 self.page += 1
             }
+        }
+    }
+    
+    private func handleError(_ error: Error) {
+        print("ERROR = \(error.localizedDescription)")
+        
+        guard let error = error as? AFError else { return }
+        switch error {
+        case .explicitlyCancelled: break
+        default:
+            loader.stopAnimating()
+            alertView.show(with: error.description)
         }
     }
     
