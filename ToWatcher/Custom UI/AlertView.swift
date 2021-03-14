@@ -12,36 +12,59 @@ class AlertView: UIView {
     private var heightConstraint: NSLayoutConstraint?
     private var alertHeight: CGFloat = AppStyle.alertViewHeight
     
-    private var alertImageView = UIImageView(image: AppStyle.alertImage)
+    private var alertImageView = UIImageView()
     private var alertLabel = UILabel().set(font: UIFont(name: AppStyle.appFontNameSemiBold, size: AppStyle.searchItemLocalTitleFontSize)!,
-                                           color: AppStyle.alertTextColor,
+                                           color: AppStyle.alertViewTextColor,
                                            numberOfLines: 2,
                                            minimumScale: 0.8)
     
-    private var okButton: UIButton = {
-        let okButton = UIButton()
-        okButton.titleLabel?.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.searchItemLocalTitleFontSize)
-        okButton.setTitle("OK", for: .normal)
-        okButton.layer.cornerRadius = AppStyle.alertOKButtonCornerRadius
-        okButton.backgroundColor = AppStyle.alertViewColor.darker
-        return okButton
-    }()
+    private var style: AlertStyle = .error {
+        didSet {
+            switch style {
+            case .error:
+                backgroundColor = AppStyle.alertViewErrorColor
+                alertImageView.image = AppStyle.alertViewErrorImage
+            case .warning:
+                backgroundColor = AppStyle.alertViewWarningColor
+                alertImageView.image = AppStyle.alertViewWarningImage
+            }
+        }
+    }
+    
+    enum AlertStyle {
+        case error
+        case warning
+    }
+    
+    private var autoHidingTimer: Timer?
+    private var fromIndexPath: IndexPath?
     
     func setup() {
         isHidden = true
-        backgroundColor = AppStyle.alertViewColor
         setupConstraints()
     }
     
-    func setAlertText(_ text: String) {
-        alertLabel.text = text
-    }
-    
-    func show(with text: String ) {
-        guard isHidden || text != alertLabel.text else { return }
+    func show(text: String, style: AlertStyle, from: IndexPath? = nil) {
+        let isClosingNow = isAnimating && !isHidden
+        if isClosingNow {
+            // TODO: В идеале дождаться точного окончания анимации и тогда вызывать
+            DispatchQueue.main.asyncAfter(deadline: .now() + AppStyle.animationDuration) { self.show(text: text, style: style, from: from) }
+            return
+        }
+        
+        let isSameErrorAlreadyShown = style == .error && text == alertLabel.text && !isHidden
+        let isSameWarningAlreadyShown = style == .warning && from == fromIndexPath && !isHidden
+        guard !(isSameErrorAlreadyShown || isSameWarningAlreadyShown) else { return }
+        
+        autoHidingTimer?.invalidate()
         
         hideIfNeeded {
             self.alertLabel.text = text
+            self.style = style
+            self.fromIndexPath = from
+            
+            self.setAutoHidingTimer()
+            
             self.show()
         }
     }
@@ -67,13 +90,9 @@ class AlertView: UIView {
         stackView.distribution = .fill
         stackView.addArrangedSubview(alertImageView)
         stackView.addArrangedSubview(alertLabel)
-        stackView.addArrangedSubview(okButton)
         
         alertImageView.heightAnchor.constraint(equalToConstant: AppStyle.alertImageHeight).isActive = true
         alertImageView.widthAnchor.constraint(equalToConstant: AppStyle.alertImageHeight).isActive = true
-        
-        okButton.addTarget(self, action: #selector(okTapped), for: .touchUpInside)
-        okButton.widthAnchor.constraint(equalToConstant: AppStyle.alertOKButtonWidth).isActive = true
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +123,9 @@ class AlertView: UIView {
         })
     }
     
-    @objc private func okTapped() {
-        hide()
+    private func setAutoHidingTimer() {
+        self.autoHidingTimer = Timer.scheduledTimer(withTimeInterval: AppStyle.alertViewAutoHidingInterval, repeats: false) { _ in
+            self.hideIfNeeded()
+        }
     }
 }

@@ -196,8 +196,9 @@ struct AppStyle {
     static let scoreMiddleColor: UIColor = #colorLiteral(red: 1, green: 0.7568627451, blue: 0, alpha: 1)
     static let scoreLowColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
     static let scoreBGColor: UIColor = #colorLiteral(red: 0.7529411765, green: 0.7725490196, blue: 0.7843137255, alpha: 0.5484267979)
-    static let alertViewColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
-    static let alertTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    static let alertViewErrorColor: UIColor = #colorLiteral(red: 0.7215686275, green: 0.04705882353, blue: 0.03529411765, alpha: 1)
+    static let alertViewWarningColor: UIColor = #colorLiteral(red: 1, green: 0.7568627451, blue: 0, alpha: 1)
+    static let alertViewTextColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     
     // MARK: - images
     static let menuItemToWatchImage: UIImage = #imageLiteral(resourceName: "menu-item-to-watch")
@@ -206,8 +207,10 @@ struct AppStyle {
     static let floatActionBarIconImage: UIImage = #imageLiteral(resourceName: "plus")
     static let watchItemActionWatchedImage: UIImage = #imageLiteral(resourceName: "action_view_watched")
     static let watchItemActionDeleteImage: UIImage = #imageLiteral(resourceName: "action_view_delete")
-    static let alertImage: UIImage = #imageLiteral(resourceName: "alert")
+    static let alertViewErrorImage: UIImage = #imageLiteral(resourceName: "error")
+    static let alertViewWarningImage: UIImage = #imageLiteral(resourceName: "warning")
     
     // MARK: - animations
     static let animationDuration = 0.4
+    static let alertViewAutoHidingInterval = 2.0
 }

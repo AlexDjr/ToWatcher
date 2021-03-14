@@ -36,4 +36,8 @@ extension UIView {
         
         layer.masksToBounds = true
     }
+    
+    var isAnimating: Bool {
+        return (self.layer.animationKeys()?.count ?? 0) > 0
+    }
 }
