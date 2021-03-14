@@ -64,7 +64,10 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard isEligible(indexPath) else { return }
         guard indexPath != self.collectionView.selectedIndexPath else { return }
+        
+        alertView.hideIfNeeded()
         
         self.view.bringSubviewToFront(collectionView)
         containerSearchView.isHidden = true
@@ -248,8 +251,23 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         case .explicitlyCancelled: break
         default:
             loader.stopAnimating()
-            alertView.show(with: error.description)
+            alertView.show(text: error.description, style: .error)
         }
+    }
+    
+    private func isEligible(_ indexPath: IndexPath) -> Bool {
+        guard let selectedCell = self.collectionView.cellForItem(at: indexPath) as? SearchItemCell, let watchItem = selectedCell.watchItem else { return true }
+        
+        // TODO: Исправить на работу с БД!!!
+        let toWatch = toWatchItems.first { $0.id == watchItem.id }
+        let watched = watchedItems.first { $0.id == watchItem.id }
+        
+        if toWatch != nil || watched != nil {
+            alertView.show(text: "Этот фильм уже есть в вашем списке!", style: .warning, from: indexPath)
+            return false
+        }
+        
+        return true
     }
     
     // MARK: - Items animation
