@@ -42,6 +42,34 @@ class SearchView: UIView {
         let iconImageView = UIImageView(image: #imageLiteral(resourceName: "search-icon"))
         textField.leftView = iconImageView
         textField.leftViewMode = .always
+        
+        let clearButton = UIButton(frame: CGRect(x: 0, y: 0, width: 22.0, height: 14.0))
+        clearButton.addTarget(self, action: #selector(clear), for: .touchUpInside)
+        clearButton.setImage(#imageLiteral(resourceName: "clear-icon"), for: .normal)
+        textField.rightView = clearButton
+    }
+    
+    @objc private func clear() {
+        textField.text = nil
+        hideClearButton()
+        delegate?.didSearchTextChanged("")
+        textField.becomeFirstResponder()
+    }
+    
+    private func showOrHideClearButton(_ string: String?) {
+        if string ?? "" == "" {
+            hideClearButton()
+        } else {
+            showClearButton()
+        }
+    }
+    
+    private func showClearButton() {
+        textField.rightViewMode = .always
+    }
+    
+    private func hideClearButton() {
+        textField.rightViewMode = .never
     }
 }
 
@@ -54,7 +82,16 @@ extension SearchView: UITextFieldDelegate {
             searchString = text.replacingCharacters(in: textRange, with: string)
         }
         
+        showOrHideClearButton(searchString)
         delegate?.didSearchTextChanged(searchString)
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        showOrHideClearButton(textField.text)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        showOrHideClearButton(textField.text)
     }
 }
