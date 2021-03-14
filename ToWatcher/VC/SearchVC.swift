@@ -78,7 +78,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: AppStyle.searchViewContainerHeight, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: AppStyle.searchViewContainerHeight, left: 0, bottom: AppStyle.floatActionButtonHeight + AppStyle.floatActionButtonPadding * 2, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
