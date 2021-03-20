@@ -11,15 +11,26 @@ import UIKit
 class WatchedVC: WatchItemsVC {
     private let watchedItemCellReuseIdentifier = "watchedItemCell"
     
+    override var watchType: WatchType {
+        get {
+            WatchType.watched
+        }
+        set {
+            super.watchType = newValue
+        }
+    }
+    
     override var watchItems: [WatchItem] {
-        didSet {
-            watchedItems = watchItems
+        get {
+            DBManager.shared.getWatchItems(watchType)
+        }
+        set {
+            super.watchItems = newValue
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        watchItems = watchedItems
         
         collectionView!.register(WatchedItemCell.self, forCellWithReuseIdentifier: watchedItemCellReuseIdentifier)
     }

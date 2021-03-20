@@ -56,7 +56,8 @@ class NetworkManager {
                                                                 localTitle: $0.localTitle,
                                                                 originalTitle: $0.originalTitle,
                                                                 year: $0.year,
-                                                                score: $0.score) }
+                                                                score: $0.score,
+                                                                type: .default) }
                         completion(.success((watchItems, totalPages)))
                         
                     } catch let error {

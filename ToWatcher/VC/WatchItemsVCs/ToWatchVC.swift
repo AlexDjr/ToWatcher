@@ -10,14 +10,25 @@ import UIKit
 
 class ToWatchVC: WatchItemsVC {
     
+    override var watchType: WatchType {
+        get {
+            WatchType.toWatch
+        }
+        set {
+            super.watchType = newValue
+        }
+    }
+    
     override var watchItems: [WatchItem] {
-        didSet {
-            toWatchItems = watchItems
+        get {
+            DBManager.shared.getWatchItems(watchType)
+        }
+        set {
+            super.watchItems = newValue
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        watchItems = toWatchItems
     }
 }
