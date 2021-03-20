@@ -13,6 +13,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     private var watchItemCellReuseIdentifier = "watchItemCell"
     
+    var watchType = WatchType.default
     var watchItems: [WatchItem] = []
     var collectionView: WatchItemCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
@@ -86,7 +87,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     // MARK: - WatchItemEditProtocol
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
         guard let index = (watchItems.firstIndex { $0 == item }) else { return }
-        deleteCell(at: IndexPath(item: index, section: 0))
+        deleteItem(item, at: IndexPath(item: index, section: 0))
         homeVC?.didRemoveItem(item, withType: type)
     }
     
@@ -138,23 +139,29 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func addItem(_ item: WatchItem) {
+        item.type = watchType
+        
         if collectionView == nil {
             setupCollectionView()
         }
         
-        insertItem(item)
+        DBManager.shared.save(item)
         reloadCollectionViewData()
     }
     
     func addItemAfterSearch(_ item: WatchItem) {
+        item.type = watchType
+        
+        let currentItemsCount = watchItems.count
         isItemAddedAfterSearch = true
         delegate?.didAddItemAfterSearch()
         
-        insertItem(item)
+        DBManager.shared.save(item)
         
-        afterAnimationsCallback = {
-            self.reloadCollectionView()
-            self.removeChildViewController(self.childViewController)
+        if currentItemsCount == 0 {
+            finishAddingItem()
+        } else {
+            afterAnimationsCallback = { self.finishAddingItem() }
         }
     }
     
@@ -193,9 +200,9 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         return layout
     }
     
-    private func deleteCell(at indexPath: IndexPath) {
+    private func deleteItem(_ item: WatchItem, at indexPath: IndexPath) {
         moveItemsEditMode()
-        watchItems.remove(at: indexPath.row)
+        DBManager.shared.delete(item)
         collectionView.deleteItems(at: [indexPath])
     }
     
@@ -205,15 +212,16 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         reloadCollectionViewData()
     }
     
+    private func finishAddingItem() {
+        reloadCollectionView()
+        removeChildViewController(childViewController)
+    }
+    
     private func unHideItemsIfNeeded() {
         for i in watchItems.indices {
             let item = collectionView.cellForItem(at: IndexPath(item: i, section: 0))
             item?.isHidden = false
         }
-    }
-    
-    private func insertItem(_ item: WatchItem) {
-        watchItems.insert(item, at: 0)
     }
     
     private func reloadCollectionViewData() {

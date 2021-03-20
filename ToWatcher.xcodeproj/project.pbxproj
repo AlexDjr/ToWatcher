@@ -59,6 +59,8 @@
 		FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */; };
 		FA9E74FD25D30B4100DFF57D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E74FC25D30B4100DFF57D /* Search.swift */; };
 		FA9E758F25D4839D00DFF57D /* String_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E758E25D4839D00DFF57D /* String_ext.swift */; };
+		FAAD9B8925FFE3D000180BD3 /* DBWatchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD9B8825FFE3D000180BD3 /* DBWatchItem.swift */; };
+		FAAD9F83260271F000180BD3 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD9F82260271F000180BD3 /* DBManager.swift */; };
 		FAB6002B25DC4D2300EEBD7A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6002A25DC4D2300EEBD7A /* Movie.swift */; };
 		FAB6002E25DC5DF500EEBD7A /* Int_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */; };
 		FAB6FCC825D5BD5A00EEBD7A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */; };
@@ -71,6 +73,7 @@
 		FAC8533A2482A55F00484EC8 /* SearchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */; };
 		FACB8DB125F5408200815A78 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8DB025F5408200815A78 /* PersonView.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
+		FAEAC856260674EF00B9AB97 /* WatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEAC855260674EF00B9AB97 /* WatchType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +133,8 @@
 		FA9D3A4D245DD8A8000688BC /* PanGestureRecognizer_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureRecognizer_ext.swift; sourceTree = "<group>"; };
 		FA9E74FC25D30B4100DFF57D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		FA9E758E25D4839D00DFF57D /* String_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_ext.swift; sourceTree = "<group>"; };
+		FAAD9B8825FFE3D000180BD3 /* DBWatchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBWatchItem.swift; sourceTree = "<group>"; };
+		FAAD9F82260271F000180BD3 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		FAB6002A25DC4D2300EEBD7A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int_ext.swift; sourceTree = "<group>"; };
 		FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -142,6 +147,7 @@
 		FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCollectionView.swift; sourceTree = "<group>"; };
 		FACB8DB025F5408200815A78 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
+		FAEAC855260674EF00B9AB97 /* WatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,8 +232,8 @@
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA2C8A39227725E300E01545 /* AppStyle.swift */,
-				FA9E74FB25D30B2000DFF57D /* Model */,
 				FAB6FCC625D5BD0E00EEBD7A /* Network */,
+				FAAD9F852602720700180BD3 /* DB */,
 				FA9D3A46245DD80C000688BC /* Types */,
 				FA0E509822AC4CE5002417BD /* Extensions */,
 				FA2C8A3D22774F7F00E01545 /* Protocols */,
@@ -317,6 +323,7 @@
 				FA14CDC52466EB98009230C4 /* WatchItemEditEndState.swift */,
 				FA0A5C122470670A0008599C /* MenuItemState.swift */,
 				FA0A5C142470672A0008599C /* MenuItemType.swift */,
+				FAEAC855260674EF00B9AB97 /* WatchType.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -337,13 +344,22 @@
 				FA9E74FC25D30B4100DFF57D /* Search.swift */,
 				FAB6002A25DC4D2300EEBD7A /* Movie.swift */,
 			);
-			name = Model;
-			path = ../Model;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FAAD9F852602720700180BD3 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				FAAD9F82260271F000180BD3 /* DBManager.swift */,
+				FAAD9B8825FFE3D000180BD3 /* DBWatchItem.swift */,
+			);
+			path = DB;
 			sourceTree = "<group>";
 		};
 		FAB6FCC625D5BD0E00EEBD7A /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				FA9E74FB25D30B2000DFF57D /* Model */,
 				FAB6FCC725D5BD5A00EEBD7A /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -486,6 +502,7 @@
 				FAC0CC2324695E6E002624F3 /* MenuItemView.swift in Sources */,
 				FA0A5C1D2471A76F0008599C /* UIDevice_ext.swift in Sources */,
 				FA9D3A4C245DD87A000688BC /* WatchItemActionView.swift in Sources */,
+				FAEAC856260674EF00B9AB97 /* WatchType.swift in Sources */,
 				FA0E509722AC4353002417BD /* UITextField_ext.swift in Sources */,
 				FA6F255625FCD7040001EBF5 /* AlertView.swift in Sources */,
 				FABEB1AE22B78D8700940AB1 /* UICollectionView+indexPathForVisibleRect.swift in Sources */,
@@ -495,6 +512,7 @@
 				FA0A5C19247173C00008599C /* SearchView.swift in Sources */,
 				FA2C8A3C227745CE00E01545 /* WatchItemDelegateProtocol.swift in Sources */,
 				FA350E9F226797FC00A167CB /* HomeVC.swift in Sources */,
+				FAAD9B8925FFE3D000180BD3 /* DBWatchItem.swift in Sources */,
 				FA91D8B922AAA77900243988 /* SearchVC.swift in Sources */,
 				FA0CB7A32468349E00005C14 /* WatchItemCollectionView.swift in Sources */,
 				FA2C8A3A227725E300E01545 /* AppStyle.swift in Sources */,
@@ -522,6 +540,7 @@
 				FA253CEA246035EB00297E53 /* WatchItemCellState.swift in Sources */,
 				FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */,
 				FA932E2A226E07EF0087BE9E /* MenuItem.swift in Sources */,
+				FAAD9F83260271F000180BD3 /* DBManager.swift in Sources */,
 				FA253CEC24618A8200297E53 /* WatchItemEditProtocol.swift in Sources */,
 				FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */,
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,

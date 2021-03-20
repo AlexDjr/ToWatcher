@@ -10,4 +10,5 @@ target 'ToWatcher' do
   pod 'KeychainAccess'
   pod 'MKRingProgressView'
   pod 'NVActivityIndicatorView'
+  pod 'RealmSwift'
 end

@@ -51,8 +51,8 @@ extension MenuItem {
         let index = menuItems.firstIndex(of: self)
         
         switch index {
-        case 1: return toWatchItems.count
-        case 2: return watchedItems.count
+        case 1: return DBManager.shared.getWatchItems(.toWatch).count
+        case 2: return DBManager.shared.getWatchItems(.watched).count
         default: break
         }
         

@@ -258,9 +258,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     private func isEligible(_ indexPath: IndexPath) -> Bool {
         guard let selectedCell = self.collectionView.cellForItem(at: indexPath) as? SearchItemCell, let watchItem = selectedCell.watchItem else { return true }
         
-        // TODO: Исправить на работу с БД!!!
-        let toWatch = toWatchItems.first { $0.id == watchItem.id }
-        let watched = watchedItems.first { $0.id == watchItem.id }
+        let toWatch = DBManager.shared.getWatchItems(.toWatch).first { $0.id == watchItem.id }
+        let watched = DBManager.shared.getWatchItems(.watched).first { $0.id == watchItem.id }
         
         if toWatch != nil || watched != nil {
             alertView.show(text: "Этот фильм уже есть в вашем списке!", style: .warning, from: indexPath)
