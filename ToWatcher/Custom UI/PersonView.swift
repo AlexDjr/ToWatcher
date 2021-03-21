@@ -48,7 +48,7 @@ class PersonView: UIView {
     
     
     // MARK: - Private methods
-    private func setImage(_ imageURL: URL) {
+    private func setImage(_ imageURL: URL?) {
         itemImageView.kf.setImage(with: imageURL, placeholder: UIImage(named: "placeholder")!)
     }
     

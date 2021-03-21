@@ -35,7 +35,7 @@ class WatchItemMainView: UIView {
     }
     
     // MARK: Public methods
-    func setImage(_ imageURL: URL) {
+    func setImage(_ imageURL: URL?) {
         itemImageView.kf.setImage(with: imageURL, placeholder: UIImage(named: "placeholder")!)
     }
 

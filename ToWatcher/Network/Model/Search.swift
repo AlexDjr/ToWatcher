@@ -33,7 +33,7 @@ struct SearchMovie: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try container.decodeIfPresent(Int.self, forKey: .id) ?? 0
-        backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropPath) ?? ""
+        backdropPath = try container.decodeIfPresent(String.self, forKey: .backdropPath)
         originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle) ?? ""
         localTitle = try container.decodeIfPresent(String.self, forKey: .localTitle) ?? ""
         overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? ""
