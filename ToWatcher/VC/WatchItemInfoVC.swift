@@ -53,12 +53,6 @@ class WatchItemInfoVC: UIViewController {
     
     private var watchItem: WatchItem
     
-    private var movie: Movie? {
-        didSet {
-            setupMovieInfo()
-        }
-    }
-    
     init(watchItem: WatchItem) {
         self.watchItem = watchItem
         super.init(nibName: nil, bundle: nil)
@@ -76,10 +70,14 @@ class WatchItemInfoVC: UIViewController {
     
     // MARK: - Private methods
     private func getMovieInfo() {
+        guard !watchItem.isMovieInfoAdded else { return }
+        
         NetworkManager.shared.getMovieInfo(watchItem.id) { result in
             switch result {
             case .success(let movie):
-                self.movie = movie
+                self.watchItem.addMovieInfo(movie)
+                self.setupMovieInfo()
+                DBManager.shared.save(self.watchItem)
                 
             case .failure(let error):
                 print("ERROR = \(error.localizedDescription)")
@@ -88,20 +86,20 @@ class WatchItemInfoVC: UIViewController {
     }
     
     private func setupMovieInfo() {
-        guard let movie = movie else { return }
+        guard watchItem.isMovieInfoAdded else { return }
         infoView.isHidden = false
         
-        yearLabel.text = movie.year
-        durationLabel.text = "\(movie.duration)"
-        genresLabel.text = movie.genres.isEmpty ? "---" : movie.genres.joined(separator: " • ")
-        overviewLabel.text = movie.overview
+        yearLabel.text = watchItem.year
+        durationLabel.text = "\(watchItem.duration)"
+        genresLabel.text = watchItem.genres.isEmpty ? "---" : watchItem.genres.joined(separator: " • ")
+        overviewLabel.text = watchItem.overview
         
-        if let director = movie.director {
+        if let director = watchItem.director {
             directorView = PersonView(director)
         }
         
         if actorsViews.count == 0 {
-            movie.cast.forEach { actor in
+            watchItem.cast.forEach { actor in
                 let personView = PersonView(actor)
                 actorsViews.append(personView)
             }
