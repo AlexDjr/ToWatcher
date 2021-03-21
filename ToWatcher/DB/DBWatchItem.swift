@@ -17,7 +17,7 @@ import RealmSwift
     dynamic var year: String = ""
     dynamic var score: Double = 0.0
     dynamic var overview: String = ""
-    dynamic var genres: List<String> = List<String>()
+    dynamic var genres: List<DBGenre> = List<DBGenre>()
     dynamic var duration: String = ""
     dynamic var cast: List<DBPerson> = List<DBPerson>()
     dynamic var director: DBPerson? = nil
@@ -38,8 +38,8 @@ import RealmSwift
         self.score = item.score
         self.overview = item.overview
         
-        let genres = List<String>()
-        genres.append(objectsIn: item.genres)
+        let genres = List<DBGenre>()
+        genres.append(objectsIn: item.genres.map { DBGenre($0) })
         self.genres = genres
         
         self.duration = item.duration

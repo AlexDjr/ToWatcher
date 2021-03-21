@@ -16,7 +16,7 @@ struct Movie: Decodable {
     var overview: String
     var score: Double?
     var year: String
-    var genres: [String]
+    var genres: [Genre]
     var duration: String
     var cast: [Person]
     var director: Person?
@@ -44,7 +44,7 @@ struct Movie: Decodable {
         overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? ""
         score = try container.decodeIfPresent(Double.self, forKey: .score) ?? 0.0
         year = try container.decodeIfPresent(String.self, forKey: .year).year()
-        genres = (try container.decodeIfPresent([Genre].self, forKey: .genres))?.map { $0.name } ?? []
+        genres = (try container.decodeIfPresent([Genre].self, forKey: .genres)) ?? []
         
         let durationInt = try container.decodeIfPresent(Int.self, forKey: .duration) ?? 0
         duration = durationInt != 0 ? "\(durationInt.hoursMins())" : ""
@@ -55,11 +55,6 @@ struct Movie: Decodable {
         cast = Array(fullCast.prefix(5))
         director = fullCrew.first { $0.job == "Director" }
     }
-}
-
-struct Genre: Decodable {
-    var id: Int
-    var name: String
 }
 
 struct Credits: Decodable {

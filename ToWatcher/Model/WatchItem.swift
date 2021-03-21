@@ -16,7 +16,7 @@ class WatchItem: Equatable {
     var year: String
     var score: Double
     var overview: String
-    var genres: [String]
+    var genres: [Genre]
     var duration: String
     var cast: [Person]
     var director: Person?
@@ -29,7 +29,7 @@ class WatchItem: Equatable {
          year: String,
          score: Double,
          overview: String = "",
-         genres: [String] = [],
+         genres: [Genre] = [],
          duration: String = "",
          cast: [Person] = [],
          director: Person? = nil,
@@ -56,7 +56,7 @@ class WatchItem: Equatable {
                   year: dbItem.year,
                   score: dbItem.score,
                   overview: dbItem.overview,
-                  genres: Array(dbItem.genres),
+                  genres: Array(dbItem.genres.map { Genre($0) }),
                   duration: dbItem.duration,
                   cast: Array(dbItem.cast.compactMap { Person($0) }),
                   director: Person(dbItem.director),
@@ -66,14 +66,21 @@ class WatchItem: Equatable {
     static func == (lhs: WatchItem, rhs: WatchItem) -> Bool {
         return lhs.localTitle == rhs.localTitle && lhs.originalTitle == rhs.originalTitle && lhs.id == rhs.id
     }
-    
-    var isMovieInfoAdded: Bool { overview != "" || !genres.isEmpty || duration != "" || !cast.isEmpty || director != nil }
-    
+}
+
+extension WatchItem {
     func addMovieInfo(_ movie: Movie) {
         self.overview = movie.overview
         self.genres = movie.genres
         self.duration = movie.duration
         self.cast = movie.cast
         self.director = movie.director
+    }
+    
+    var isMovieInfoAdded: Bool { overview != "" || !genres.isEmpty || duration != "" || !cast.isEmpty || director != nil }
+    
+    var genresString: String {
+        guard !genres.isEmpty else { return "---" }
+        return genres.map {$0.name}.joined(separator: " • ")
     }
 }
