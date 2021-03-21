@@ -68,13 +68,15 @@ struct Credits: Decodable {
 }
 
 struct Person: Decodable {
+    var id: Int
     var name: String
     var originalName: String
     var job: String
-    var imageURL: URL
+    var photoURL: URL
     
     
     enum CodingKeys: String, CodingKey {
+        case id
         case name
         case originalName
         case profilePath
@@ -88,10 +90,29 @@ struct Person: Decodable {
         let backdropSize = "w185"
         
         
+        id = try container.decodeIfPresent(Int.self, forKey: .id) ?? 0
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         originalName = try container.decodeIfPresent(String.self, forKey: .originalName) ?? ""
         job = try container.decodeIfPresent(String.self, forKey: .job) ?? ""
         let profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath) ?? ""
-        imageURL = URL(string: "\(imageBaseURL)\(backdropSize)\(profilePath)")!
+        photoURL = URL(string: "\(imageBaseURL)\(backdropSize)\(profilePath)")!
+    }
+    
+    init(id: Int, name: String, originalName: String, job: String, photoURL: URL) {
+        self.id = id
+        self.name = name
+        self.originalName = originalName
+        self.job = job
+        self.photoURL = photoURL
+    }
+    
+    init?(_ dbPerson: DBPerson?) {
+        guard let dbPerson = dbPerson else { return nil }
+        
+        self.init(id: dbPerson.id,
+                  name: dbPerson.name,
+                  originalName: dbPerson.originalName,
+                  job: dbPerson.job,
+                  photoURL: URL(string: dbPerson.photoURLString)!)
     }
 }

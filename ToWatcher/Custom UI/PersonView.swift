@@ -29,7 +29,7 @@ class PersonView: UIView {
         self.init(frame: CGRect.zero)
         self.person = person
         nameLabel.text = person.name
-        setImage(person.imageURL)
+        setImage(person.photoURL)
         setupView()
     }
     

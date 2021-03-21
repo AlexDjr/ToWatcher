@@ -74,7 +74,7 @@ class WatchItemView: UIView {
     
     // MARK: - Public methods
     func setWatchItemInfo(_ watchItem: WatchItem) {
-        mainView.setImage(watchItem.imageURL)
+        mainView.setImage(watchItem.backdropURL)
         
         originalTitleLabel.isHidden = watchItem.localTitle == watchItem.originalTitle
         
