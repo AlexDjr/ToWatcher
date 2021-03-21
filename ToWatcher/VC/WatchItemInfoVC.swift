@@ -91,7 +91,7 @@ class WatchItemInfoVC: UIViewController {
         
         yearLabel.text = watchItem.year
         durationLabel.text = "\(watchItem.duration)"
-        genresLabel.text = watchItem.genres.isEmpty ? "---" : watchItem.genres.joined(separator: " • ")
+        genresLabel.text = watchItem.genresString
         overviewLabel.text = watchItem.overview
         
         if let director = watchItem.director {
