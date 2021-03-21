@@ -11,7 +11,6 @@ import Foundation
 struct SearchMovie: Decodable {
     var id: Int
     var backdropPath: String?
-//    var genreIds: [Int]
     var originalTitle: String
     var localTitle: String
     var overview: String?

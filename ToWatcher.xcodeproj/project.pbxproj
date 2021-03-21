@@ -72,6 +72,8 @@
 		FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC5D60D22B173EB005ED487 /* WatchedVC.swift */; };
 		FAC8533A2482A55F00484EC8 /* SearchItemCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */; };
 		FACB8DB125F5408200815A78 /* PersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACB8DB025F5408200815A78 /* PersonView.swift */; };
+		FACEDD982607C24700509564 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEDD972607C24700509564 /* Person.swift */; };
+		FACEDDA52607C48000509564 /* DBPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEDDA42607C48000509564 /* DBPerson.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 		FAEAC856260674EF00B9AB97 /* WatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEAC855260674EF00B9AB97 /* WatchType.swift */; };
 /* End PBXBuildFile section */
@@ -146,6 +148,8 @@
 		FAC5D60D22B173EB005ED487 /* WatchedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedVC.swift; sourceTree = "<group>"; };
 		FAC853392482A55F00484EC8 /* SearchItemCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemCollectionView.swift; sourceTree = "<group>"; };
 		FACB8DB025F5408200815A78 /* PersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonView.swift; sourceTree = "<group>"; };
+		FACEDD972607C24700509564 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		FACEDDA42607C48000509564 /* DBPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPerson.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 		FAEAC855260674EF00B9AB97 /* WatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -343,6 +347,7 @@
 			children = (
 				FA9E74FC25D30B4100DFF57D /* Search.swift */,
 				FAB6002A25DC4D2300EEBD7A /* Movie.swift */,
+				FACEDD972607C24700509564 /* Person.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 			children = (
 				FAAD9F82260271F000180BD3 /* DBManager.swift */,
 				FAAD9B8825FFE3D000180BD3 /* DBWatchItem.swift */,
+				FACEDDA42607C48000509564 /* DBPerson.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -544,6 +550,7 @@
 				FA253CEC24618A8200297E53 /* WatchItemEditProtocol.swift in Sources */,
 				FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */,
 				FA8E046C22B68D2F00809EC6 /* MenuItemDelegateProtocol.swift in Sources */,
+				FACEDD982607C24700509564 /* Person.swift in Sources */,
 				FAC8533A2482A55F00484EC8 /* SearchItemCollectionView.swift in Sources */,
 				FA350EB12267A3C700A167CB /* MenuBar.swift in Sources */,
 				FAC5D60E22B173EB005ED487 /* WatchedVC.swift in Sources */,
@@ -552,6 +559,7 @@
 				FA9D3A4E245DD8A8000688BC /* PanGestureRecognizer_ext.swift in Sources */,
 				FA6F255925FD43DF0001EBF5 /* AFError_ext.swift in Sources */,
 				FA14CDC62466EB98009230C4 /* WatchItemEditEndState.swift in Sources */,
+				FACEDDA52607C48000509564 /* DBPerson.swift in Sources */,
 				FA3D3C5B25F6A5370060DA53 /* UIStackView_ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
