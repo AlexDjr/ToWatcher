@@ -52,7 +52,8 @@ class NetworkManager {
                         let totalPages = searchResponse.totalPages
                         let movies = searchResponse.results
                         
-                        let watchItems = movies.map { WatchItem(id: $0.id, backdropURL: URL(string: "\(imageBaseURL)\(backdropSize)\($0.backdropPath ?? "")")!,
+                        let watchItems = movies.map { WatchItem(id: $0.id,
+                                                                backdropURL: URL(string: $0.backdropPath != nil ? "\(imageBaseURL)\(backdropSize)\($0.backdropPath!)" : ""),
                                                                 localTitle: $0.localTitle,
                                                                 originalTitle: $0.originalTitle,
                                                                 year: $0.year,

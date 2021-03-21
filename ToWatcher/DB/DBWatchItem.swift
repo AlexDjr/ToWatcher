@@ -11,7 +11,7 @@ import RealmSwift
 
 @objcMembers class DBWatchItem: Object {
     dynamic var id: Int = 0
-    dynamic var backdropURLString: String = ""
+    dynamic var backdropURLString: String? = nil
     dynamic var localTitle: String = ""
     dynamic var originalTitle: String = ""
     dynamic var year: String = ""
@@ -31,7 +31,7 @@ import RealmSwift
     convenience init(_ item: WatchItem) {
         self.init()
         self.id = item.id
-        self.backdropURLString = item.backdropURL.absoluteString
+        self.backdropURLString = item.backdropURL?.absoluteString
         self.localTitle = item.localTitle
         self.originalTitle = item.originalTitle
         self.year = item.year
@@ -58,7 +58,7 @@ import RealmSwift
     dynamic var name: String = ""
     dynamic var originalName: String = ""
     dynamic var job: String = ""
-    dynamic var photoURLString: String = ""
+    dynamic var photoURLString: String? = nil
     
     override static func primaryKey() -> String? {
         return "id"
@@ -72,6 +72,6 @@ import RealmSwift
         self.name = person.name
         self.originalName = person.originalName
         self.job = person.job
-        self.photoURLString = person.photoURL.absoluteString
+        self.photoURLString = person.photoURL?.absoluteString
     }
 }

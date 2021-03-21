@@ -10,7 +10,7 @@ import UIKit
 
 class WatchItem: Equatable {
     var id: Int
-    var backdropURL: URL
+    var backdropURL: URL?
     var localTitle: String
     var originalTitle: String
     var year: String
@@ -23,7 +23,7 @@ class WatchItem: Equatable {
     var type: WatchType
     
     init(id: Int,
-         backdropURL: URL,
+         backdropURL: URL?,
          localTitle: String,
          originalTitle: String,
          year: String,
@@ -50,7 +50,7 @@ class WatchItem: Equatable {
     
     convenience init(_ dbItem: DBWatchItem) {
         self.init(id: dbItem.id,
-                  backdropURL: URL(string: dbItem.backdropURLString)!,
+                  backdropURL: URL(string: dbItem.backdropURLString ?? ""),
                   localTitle: dbItem.localTitle,
                   originalTitle: dbItem.originalTitle,
                   year: dbItem.year,
