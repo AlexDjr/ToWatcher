@@ -263,11 +263,10 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.animateItems(withType: .watchItemSelected, andDirection: .fromScreen)
         
         let watchItem = self.watchItems[indexPath.item]
-        
-        NetworkManager.shared.getMovieInfo(watchItem.id) { _ in } // TODO: по идее должен использовать кэш и не ходить второй раз в есть
+        let vc = WatchItemInfoVC(watchItem: watchItem)
         
         collectionView.fromScreenFinishedCallback = {
-            self.showWatchItemInfoVC(watchItem)
+            self.showWatchItemInfoVC(vc)
             self.collectionView.isUserInteractionEnabled = false
             self.delegate?.didFinishMoveItemsFromScreen()
         }
@@ -318,8 +317,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     // MARK: - Work with VCs
-    private func showWatchItemInfoVC(_ watchItem: WatchItem) {
-        childViewController = WatchItemInfoVC(watchItem: watchItem)
+    private func showWatchItemInfoVC(_ vc: WatchItemInfoVC) {
+        childViewController = vc
         add(asChildViewController: childViewController)
     }
     

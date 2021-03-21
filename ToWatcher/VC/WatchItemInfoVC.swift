@@ -53,9 +53,16 @@ class WatchItemInfoVC: UIViewController {
     
     private var watchItem: WatchItem
     
+    private var movie: Movie? {
+        didSet {
+            setupMovieInfo()
+        }
+    }
+    
     init(watchItem: WatchItem) {
         self.watchItem = watchItem
         super.init(nibName: nil, bundle: nil)
+        getMovieInfo()
     }
     
     required init?(coder: NSCoder) {
@@ -64,36 +71,48 @@ class WatchItemInfoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.getMovieInfo(watchItem.id) { result in
-            switch result {
-            case .success(let movie):
-                self.infoView.isHidden = false
-                
-                self.yearLabel.text = movie.year
-                self.durationLabel.text = "\(movie.duration)"
-                self.genresLabel.text = movie.genres.isEmpty ? "---" : movie.genres.joined(separator: " • ")
-                self.overviewLabel.text = movie.overview
-                
-                if let director = movie.director {
-                    self.directorView = PersonView(director)
-                }
-                
-                movie.cast.forEach { actor in
-                    let personView = PersonView(actor)
-                    self.actorsViews.append(personView)
-                }
-                
-                self.setupCastScrollView()
-                
-            case .failure(let error):
-                print("ERROR = \(error.localizedDescription)")
-                self.infoView.isHidden = true
-            }
-        }
         setupView()
     }
     
     // MARK: - Private methods
+    private func getMovieInfo() {
+        NetworkManager.shared.getMovieInfo(watchItem.id) { result in
+            switch result {
+            case .success(let movie):
+                self.movie = movie
+                
+            case .failure(let error):
+                print("ERROR = \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func setupMovieInfo() {
+        guard let movie = movie else { return }
+        infoView.isHidden = false
+        
+        yearLabel.text = movie.year
+        durationLabel.text = "\(movie.duration)"
+        genresLabel.text = movie.genres.isEmpty ? "---" : movie.genres.joined(separator: " • ")
+        overviewLabel.text = movie.overview
+        
+        if let director = movie.director {
+            directorView = PersonView(director)
+        }
+        
+        if actorsViews.count == 0 {
+            movie.cast.forEach { actor in
+                let personView = PersonView(actor)
+                actorsViews.append(personView)
+            }
+        }
+        
+        if isViewLoaded {
+            setupDirectorView()
+            setupActorsView()
+        }
+    }
+
     private func setupView() {
         view.alpha = 0.0
         
@@ -106,6 +125,8 @@ class WatchItemInfoVC: UIViewController {
         setupTitles()
         setupInfoView()
         setupOverviewLabel()
+        setupCastScrollView()
+        setupMovieInfo()
     }
     
     private func setupScrollView() {
@@ -121,7 +142,6 @@ class WatchItemInfoVC: UIViewController {
         originalTitle.isHidden = watchItem.localTitle == watchItem.originalTitle
         localTitle.text = watchItem.localTitle
         originalTitle.text = watchItem.originalTitle
-        
         
         titlesStackView.addArrangedSubview(localTitle)
         titlesStackView.addArrangedSubview(originalTitle)
@@ -165,23 +185,17 @@ class WatchItemInfoVC: UIViewController {
         infoLabelsView.leftAnchor.constraint(equalTo: scoreView.rightAnchor, constant: AppStyle.watchItemInfoPadding * 4).isActive = true
         infoLabelsView.rightAnchor.constraint(equalTo: infoView.rightAnchor, constant: -AppStyle.watchItemInfoPadding).isActive = true
         
-        yearLabel.text = ""
-        
         infoLabelsView.addSubview(yearLabel)
         yearLabel.translatesAutoresizingMaskIntoConstraints = false
         yearLabel.topAnchor.constraint(equalTo: infoLabelsView.topAnchor).isActive = true
         yearLabel.leftAnchor.constraint(equalTo: infoLabelsView.leftAnchor).isActive = true
         yearLabel.rightAnchor.constraint(equalTo: infoLabelsView.rightAnchor).isActive = true
-        
-        durationLabel.text = ""
 
         infoLabelsView.addSubview(durationLabel)
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
         durationLabel.topAnchor.constraint(equalTo: yearLabel.bottomAnchor, constant: AppStyle.watchItemInfoLineSpacing * 2).isActive = true
         durationLabel.leftAnchor.constraint(equalTo: infoLabelsView.leftAnchor).isActive = true
         durationLabel.rightAnchor.constraint(equalTo: infoLabelsView.rightAnchor).isActive = true
-        
-        genresLabel.text = ""
 
         infoLabelsView.addSubview(genresLabel)
         genresLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -192,8 +206,6 @@ class WatchItemInfoVC: UIViewController {
     }
     
     private func setupOverviewLabel() {
-        overviewLabel.text = ""
-        
         overviewLabel.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(overviewLabel)
         overviewLabel.topAnchor.constraint(equalTo: infoView.bottomAnchor, constant: AppStyle.watchItemInfoPadding * 2).isActive = true
@@ -210,8 +222,6 @@ class WatchItemInfoVC: UIViewController {
         castScrollView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
         castScrollView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         scrollView.contentLayoutGuide.bottomAnchor.constraint(equalTo: castScrollView.bottomAnchor, constant: AppStyle.floatActionButtonHeight + AppStyle.floatActionButtonPadding * 2).isActive = true
-        setupDirectorView()
-        setupActorsView()
     }
     
     private func setupDirectorView() {
