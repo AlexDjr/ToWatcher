@@ -33,6 +33,11 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setupView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setFocusOnSearchView()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
