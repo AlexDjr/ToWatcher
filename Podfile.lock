@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (5.4.1)
-  - KeychainAccess (4.2.1)
-  - Kingfisher (6.1.0)
+  - KeychainAccess (4.2.2)
+  - Kingfisher (6.2.1)
   - MKRingProgressView (2.2.3)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
@@ -22,19 +22,18 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - Alamofire
     - KeychainAccess
     - Kingfisher
     - MKRingProgressView
     - NVActivityIndicatorView
     - Realm
     - RealmSwift
-  trunk:
-    - Alamofire
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
-  Kingfisher: f5d8d60a0ef3edd642fd781bae60918599901aff
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
   MKRingProgressView: 404b3157e7a533ab8668d29ec20042c35d12ca1d
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Realm: e523da9ade306c5ae87e85dc09fdef148d3e1cc1
