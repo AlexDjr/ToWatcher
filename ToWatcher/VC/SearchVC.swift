@@ -129,6 +129,11 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
     }
     
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
+    }
+    
     // MARK: - Private Methods
     private func setupView() {
         view.alpha = 0.0
