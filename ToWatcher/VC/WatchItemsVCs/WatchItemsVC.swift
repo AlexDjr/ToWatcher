@@ -87,7 +87,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     // MARK: - WatchItemEditProtocol
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
         guard let index = (watchItems.firstIndex { $0 == item }) else { return }
-        deleteItem(item, at: IndexPath(item: index, section: 0))
+        deleteItem(item, at: IndexPath(item: index, section: 0), with: type)
         homeVC?.didRemoveItem(item, withType: type)
     }
     
@@ -200,9 +200,18 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         return layout
     }
     
-    private func deleteItem(_ item: WatchItem, at indexPath: IndexPath) {
+    private func deleteItem(_ item: WatchItem, at indexPath: IndexPath, with type: WatchItemEditState) {
         moveItemsEditMode()
-        DBManager.shared.delete(item)
+        
+        switch type {
+        case .toWatched:
+            item.type = .default
+            DBManager.shared.save(item)
+        case .toDelete:
+            DBManager.shared.delete(item)
+        default: break
+        }
+        
         collectionView.deleteItems(at: [indexPath])
     }
     

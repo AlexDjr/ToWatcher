@@ -14,6 +14,7 @@ struct Person: Decodable {
     var originalName: String
     var job: String
     var photoURL: URL?
+    var watchItems: [WatchItem]?
     
     enum CodingKeys: String, CodingKey {
         case id
