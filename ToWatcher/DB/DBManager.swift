@@ -12,7 +12,7 @@ import RealmSwift
 class DBManager {
     static let shared = DBManager()
     
-    private let db = try! Realm()
+    fileprivate let db = try! Realm()
     
     private lazy var toWatchItems = getWatchItemsFromDB(.toWatch)
     private lazy var watchedItems = getWatchItemsFromDB(.watched)
@@ -28,10 +28,17 @@ class DBManager {
         return []
     }
     
-    func save(_ item: WatchItem) {
-        let dbItem = DBWatchItem(item)
+    func insert(_ item: WatchItem) {
         try! db.write {
+            let dbItem = DBWatchItem(item)
             db.add(dbItem, update: .modified)
+        }
+    }
+    
+    func update(_ item: WatchItem) {
+        try! db.write {
+            guard let dbItem = db.object(ofType: DBWatchItem.self, forPrimaryKey: item.id) else { return }
+            dbItem.update(with: item)
         }
     }
     
@@ -59,4 +66,42 @@ class DBManager {
         return cast.filter { $0.watchItemsAsActor.count + $0.watchItemsAsDirector.count == 1 }
     }
     
+    fileprivate func getIfExists(_ person: Person?) -> DBPerson? {
+        if let person = person, let dbPerson = db.object(ofType: DBPerson.self, forPrimaryKey: person.id) {
+            return dbPerson
+        } else {
+            return DBPerson(person)
+        }
+    }
+    
+    fileprivate func getIfExists(_ genre: Genre) -> DBGenre {
+        if let dbGenre = db.object(ofType: DBGenre.self, forPrimaryKey: genre.id) {
+            return dbGenre
+        } else {
+            return DBGenre(genre)
+        }
+    }
+}
+
+fileprivate extension DBWatchItem {
+    func update(with item: WatchItem) {
+        self.backdropURLString = item.backdropURL?.absoluteString
+        self.localTitle = item.localTitle
+        self.originalTitle = item.originalTitle
+        self.year = item.year
+        self.score = item.score
+        self.overview = item.overview
+        self.duration = item.duration
+        self.director = DBManager.shared.getIfExists(item.director)
+        self.type = item.type.rawValue
+        
+        let cast = item.cast.compactMap { DBManager.shared.getIfExists($0) }
+        let genres = item.genres.map { DBManager.shared.getIfExists($0) }
+        
+        self.cast.removeAll()
+        self.cast.append(objectsIn: cast)
+        
+        self.genres.removeAll()
+        self.genres.append(objectsIn: genres)
+    }
 }

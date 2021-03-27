@@ -87,6 +87,9 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     // MARK: - WatchItemEditProtocol
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
         guard let index = (watchItems.firstIndex { $0 == item }) else { return }
+        
+        let item = watchItems[index] //берем item из массива айтемов, т.к. он смотрит на объекты БД и содержит все актуальные данные. А item c ячейки - только данные, полученные при поиске.
+        
         deleteItem(item, at: IndexPath(item: index, section: 0), with: type)
         homeVC?.didRemoveItem(item, withType: type)
     }
@@ -145,7 +148,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
             setupCollectionView()
         }
         
-        DBManager.shared.save(item)
+        DBManager.shared.insert(item)
         reloadCollectionViewData()
     }
     
@@ -156,7 +159,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         isItemAddedAfterSearch = true
         delegate?.didAddItemAfterSearch()
         
-        DBManager.shared.save(item)
+        DBManager.shared.insert(item)
         
         if currentItemsCount == 0 {
             finishAddingItem()
@@ -206,7 +209,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         switch type {
         case .toWatched:
             item.type = .default
-            DBManager.shared.save(item)
+            DBManager.shared.update(item)
         case .toDelete:
             DBManager.shared.delete(item)
         default: break
