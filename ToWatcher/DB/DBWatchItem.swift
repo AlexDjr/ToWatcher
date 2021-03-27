@@ -22,7 +22,7 @@ import RealmSwift
     dynamic var cast: List<DBPerson> = List<DBPerson>()
     dynamic var director: DBPerson? = nil
     dynamic var type: String = ""
-    dynamic var dateAdded = Date()
+    dynamic var dateAdded: Date? = nil
     
     override static func primaryKey() -> String? {
         return "id"
@@ -50,5 +50,6 @@ import RealmSwift
         
         self.director = DBPerson(item.director)
         self.type = item.type.rawValue
+        self.dateAdded = Date()
     }
 }

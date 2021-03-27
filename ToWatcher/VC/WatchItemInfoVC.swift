@@ -77,7 +77,7 @@ class WatchItemInfoVC: UIViewController {
             case .success(let movie):
                 self.watchItem.addMovieInfo(movie)
                 self.setupMovieInfo()
-                DBManager.shared.save(self.watchItem)
+                DBManager.shared.update(self.watchItem)
                 
             case .failure(let error):
                 print("ERROR = \(error.localizedDescription)")
