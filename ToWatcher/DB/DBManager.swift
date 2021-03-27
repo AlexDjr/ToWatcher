@@ -37,7 +37,9 @@ class DBManager {
     
     func delete(_ item: WatchItem) {
         guard let dbItem = db.object(ofType: DBWatchItem.self, forPrimaryKey: item.id) else { return }
+        let castToDelete = getCastToDelete(dbItem)
         try! db.write {
+            db.delete(castToDelete)
             db.delete(dbItem)
         }
     }
@@ -45,6 +47,16 @@ class DBManager {
     // MARK: - Private methods
     private func getWatchItemsFromDB(_ type: WatchType) -> Results<DBWatchItem> {
         return db.objects(DBWatchItem.self).filter ("type = '\(type.rawValue)'").sorted(byKeyPath: "dateAdded", ascending: false)
+    }
+    
+    private func getCastToDelete(_ dbItem: DBWatchItem) -> [DBPerson] {
+        var cast = Array(dbItem.cast)
+        
+        if let director = dbItem.director {
+            cast.append(director)
+        }
+        
+        return cast.filter { $0.watchItemsAsActor.count + $0.watchItemsAsDirector.count == 1 }
     }
     
 }

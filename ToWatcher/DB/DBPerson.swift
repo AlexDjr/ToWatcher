@@ -15,6 +15,8 @@ import RealmSwift
     dynamic var originalName: String = ""
     dynamic var job: String = ""
     dynamic var photoURLString: String? = nil
+    let watchItemsAsActor = LinkingObjects(fromType: DBWatchItem.self, property:"cast")
+    let watchItemsAsDirector = LinkingObjects(fromType: DBWatchItem.self, property:"director")
     
     override static func primaryKey() -> String? {
         return "id"
