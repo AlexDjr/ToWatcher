@@ -72,6 +72,7 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         guard isEligible(indexPath) else { return }
         guard indexPath != self.collectionView.selectedIndexPath else { return }
         
+        self.collectionView.isUserInteractionEnabled = false
         alertView.hideIfNeeded()
         
         self.view.bringSubviewToFront(collectionView)
