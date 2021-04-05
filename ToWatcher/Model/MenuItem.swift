@@ -19,10 +19,10 @@ class MenuItem: Equatable {
         
         switch type {
         case .toWatch:
-            name = "ПОСМОТРЕТЬ"
+            name = NSLocalizedString("type_to_watch", comment: "Name of menu item. List of movies to watch")
             image = AppStyle.menuItemToWatchImage
         case .watched:
-            name = "ПРОСМОТРЕНО"
+            name = NSLocalizedString("type_watched", comment: "Name of menu item. list of movies already watched")
             image = AppStyle.menuItemWatchedImage
         default:
             break

@@ -1,0 +1,7 @@
+"label_director_title" = "Director";
+"label_actors_title" = "Cast";
+"type_to_watch" = "TO WATCH";
+"type_watched" = "WATCHED";
+"text_error_movie_already_in_list" = "This movie is already on your list!";
+"text_hours_short" = "h";
+"text_minutes_short" = "min";

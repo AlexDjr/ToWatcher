@@ -10,8 +10,10 @@ import Foundation
 
 extension Int {
     func hoursMins() -> String {
-        let mins = Double(self).truncatingRemainder(dividingBy: 60)
-        let hours = (Double(self) - mins) / 60
-        return "\(Int(hours)) ч \(Int(mins)) мин"
+        let minsCount = Double(self).truncatingRemainder(dividingBy: 60)
+        let hoursCount = (Double(self) - minsCount) / 60
+        let hours = NSLocalizedString("text_hours_short", comment: "Abbreviation of hour")
+        let mins = NSLocalizedString("text_minutes_short", comment: "Abbreviation of minutes")
+        return "\(Int(hoursCount)) \(hours) \(Int(minsCount)) \(mins)"
     }
 }

@@ -273,7 +273,8 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let watched = DBManager.shared.getWatchItems(.watched).first { $0.id == watchItem.id }
         
         if toWatch != nil || watched != nil {
-            alertView.show(text: "Этот фильм уже есть в вашем списке!", style: .warning, from: indexPath)
+            let errorText = NSLocalizedString("text_error_movie_already_in_list", comment: "Error text for a case when selected movie is already in the list")
+            alertView.show(text: errorText, style: .warning, from: indexPath)
             return false
         }
         

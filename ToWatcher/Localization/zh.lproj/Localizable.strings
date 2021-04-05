@@ -1,0 +1,20 @@
+/* Title for movie's cast(actors) */
+"label_actors_title" = "演员们";
+
+/* Title for director of a movie */
+"label_director_title" = "制片人";
+
+/* Error text for a case when selected movie is already in the list */
+"text_error_movie_already_in_list" = "这部电影已经在您的清单上了";
+
+/* Abbreviation of hour */
+"text_hours_short" = "時";
+
+/* Abbreviation of minutes */
+"text_minutes_short" = "分";
+
+/* Name of menu item. List of movies to watch */
+"type_to_watch" = "观看";
+
+/* Name of menu item. list of movies already watched */
+"type_watched" = "已观看";

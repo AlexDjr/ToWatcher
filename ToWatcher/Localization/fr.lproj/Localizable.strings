@@ -1,0 +1,20 @@
+/* Title for movie's cast(actors) */
+"label_actors_title" = "Acteurs";
+
+/* Title for director of a movie */
+"label_director_title" = "Réalisateur";
+
+/* Error text for a case when selected movie is already in the list */
+"text_error_movie_already_in_list" = "Ce film est déjà dans votre liste!";
+
+/* Abbreviation of hour */
+"text_hours_short" = "h";
+
+/* Abbreviation of minutes */
+"text_minutes_short" = "min";
+
+/* Name of menu item. List of movies to watch */
+"type_to_watch" = "REGARDER";
+
+/* Name of menu item. list of movies already watched */
+"type_watched" = "REGARDÉ";
