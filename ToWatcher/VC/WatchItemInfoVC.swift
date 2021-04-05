@@ -226,7 +226,7 @@ class WatchItemInfoVC: UIViewController {
         guard directorView.person != nil else { return }
         
         let directorTitleLabel = castTitleLabel()
-        directorTitleLabel.text = "Режиссер"
+        directorTitleLabel.text = NSLocalizedString("label_director_title", comment: "Title for director of a movie")
         
         let directorStackView = UIStackView().set(axis: .vertical, spacing: 4.0, alignment: .center)
         directorStackView.addArrangedSubview(directorTitleLabel)
@@ -251,7 +251,7 @@ class WatchItemInfoVC: UIViewController {
         }
         
         let actorsTitleLabel = castTitleLabel()
-        actorsTitleLabel.text = "Актеры"
+        actorsTitleLabel.text = NSLocalizedString("label_actors_title", comment: "Title for movie's cast(actors)")
         
         let view = UIView()
         view.addSubview(actorsTitleLabel)

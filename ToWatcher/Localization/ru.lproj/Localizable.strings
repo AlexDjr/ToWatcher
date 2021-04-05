@@ -1,0 +1,7 @@
+"label_director_title" = "Режиссер";
+"label_actors_title" = "Актеры";
+"type_to_watch" = "ПОСМОТРЕТЬ";
+"type_watched" = "ПРОСМОТРЕНО";
+"text_error_movie_already_in_list" = "Этот фильм уже есть в вашем списке!";
+"text_hours_short" = "ч";
+"text_minutes_short" = "мин";

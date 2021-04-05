@@ -23,7 +23,7 @@ class NetworkManager {
         "Accept": "application/json"
     ]
     
-    private var parameters: [String: Any] = ["language":"ru-RU"]
+    private var parameters: [String: Any] = ["language":"\(Bundle.main.preferredLocalizations.first ?? "en")"]
     
     private let decoder: JSONDecoder = {
         let decoder: JSONDecoder = JSONDecoder()
