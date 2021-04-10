@@ -57,6 +57,7 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard !collectionView.isTracking else { return }
         guard indexPath != self.collectionView.selectedIndexPath else { return }
         
         self.view.bringSubviewToFront(collectionView)
