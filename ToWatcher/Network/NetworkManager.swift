@@ -56,7 +56,7 @@ class NetworkManager {
                                                                 backdropURL: URL(string: $0.backdropPath != nil ? "\(imageBaseURL)\(backdropSize)\($0.backdropPath!)" : ""),
                                                                 localTitle: $0.localTitle,
                                                                 originalTitle: $0.originalTitle,
-                                                                year: $0.year,
+                                                                releaseDate: $0.releaseDate,
                                                                 score: $0.score,
                                                                 type: .default) }
                         completion(.success((watchItems, totalPages)))

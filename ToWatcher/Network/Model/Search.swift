@@ -15,7 +15,7 @@ struct SearchMovie: Decodable {
     var localTitle: String
     var overview: String?
     var score: Double
-    var year: String
+    var releaseDate: Date?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -24,7 +24,7 @@ struct SearchMovie: Decodable {
         case localTitle = "title"
         case overview
         case score = "voteAverage"
-        case year = "releaseDate"
+        case releaseDate
     }
 
     
@@ -37,7 +37,7 @@ struct SearchMovie: Decodable {
         localTitle = try container.decodeIfPresent(String.self, forKey: .localTitle) ?? ""
         overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? ""
         score = try container.decodeIfPresent(Double.self, forKey: .score) ?? 0.0
-        year = try container.decodeIfPresent(String.self, forKey: .year).year()
+        releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate).toDate()
     }
 }
 

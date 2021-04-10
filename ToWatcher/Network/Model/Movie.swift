@@ -15,7 +15,7 @@ struct Movie: Decodable {
     var localTitle: String
     var overview: String
     var score: Double?
-    var year: String
+    var releaseDate: Date?
     var genres: [Genre]
     var duration: String
     var cast: [Person]
@@ -28,7 +28,7 @@ struct Movie: Decodable {
         case localTitle = "title"
         case overview
         case score = "voteAverage"
-        case year = "releaseDate"
+        case releaseDate
         case genres
         case duration = "runtime"
         case cast = "credits"
@@ -43,7 +43,7 @@ struct Movie: Decodable {
         localTitle = try container.decodeIfPresent(String.self, forKey: .localTitle) ?? ""
         overview = try container.decodeIfPresent(String.self, forKey: .overview) ?? ""
         score = try container.decodeIfPresent(Double.self, forKey: .score) ?? 0.0
-        year = try container.decodeIfPresent(String.self, forKey: .year).year()
+        releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate).toDate()
         genres = (try container.decodeIfPresent([Genre].self, forKey: .genres)) ?? []
         
         let durationInt = try container.decodeIfPresent(Int.self, forKey: .duration) ?? 0

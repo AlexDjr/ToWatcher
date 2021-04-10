@@ -13,7 +13,7 @@ class WatchItem: Equatable {
     var backdropURL: URL?
     var localTitle: String
     var originalTitle: String
-    var year: String
+    var releaseDate: Date?
     var score: Double
     var overview: String
     var genres: [Genre]
@@ -26,7 +26,7 @@ class WatchItem: Equatable {
          backdropURL: URL?,
          localTitle: String,
          originalTitle: String,
-         year: String,
+         releaseDate: Date?,
          score: Double,
          overview: String = "",
          genres: [Genre] = [],
@@ -38,7 +38,7 @@ class WatchItem: Equatable {
         self.backdropURL = backdropURL
         self.localTitle = localTitle
         self.originalTitle = originalTitle
-        self.year = year
+        self.releaseDate = releaseDate
         self.score = score
         self.type = type
         self.overview = overview
@@ -53,7 +53,7 @@ class WatchItem: Equatable {
                   backdropURL: URL(string: dbItem.backdropURLString ?? ""),
                   localTitle: dbItem.localTitle,
                   originalTitle: dbItem.originalTitle,
-                  year: dbItem.year,
+                  releaseDate: dbItem.releaseDate,
                   score: dbItem.score,
                   overview: dbItem.overview,
                   genres: Array(dbItem.genres.map { Genre($0) }),
@@ -83,4 +83,6 @@ extension WatchItem {
         guard !genres.isEmpty else { return "---" }
         return genres.map {$0.name}.joined(separator: " • ")
     }
+    
+    var year: String { releaseDate.year() }
 }
