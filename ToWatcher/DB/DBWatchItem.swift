@@ -14,7 +14,7 @@ import RealmSwift
     dynamic var backdropURLString: String? = nil
     dynamic var localTitle: String = ""
     dynamic var originalTitle: String = ""
-    dynamic var year: String = ""
+    dynamic var releaseDate: Date? = nil
     dynamic var score: Double = 0.0
     dynamic var overview: String = ""
     dynamic var genres: List<DBGenre> = List<DBGenre>()
@@ -34,7 +34,7 @@ import RealmSwift
         self.backdropURLString = item.backdropURL?.absoluteString
         self.localTitle = item.localTitle
         self.originalTitle = item.originalTitle
-        self.year = item.year
+        self.releaseDate = item.releaseDate
         self.score = item.score
         self.overview = item.overview
         

@@ -38,6 +38,7 @@
 		FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */; };
 		FA3D3C5B25F6A5370060DA53 /* UIStackView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */; };
 		FA3D3C5E25F6A8D40060DA53 /* UIScrollView_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */; };
+		FA3DE2C626220C1F0081841B /* Date_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3DE2C526220C1F0081841B /* Date_ext.swift */; };
 		FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA581CC92274AE70009FBF9A /* FloatActionButton.swift */; };
 		FA5BDDC425D0692F00E83F77 /* UILabel_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */; };
 		FA5D5B8122B16D3000159B40 /* WatchItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */; };
@@ -117,6 +118,7 @@
 		FA350EE1226C886C00A167CB /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		FA3D3C5A25F6A5370060DA53 /* UIStackView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView_ext.swift; sourceTree = "<group>"; };
 		FA3D3C5D25F6A8D40060DA53 /* UIScrollView_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScrollView_ext.swift; sourceTree = "<group>"; };
+		FA3DE2C526220C1F0081841B /* Date_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date_ext.swift; sourceTree = "<group>"; };
 		FA581CC92274AE70009FBF9A /* FloatActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatActionButton.swift; sourceTree = "<group>"; };
 		FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel_ext.swift; sourceTree = "<group>"; };
 		FA5D5B8022B16D3000159B40 /* WatchItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemsVC.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				FA6D811322788A9F00A60758 /* UIView_ext.swift */,
 				FA9E758E25D4839D00DFF57D /* String_ext.swift */,
+				FA3DE2C526220C1F0081841B /* Date_ext.swift */,
 				FAB6002D25DC5DF500EEBD7A /* Int_ext.swift */,
 				FA5BDDC325D0692E00E83F77 /* UILabel_ext.swift */,
 				FA0E509622AC4353002417BD /* UITextField_ext.swift */,
@@ -565,6 +568,7 @@
 				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
 				FA350E9D226797FC00A167CB /* AppDelegate.swift in Sources */,
 				FA9D3A48245DD826000688BC /* WatchItemEditState.swift in Sources */,
+				FA3DE2C626220C1F0081841B /* Date_ext.swift in Sources */,
 				FA6D811622789B6300A60758 /* WatchItemCell.swift in Sources */,
 				FA6F255C25FD4D4A0001EBF5 /* UIColor_ext.swift in Sources */,
 				FA8FC99922AE3F5500F66F8F /* AnimatableCollectionView.swift in Sources */,

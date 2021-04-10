@@ -9,15 +9,13 @@
 import Foundation
 
 extension Optional where Wrapped == String {
-    func year() -> String {
-        guard let self = self else { return "" }
+    func toDate() -> Date? {
+        guard let self = self else { return nil }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         
-        guard let date = formatter.date(from: self) else { return "" }
-        formatter.dateFormat = "yyyy"
-        let year = formatter.string(from: date)
-        return year
+        guard let date = formatter.date(from: self) else { return nil }
+        return date
     }
 }

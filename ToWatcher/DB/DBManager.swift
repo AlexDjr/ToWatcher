@@ -88,7 +88,7 @@ fileprivate extension DBWatchItem {
         self.backdropURLString = item.backdropURL?.absoluteString
         self.localTitle = item.localTitle
         self.originalTitle = item.originalTitle
-        self.year = item.year
+        self.releaseDate = item.releaseDate
         self.score = item.score
         self.overview = item.overview
         self.duration = item.duration
