@@ -39,6 +39,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         if collectionView == nil {
             setupCollectionView()
         }
+        
+        NetworkManager.shared.getRefreshedScores(watchType) { self.refreshScores($0) }
     }
     
     override func viewDidLayoutSubviews() {
@@ -241,6 +243,14 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         collectionView.reloadData()
     }
     
+    private func refreshScores(_ scores: [Int: Double]) {
+        let watchItemsToRefresh = watchItems.filter { scores[$0.id] != nil }
+        watchItemsToRefresh.forEach {
+            $0.score = scores[$0.id]!
+            DBManager.shared.update($0)
+        }
+        reloadCollectionViewData()
+    }
     
     // MARK: - Gestures
     private func setupLongPressGesture() {

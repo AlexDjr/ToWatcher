@@ -23,7 +23,7 @@ class NetworkManager {
         "Accept": "application/json"
     ]
     
-    private var parameters: [String: Any] = ["language":"\(Bundle.main.preferredLocalizations.first ?? "en")"]
+    private let parameters: [String: Any] = ["language":"\(Bundle.main.preferredLocalizations.first ?? "en")"]
     
     private let decoder: JSONDecoder = {
         let decoder: JSONDecoder = JSONDecoder()
@@ -35,13 +35,14 @@ class NetworkManager {
     
     // MARK: - Public methods
     func search(_ searchString: String, page: Int, completion: @escaping (Result<SearchResult, Error>) -> ()) {
-        parameters["page"] = page
-        parameters["query"] = searchString
+        var params = parameters
+        params["page"] = page
+        params["query"] = searchString
         
         let imageBaseURL = "https://image.tmdb.org/t/p/"
         let backdropSize = "w780"
         
-        let request = AF.request("\(baseURL)/search/movie", parameters: parameters, headers: headers)
+        let request = AF.request("\(baseURL)/search/movie", parameters: params, headers: headers)
             .validate(statusCode: 200..<300)
             .responseData { response in
                 switch response.result {
@@ -73,8 +74,44 @@ class NetworkManager {
     }
     
     func getMovieInfo(_ id: Int, completion: @escaping (Result<Movie, Error>) -> ()) {
-        parameters["append_to_response"] = "credits"
+        var params = parameters
+        params["append_to_response"] = "credits"
         
+        requestMovieInfo(id, parameters: params) { completion($0) }
+    }
+    
+    func cancelSearchRequests() {
+        searchRequests.forEach { $0.cancel() }
+        searchRequests.removeAll()
+    }
+    
+    func getRefreshedScores(_ type: WatchType, completion: @escaping ([Int: Double]) -> ()) {
+        let recentWatchItems = DBManager.shared.getRecentWatchItems(type)
+        
+        var refreshedScores = [Int: Double]()
+        
+        let requestGroup = DispatchGroup()
+        
+        recentWatchItems.forEach {
+            requestGroup.enter()
+            
+            requestMovieInfo($0.id, parameters: parameters) { result in
+                switch result {
+                case .success(let movie): refreshedScores[movie.id] = movie.score
+                default: break
+                }
+                requestGroup.leave()
+            }
+        }
+        
+        requestGroup.notify(queue: DispatchQueue.main) {
+            completion(refreshedScores)
+        }
+        
+    }
+    
+    // MARK: - Private methods
+    private func requestMovieInfo(_ id: Int, parameters: Parameters? = nil, completion: @escaping (Result<Movie, Error>) -> ()) {
         AF.request("\(baseURL)/movie/\(id)", parameters: parameters, headers: headers)
             .validate(statusCode: 200..<300)
             .responseData { response in
@@ -93,10 +130,5 @@ class NetworkManager {
                     completion(.failure(error))
                 }
             }
-    }
-    
-    func cancelSearchRequests() {
-        searchRequests.forEach { $0.cancel() }
-        searchRequests.removeAll()
     }
 }

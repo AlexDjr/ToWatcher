@@ -28,6 +28,10 @@ class DBManager {
         return []
     }
     
+    func getRecentWatchItems(_ type: WatchType) -> [WatchItem] {
+        return getWatchItems(type).filter { $0.releaseDate != nil && $0.releaseDate!.daysBetweenDate(Date()) < 90 }
+    }
+    
     func insert(_ item: WatchItem) {
         try! db.write {
             let dbItem = DBWatchItem(item)
