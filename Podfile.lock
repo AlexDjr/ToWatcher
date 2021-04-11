@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.4.1)
+  - Alamofire (5.4.2)
   - KeychainAccess (4.2.2)
   - Kingfisher (6.2.1)
   - MKRingProgressView (2.2.3)
@@ -31,7 +31,7 @@ SPEC REPOS:
     - RealmSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  Alamofire: bfbc4c2fe5909b1d94fb4ef2277c6b3727ef5dae
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
   MKRingProgressView: 404b3157e7a533ab8668d29ec20042c35d12ca1d
