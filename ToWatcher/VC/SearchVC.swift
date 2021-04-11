@@ -108,7 +108,6 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             return
         }
         
-        print("searchString = \(searchString)")
         page = 1
         self.searchString = searchString
         
@@ -153,7 +152,6 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         searchView.delegate = self
         
         animateShowView()
-//        setFocusOnSearchView()
     }
     
     private func setupSearchView() {
@@ -257,8 +255,6 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     private func handleError(_ error: Error) {
-        print("ERROR = \(error.localizedDescription)")
-        
         guard let error = error as? AFError else { return }
         switch error {
         case .explicitlyCancelled: break

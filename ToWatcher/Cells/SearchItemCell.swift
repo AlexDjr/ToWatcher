@@ -61,10 +61,7 @@ class SearchItemCell: UICollectionViewCell {
         let delta = currentY - (AppStyle.menuBarFullHeight) - halfHeightDeltaAfterScale
         let yXScaledTransform = xScaledTransform.translatedBy(x: 0, y: -delta / scaleY)
         
-//                       completion: { _ in
-//                        // получается не такая тень, как на главной =(
-////                        self.mainView.addShadow(AppStyle.itemRoundCorners, radius: self.mainView.frame.height * AppStyle.itemCornerRadiusCoeff)
-//                       })
+        // TODO: Сейчас после увеличении ячейки на экране поиска ее тень выглядит не так, как у ячеек на WatchItemsVC.
         
         return yXScaledTransform
     }
