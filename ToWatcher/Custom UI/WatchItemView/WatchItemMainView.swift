@@ -34,7 +34,7 @@ class WatchItemMainView: UIView {
         roundedView.roundCorners(AppStyle.itemRoundCorners, radius: self.frame.height * AppStyle.itemCornerRadiusCoeff)
     }
     
-    // MARK: Public methods
+    // MARK: - Public methods
     func setImage(_ imageURL: URL?) {
         itemImageView.kf.setImage(with: imageURL, placeholder: UIImage(named: "placeholder")!)
     }
@@ -69,10 +69,6 @@ class WatchItemMainView: UIView {
         originalImage = itemImageView.image
         
         let ciImage = CIImage(image: itemImageView.image!)!
-        //        let blackAndWhiteImage = ciImage.applyingFilter("CIColorControls", parameters: ["inputSaturation": 0, "inputContrast": 1, "inputBrightness": 0.015])
-        //        let blackAndWhiteImage = ciImage.applyingFilter("CIColorMonochrome", parameters: ["inputColor": CIColor.gray, "inputIntensity": 1])
-        //        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectMono", parameters: [:])
-        //        let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectNoir", parameters: [:])
         let blackAndWhiteImage = ciImage.applyingFilter("CIPhotoEffectTonal", parameters: [:])
         let newImage = UIImage(ciImage: blackAndWhiteImage)
         

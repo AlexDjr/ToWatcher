@@ -268,9 +268,6 @@ class WatchItemView: UIView {
         let shouldViewStickToFrame = currentXPoint == 0.0 && abs(newXPoint) < AppStyle.watchItemEditStickToFrameGap
         guard !shouldViewStickToFrame else { return }
         
-        //        let canMoveView = abs(newXPoint) <= AppStyle.watchItemEditActionViewWidth && newXPoint != currentXPoint
-        //        guard canMoveView else { return }
-        
         switchCellStateIfNeeded(current: currentXPoint, new: newXPoint)
         
         let shouldStop = (contextCell as? WatchedItemCell) != nil && abs(newXPoint) > AppStyle.watchItemEditWatchedShouldStopGap && currentEditState == .toWatched
@@ -283,11 +280,6 @@ class WatchItemView: UIView {
     
     private func getXPoint(from translationPoint: CGPoint) -> CGFloat {
         var xPoint = leftMainConstraint.constant + translationPoint.x
-        
-        //        let isMaxWidthReached = abs(leadingConstraint.constant) < AppStyle.watchItemEditActionViewWidth && abs(xPoint) > AppStyle.watchItemEditActionViewWidth
-        //        if isMaxWidthReached {
-        //            xPoint = xPoint > 0 ? AppStyle.watchItemEditActionViewWidth : -AppStyle.watchItemEditActionViewWidth
-        //        }
         
         let shouldStickToFrame = abs(xPoint) < AppStyle.watchItemEditStickToFrameGap
         if shouldStickToFrame {
@@ -311,9 +303,6 @@ class WatchItemView: UIView {
     private func moveMainView(_ newConstant: CGFloat) {
         UIView.animate(withDuration: 0.01) {
             self.changeConstraints(newConstant, isForAnimation: true)
-            //            if abs(newConstant) == AppStyle.watchItemEditActionViewWidth {
-            //                self.impactFeedbackgenerator.impactOccurred()
-            //            }
         }
         
         moveActionViewIfNeeded(newConstant)

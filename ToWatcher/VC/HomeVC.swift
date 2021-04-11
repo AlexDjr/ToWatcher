@@ -54,10 +54,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         let cell = containerView.dequeueReusableCell(withReuseIdentifier: ContainerCell.reuseIdentifier, for: indexPath) as! ContainerCell
 
         cell.hostedView = childControllers[indexPath.item].view
-        
-//        cell.contentView.backgroundColor = .blue
-//        cell.contentView.layer.borderColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-//        cell.contentView.layer.borderWidth = 2.0
         return cell
     }
     
@@ -178,7 +174,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-//        containerView.topAnchor.constraint(equalTo: menuBar.bottomAnchor).isActive = true
         containerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true

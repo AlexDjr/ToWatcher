@@ -30,7 +30,7 @@ class WatchItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: Public methods
+    // MARK: - Public methods
     func setupState(_ state: WatchItemCellState = .enabled, isForReused: Bool = false) {
         self.state = state
         watchItemView.setupState(state)
