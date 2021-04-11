@@ -14,7 +14,7 @@
 "text_minutes_short" = "min";
 
 /* Name of menu item. List of movies to watch */
-"type_to_watch" = "SCHAUEN";
+"type_to_watch" = "ANSEHEN";
 
 /* Name of menu item. list of movies already watched */
 "type_watched" = "GESEHEN";
