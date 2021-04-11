@@ -35,7 +35,9 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setFocusOnSearchView()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.setFocusOnSearchView()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

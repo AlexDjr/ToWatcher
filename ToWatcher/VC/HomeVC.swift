@@ -27,6 +27,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        openSearchIfNeeded()
+        
         setupMenuBar()
         setupFloatActionButton()
         floatActionButton.addTarget(self, action: #selector(pressFloatActionButton), for: .touchUpInside)
@@ -215,6 +217,12 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     private func add(asChildVC vc: UIViewController) {
         addChild(vc)
         vc.didMove(toParent: self)
+    }
+    
+    private func openSearchIfNeeded() {
+        if Settings.startScreen == .search {
+            pressFloatActionButton()
+        }
     }
     
     // MARK: - MenuBar
