@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, WatchItemEditProtocol {
+class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource, WatchItemEditProtocol, Screen {
     weak var homeVC: HomeVC?
     
     private var watchItemCellReuseIdentifier = "watchItemCell"
@@ -18,7 +18,12 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     var collectionView: WatchItemCollectionView!
     weak var delegate: WatchItemDelegateProtocol?
     
-    private var childViewController: UIViewController?
+    private var childViewController: UIViewController? {
+        didSet {
+            guard let childViewController = childViewController else { return }
+            homeVC?.currentScreen = (childViewController as? Screen)?.screen ?? .default
+        }
+    }
     private var selectedIndexPath: IndexPath?
     private var isEditMode = false
     private var isItemAddedAfterSearch = false
@@ -39,6 +44,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         if collectionView == nil {
             setupCollectionView()
         }
+        
+        homeVC?.currentScreen = screen
         
         NetworkManager.shared.getRefreshedScores(watchType) { self.refreshScores($0) }
     }
@@ -97,6 +104,9 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
         homeVC?.didRemoveItem(item, withType: type)
     }
     
+    //MARK: - Screen
+    var screen: ScreenType { .default }
+    
     // MARK: - Public methods
     func moveAllItemsFromScreen() {
         collectionView.fromScreenFinishedCallback = {
@@ -109,6 +119,8 @@ class WatchItemsVC: UIViewController, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func moveItemsBackToScreen() {
+        homeVC?.currentScreen = screen
+        
         if selectedIndexPath != nil {
             animateMovingItemsExceptSelectedBackToScreen()
         } else {

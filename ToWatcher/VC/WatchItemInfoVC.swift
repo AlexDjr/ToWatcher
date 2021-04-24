@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WatchItemInfoVC: UIViewController {
+class WatchItemInfoVC: UIViewController, Screen {
     private var scrollView = UIScrollView.standart()
     
     private var localTitle = UILabel().set(font: UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)!,
@@ -67,6 +67,9 @@ class WatchItemInfoVC: UIViewController {
         super.viewDidLoad()
         setupView()
     }
+    
+    // MARK: - Screen
+    var screen: ScreenType { .info }
     
     // MARK: - Private methods
     private func getMovieInfo() {

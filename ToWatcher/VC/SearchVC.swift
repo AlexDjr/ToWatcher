@@ -11,7 +11,7 @@ import Alamofire
 import Kingfisher
 import NVActivityIndicatorView
 
-class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchDelegate {
+class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, SearchDelegate, Screen {
     private var searchView: SearchView!
     private var containerSearchView: UIView!
     private var collectionView: SearchItemCollectionView!
@@ -140,6 +140,9 @@ class SearchVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
+    
+    // MARK: - Screen
+    var screen: ScreenType { .search }
     
     // MARK: - Private Methods
     private func setupView() {

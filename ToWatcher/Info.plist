@@ -50,5 +50,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>SearchShortcut</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Добавить фильм</string>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>plus-shortcut</string>
+		</dict>
+	</array>
 </dict>
 </plist>

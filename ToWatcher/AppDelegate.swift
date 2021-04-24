@@ -13,6 +13,7 @@ import KeychainAccess
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var shortcut: UIApplicationShortcutItem?
     
     private let token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYTNmYTUwYWIzMWQwZDExMzdkZTliZjM5MzdmZmQxZiIsInN1YiI6IjViYjM1MTA4MGUwYTI2M2UwNTAwOWRkMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.y_r3nkfpPKk1C5PRd80EtWMPVfS2kwb4uSt8ILOmRUE"
 
@@ -22,7 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         try? Keychain().set(token, key: "token")
         Settings.setAppInfo()
         
+        shortcut = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        shortcut = shortcutItem
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -41,12 +48,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        handleShortcut()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    //MARK: - Private methods
+    private func handleShortcut() {
+        guard let shortcutItem = shortcut else { return }
+        
+        switch shortcutItem.type {
+        case "SearchShortcut":
+            DispatchQueue.main.async { [unowned self] in
+                guard let homeVC = self.window?.rootViewController as? HomeVC else { return }
+                homeVC.openSearch()
+            }
+            
+        default:
+            break
+        }
+        
+        shortcut = nil
+    }
 
 }
 
