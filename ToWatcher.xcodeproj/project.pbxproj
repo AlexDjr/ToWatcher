@@ -82,6 +82,7 @@
 		FACEDDAB2607C82E00509564 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEDDAA2607C82E00509564 /* Genre.swift */; };
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 		FAE563642634854300614B25 /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE563632634854300614B25 /* ScreenType.swift */; };
+		FAE563852634AE2A00614B25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAE563872634AE2A00614B25 /* InfoPlist.strings */; };
 		FAEAC856260674EF00B9AB97 /* WatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEAC855260674EF00B9AB97 /* WatchType.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,6 +174,15 @@
 		FACEDDAA2607C82E00509564 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchItemInfoVC.swift; sourceTree = "<group>"; };
 		FAE563632634854300614B25 /* ScreenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenType.swift; sourceTree = "<group>"; };
+		FAE563862634AE2A00614B25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE563892634AE3000614B25 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638A2634AE3200614B25 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638B2634AE3300614B25 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638C2634AE3400614B25 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638D2634AE3500614B25 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638E2634AE3600614B25 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE5638F2634AE3700614B25 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE563902634AE3800614B25 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FAEAC855260674EF00B9AB97 /* WatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,6 +292,7 @@
 				FABD7D93261F9C9400D7C1E2 /* LaunchScreen.storyboard */,
 				FA350EA3226797FD00A167CB /* Assets.xcassets */,
 				FA350EA8226797FD00A167CB /* Info.plist */,
+				FAE563872634AE2A00614B25 /* InfoPlist.strings */,
 				FA350ED9226C882100A167CB /* Fonts */,
 				FA2D31BE2623076700878646 /* Settings.bundle */,
 			);
@@ -495,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA350EE8226C886C00A167CB /* Montserrat-Light.ttf in Resources */,
+				FAE563852634AE2A00614B25 /* InfoPlist.strings in Resources */,
 				FABD7DA3261F9EEA00D7C1E2 /* Localizable.strings in Resources */,
 				FA2D31BF2623076700878646 /* Settings.bundle in Resources */,
 				FA350EE9226C886C00A167CB /* Montserrat-SemiBold.ttf in Resources */,
@@ -657,6 +669,22 @@
 				FABD7DAE261F9EF800D7C1E2 /* es */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		FAE563872634AE2A00614B25 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAE563862634AE2A00614B25 /* en */,
+				FAE563892634AE3000614B25 /* ca */,
+				FAE5638A2634AE3200614B25 /* zh */,
+				FAE5638B2634AE3300614B25 /* fr */,
+				FAE5638C2634AE3400614B25 /* de */,
+				FAE5638D2634AE3500614B25 /* it */,
+				FAE5638E2634AE3600614B25 /* pt */,
+				FAE5638F2634AE3700614B25 /* ru */,
+				FAE563902634AE3800614B25 /* es */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
