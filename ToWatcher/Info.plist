@@ -56,7 +56,7 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>SearchShortcut</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>Добавить фильм</string>
+			<string>UIApplicationShortcutItemTitle</string>
 			<key>UIApplicationShortcutItemIconFile</key>
 			<string>plus-shortcut</string>
 		</dict>
