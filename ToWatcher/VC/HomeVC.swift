@@ -19,6 +19,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     private var lastContentOffset: CGPoint = CGPoint()
     
+    var currentScreen: ScreenType = .default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupContainerView()
@@ -42,6 +44,18 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     // MARK: - Public methods
     func enableInteractions(_ isEnabled: Bool) {
         menuBar.isUserInteractionEnabled = isEnabled
+    }
+    
+    func openSearch() {
+        switch currentScreen {
+        case .toWatch, .watched: pressFloatActionButton()
+        case .info:
+            pressFloatActionButton()
+            DispatchQueue.main.asyncAfter(deadline: .now() + AppStyle.animationDuration * 2) {
+                self.pressFloatActionButton()
+            }
+        case .search, .default: break
+        }
     }
     
     //   MARK: - UICollectionViewDataSource
@@ -130,6 +144,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         containerView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         guard let childControllers = childControllers else { return }
         selectedChildVC = childControllers[indexPath.item]
+        setCurrentScreen(indexPath.item)
     }
     
     // MARK: - Private methods
@@ -150,6 +165,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         guard let childControllers = childControllers else { return }
         let controllerIndex = containerView.indexPathsForVisibleItems.first!.item
         selectedChildVC = childControllers[controllerIndex]
+        setCurrentScreen(controllerIndex)
     }
     
     private func setupTopAndBottomSafeArea() {
@@ -216,8 +232,13 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     private func openSearchIfNeeded() {
         if Settings.startScreen == .search {
-            pressFloatActionButton()
+            openSearch()
         }
+    }
+    
+    private func setCurrentScreen(_ index: Int) {
+        guard let screen = (childControllers?[index])?.screen else { return }
+        currentScreen = screen
     }
     
     // MARK: - MenuBar
@@ -247,7 +268,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     }
     
     // MARK: - Actions
-    @objc private func pressFloatActionButton() {
+    @objc func pressFloatActionButton() {
         containerView.isUserInteractionEnabled = false
         floatActionButton.isUserInteractionEnabled = false
         switch floatActionButton.actionState {
@@ -261,4 +282,3 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         }
     }
 }
-

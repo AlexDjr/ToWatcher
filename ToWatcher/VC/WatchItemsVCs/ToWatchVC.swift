@@ -28,7 +28,5 @@ class ToWatchVC: WatchItemsVC {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    override var screen: ScreenType { .toWatch }
 }
