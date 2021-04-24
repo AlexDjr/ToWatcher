@@ -31,6 +31,7 @@ class SearchView: UIView {
         textField.textColor = AppStyle.searchViewTextColor
         textField.font = UIFont(name: AppStyle.appFontNameBold, size: AppStyle.watchItemInfoLocalTitleFontSize)
         textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         textField.addBottomBorder()
         
         self.addSubview(textField)
