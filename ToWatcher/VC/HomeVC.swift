@@ -19,6 +19,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     private var lastContentOffset: CGPoint = CGPoint()
     
+    private lazy var reviewController = ReviewController()
+    
     var currentScreen: ScreenType = .default
     
     override func viewDidLoad() {
@@ -133,6 +135,8 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     func didRemoveItem(_ item: WatchItem, withType type: WatchItemEditState) {
         menuBar.menuView.reloadData()
     
+        reviewController.checkForReview(screen: currentScreen, type: type)
+        
         if selectedChildVC is ToWatchVC, type == .toWatched {
             guard let watchedVC = childControllers?[1] else { return }
             watchedVC.addItem(item)
