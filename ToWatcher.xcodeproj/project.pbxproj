@@ -83,6 +83,7 @@
 		FAE278BB22A934EF006FED16 /* WatchItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE278BA22A934EF006FED16 /* WatchItemInfoVC.swift */; };
 		FAE563642634854300614B25 /* ScreenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE563632634854300614B25 /* ScreenType.swift */; };
 		FAE563852634AE2A00614B25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAE563872634AE2A00614B25 /* InfoPlist.strings */; };
+		FAE563932635ED7000614B25 /* ReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE563922635ED7000614B25 /* ReviewController.swift */; };
 		FAEAC856260674EF00B9AB97 /* WatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEAC855260674EF00B9AB97 /* WatchType.swift */; };
 /* End PBXBuildFile section */
 
@@ -183,6 +184,7 @@
 		FAE5638E2634AE3600614B25 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FAE5638F2634AE3700614B25 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FAE563902634AE3800614B25 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FAE563922635ED7000614B25 /* ReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewController.swift; sourceTree = "<group>"; };
 		FAEAC855260674EF00B9AB97 /* WatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,6 +279,7 @@
 			children = (
 				FA350E9C226797FC00A167CB /* AppDelegate.swift */,
 				FA2C8A39227725E300E01545 /* AppStyle.swift */,
+				FAE563922635ED7000614B25 /* ReviewController.swift */,
 				FA2D31CD26230DE900878646 /* Settings */,
 				FABD7D5B261F8F5D00D7C1E2 /* Localization */,
 				FAB6FCC625D5BD0E00EEBD7A /* Network */,
@@ -593,6 +596,7 @@
 				FA0A5C1B247180800008599C /* SearchItemCell.swift in Sources */,
 				FA9E74FD25D30B4100DFF57D /* Search.swift in Sources */,
 				FA932E5A226F2FFC0087BE9E /* ToWatchVC.swift in Sources */,
+				FAE563932635ED7000614B25 /* ReviewController.swift in Sources */,
 				FA350EB3226B7ED000A167CB /* MenuItemCell.swift in Sources */,
 				FA6D811422788A9F00A60758 /* UIView_ext.swift in Sources */,
 				FA581CCA2274AE70009FBF9A /* FloatActionButton.swift in Sources */,
